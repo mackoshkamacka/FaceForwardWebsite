@@ -4,30 +4,32 @@ import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //Allows for page changing (e.g. go to /artist-dashboard is login is valid, and artist)
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //Stops page from refreshing
         try {
-            // 1. Authenticate
+            //Authenticate = ensure that the password, and email match the Firebase Authentication
             const userCred = await signInWithEmailAndPassword(auth, email, password);
             
-            // 2. Get user document
+            //Assuming userCred it correct, userDocRef makes reference to the user's document in Firestore
+            //then getDoc(userDocRef) actually fetches the document 
             const userDocRef = doc(db, "users", userCred.user.uid);
             const userDocSnap = await getDoc(userDocRef);
 
+            //If anything goes wrong (causing the userDocSnap to not exist), an error is thrown
             if (!userDocSnap.exists()) {
                 throw new Error("User document not found");
             }
 
-            // 3. Get role and redirect
+            //Gets the data from the userDocSnap, then gets the role
             const userData = userDocSnap.data();
             const userRole = userData.role;
             
+            //With the userRole, navigation proceeds. 
             navigate(userRole === "artist" ? "/artist-dashboard" : "/patient-dashboard");
             
         } catch (err) {
