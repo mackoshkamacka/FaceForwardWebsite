@@ -1,10 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth"; 
 import { getFirestore } from "firebase/firestore"; 
 
-// Your web app's Firebase configuration
+// Firebase configuration 
 const firebaseConfig = {
   apiKey: "AIzaSyClkLmkI-oPdsUgQnCmx2ErF5sRKnBBRDA",
   authDomain: "faceforwardplatform.firebaseapp.com",

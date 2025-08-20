@@ -8,8 +8,8 @@ export default function Signup() {                  //Component setup (exports a
     const [password, setPassword] = useState('');   //email, password, role, name = pieces of state  
     const [role, setRole] = useState("patient");    //set_X_ updates the values when inputs change 
     const [name, setName] = useState('');           //Note: state = data component keeps track of i.e. memory (React rerenders it) 
-    //const [error, setError] = useState(null); 
-    //const [loading, setLoading] = useState(false); 
+    const [error, setError] = useState(null); 
+    const [loading, setLoading] = useState(false); 
     
     const handleSignup = async (e) => {             //Signup function runs when form is 'submitted' 
         e.preventDefault();                         //Prevents browser from reloading the page 
