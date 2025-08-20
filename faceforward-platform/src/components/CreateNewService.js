@@ -7,7 +7,7 @@ export default function CreateNewService() {
     title: '',
     description: '',
     price: '',
-    type: 'makeup', // Default service types
+    type: 'makeup', // Default service type
   });
   const [submitted, setSubmitted] = useState(false);
 

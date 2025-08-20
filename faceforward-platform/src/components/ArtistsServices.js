@@ -17,15 +17,17 @@ export default function ArtistServicesList() {
     status: 'active' // Required for your rules
   });
 
-  // Real-time updates for artist's services
   useEffect(() => {
-    if (!auth.currentUser) return;
+    if (!auth.currentUser) return; //if not the artist, quit
     
     const q = query(
       collection(db, 'services'),
       where('artistId', '==', auth.currentUser.uid)
     );
     
+    //real-time updates for artist's services, keeps listening for 
+    //changes made in the database. Whenever q is added, updated, or deleted, 
+    //Firestore calls the callback function to rerender UI 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setServices(snapshot.docs.map(doc => ({ 
         id: doc.id, 
@@ -36,6 +38,7 @@ export default function ArtistServicesList() {
     return unsubscribe;
   }, []);
 
+  //allows for edits to be made 
   const handleEditClick = (service) => {
     setEditingService(service);
     setEditForm({
@@ -63,6 +66,7 @@ export default function ArtistServicesList() {
     }
   };
 
+  //deletes a service if permissions are met. 
   const handleDelete = async (serviceId) => {
     if (window.confirm('Permanently delete this service?')) {
       try {

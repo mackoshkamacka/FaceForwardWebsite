@@ -12,7 +12,7 @@ export default function ServicesList() {
   });
   const [userData, setUserData] = useState(null);
 
-  // Fetch user data when component mounts
+  //Fetch user data when component mounts
   useEffect(() => {
     const fetchUserData = async () => {
       if (auth.currentUser) {
@@ -25,7 +25,7 @@ export default function ServicesList() {
     fetchUserData();
   }, []);
 
-  // Fetch all active services
+  //Fetch all active services
   useEffect(() => {
     const fetchServices = async () => {
       const q = query(

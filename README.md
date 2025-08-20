@@ -9,9 +9,11 @@ This is my first dynamic website ... I started with static, raw HTML/CSS website
 I may have been too ambitious with this project as I started copying code from random places - not really understanding how they work. Before this commit I understood ~50% of what was going on. So here I am going to document the challenges I face, how I solve them; as the overall structure of this project (mostly for my understanding...); and (over)annotate the code (as I am not sure if it is truely self documenting). 
 
 #### Annotation Order
-- If there is similar/duplicate boilerplate code, I will not reannotate it. To ensure that all code is understood, I annotated `Signup.js`, then `Login.js`. Then I refactored the css styling in `ArtistRequest.js` (creating `ArtistRequest.css`) before annotating it.  
+- If there is similar/duplicate boilerplate code, I will not reannotate it. To ensure that all code is understood, I annotated `Signup.js` > `Login.js` > (checked `ArtistDashboard.js`) > Refactored the css styling in `ArtistRequest.js` (creating `ArtistRequest.css`) before annotating it > Then annotated `firebase.js` > `ArtistServices.js` > (checked `CreateNewService.js`) > (checked `PatientAdminRequest.js`) > (checked `PatientDashboard.js`) > (checked `PatientRequests.js`) > (checked `ProtectedRoute.js`)
 
-- `ArtistDashboard.js` is just a nestted component for `CreateNewService`, `ArtistsService`, and `ArtistRequest` components 
+- `ArtistDashboard.js` is just a nestted component for `CreateNewService`, `ArtistsService`, and `ArtistRequest` components. Similarly, `PatientDashBoard.js` is just a nested component for (`PatientAdminRequest`,) `ServicesList`, and `PatientRequests` components.   
+- `CreateNewService.js`, `PatientAdminRequest.js`, `PatientRequests.js`, `ProtectedRoute.js`, `ServiceList.js`,  were already annotated well/understood. 
+
 
 #### How React Renders My Website: 
 ![React Rendering Visual](media/ReactRenderingVisualV3.png)
