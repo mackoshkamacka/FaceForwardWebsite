@@ -112,7 +112,7 @@ export default function ArtistRequests() {
             >
               <h3>Request #{request.id.slice(0, 6)}</h3>
               <p>Service: {request.serviceName || request.serviceId}</p>
-              <p>From: {request.patientName || 'Unknown User'}</p>
+              <p>From: {request.name || 'Unknown User'}</p>
               <p>Status: {request.status}</p>
               <p>Requested Date: {request.requestedDate?.toLocaleDateString?.() || request.requestedDate}</p>
             </div>
@@ -125,8 +125,9 @@ export default function ArtistRequests() {
           <div className="modal-content">
             <h3>Request Details</h3>
             <div className="request-details">
-              <p><strong>Client Name:</strong> {selectedRequest.patientName || 'Not available'}</p>
-              <p><strong>Email:</strong> {selectedRequest.patientEmail || 'Not available'}</p>
+              <p><strong>Name:</strong> {selectedRequest.name || 'Not available'}</p>
+              <p><strong>Email:</strong> {selectedRequest.email || 'Not available'}</p>
+              <p><strong>Number of Patients: </strong> {selectedRequest.numberOfPatients}</p>
               <p><strong>Service Requested:</strong> {selectedRequest.serviceName || selectedRequest.serviceId}</p>
               <p><strong>Status:</strong> {selectedRequest.status}</p>
               <p><strong>Requested Date:</strong> {selectedRequest.requestedDate?.toLocaleDateString?.() || selectedRequest.requestedDate}</p>

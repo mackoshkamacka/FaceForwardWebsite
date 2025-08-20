@@ -41,11 +41,12 @@ export default function ServicesList() {
   const handleRequest = async () => {
     try {
       await addDoc(collection(db, 'requests'), {
+        type: 'patient', 
         serviceId: selectedService.id,
         artistId: selectedService.artistId,
-        patientId: auth.currentUser.uid,
-        patientName: userData?.name || userData?.displayName || 'Unknown', // Use from userData
-        patientEmail: auth.currentUser.email, // From auth
+        userId: auth.currentUser.uid,
+        name: userData?.name || userData?.displayName || 'Unknown', // Use from userData
+        email: auth.currentUser.email, // From auth
         serviceName: selectedService.title, // Add service name for easier display
         status: 'pending',
         requestedDate: requestDetails.date,

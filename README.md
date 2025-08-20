@@ -14,6 +14,7 @@ I may have been too ambitious with this project as I started copying code from r
 - `ArtistDashboard.js` is just a nestted component for `CreateNewService`, `ArtistsService`, and `ArtistRequest` components. Similarly, `PatientDashBoard.js` is just a nested component for (`PatientAdminRequest`,) `ServicesList`, and `PatientRequests` components.   
 - `CreateNewService.js`, `PatientAdminRequest.js`, `PatientRequests.js`, `ProtectedRoute.js`, `ServiceList.js`,  were already annotated well/understood. 
 
+After these anntoations, some files may have changed/been refactored/abstracted (particularly so patients and hopsitals have similar request cycles). 
 
 #### How React Renders My Website: 
 ![React Rendering Visual](media/ReactRenderingVisualV3.png)

@@ -72,6 +72,7 @@ export default function Signup() {                  //Component setup (exports a
             <select onChange={(e) => setRole(e.target.value)} value ={role}>
               <option value = "patient">Patient</option>
               <option value = "artist">Artist</option>   
+              <option value = "hospital">Hospital Management</option>
             </select>     
             <button type = "submit">Sign Up</button>
         </form>

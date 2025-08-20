@@ -30,7 +30,15 @@ export default function Login() {
             const userRole = userData.role;
             
             //With the userRole, navigation proceeds. 
-            navigate(userRole === "artist" ? "/artist-dashboard" : "/patient-dashboard");
+            if (userRole === "artist") {
+                navigate("/artist-dashboard");
+              } else if (userRole === "patient") {
+                navigate("/patient-dashboard");
+              } else if (userRole === "hospital") {
+                navigate("/hospital-dashboard");
+              } else {
+                navigate("/"); // fallback if role is undefined
+            }
             
         } catch (err) {
             console.error("Full error:", err);

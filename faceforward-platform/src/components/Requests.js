@@ -4,7 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { auth } from '../firebase';
 import { FaSync } from 'react-icons/fa'; // Import refresh icon
 
-export default function PatientRequests() {
+export default function Requests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false); // Changed initial state to false
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -38,7 +38,7 @@ export default function PatientRequests() {
     try {
       const q = query(
         collection(db, 'requests'),
-        where('patientId', '==', auth.currentUser.uid)
+        where('userId', '==', auth.currentUser.uid)
       );
       const snapshot = await getDocs(q);
       
