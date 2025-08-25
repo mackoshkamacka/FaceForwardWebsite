@@ -30,9 +30,26 @@ export default function Signup() {                  //Component setup (exports a
                 createdAt: new Date()
             }); 
 
-            //Successful signup logging (only reached if no errors are caught)
-            console.log("User created:", userCred.user); 
-            alert("Sign up successful"); 
+            try {
+                //Send welcome email
+                await fetch('/api/sendWelcomeEmail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        firstName: name.split(' ')[0], //take first name only
+                        email: email
+                    })
+                });
+            
+                alert("Sign up successful, email sent!");
+            
+            } catch (err) {
+                console.error("Failed to send welcome email:", err);
+                alert("Sign up successful, but email failed to send.");
+            }
+
 
         } catch (err) {
             console.error("Error code:", err.code, "Message:", err.message);

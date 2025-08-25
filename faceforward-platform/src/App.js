@@ -8,19 +8,19 @@ import Login from "./components/Login";
 import ProtectedRoute from './components/ProtectedRoute';
 import ArtistDashboard from './components/ArtistDashboard';
 import PatientDashboard from './components/PatientDashboard';
-import HospitalDashboard from './components/HospitalDashboard'; // ✅ new
+import HospitalDashboard from './components/HospitalDashboard'; 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* 🔹 Simple Navbar */}
+        {/* Simple Navbar */}
         <nav style={{ padding: '1rem' }}>
           <Link to="/" style={{ marginRight: '1rem' }}>Signup</Link>
           <Link to="/login">Login</Link>
         </nav>
 
-        {/* 🔹 Routes */}
+        {/* Routes */}
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Signup />} />
@@ -51,6 +51,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
 
           {/* Catch-all */}
           <Route path="*" element={<Navigate to="/" replace />} />
