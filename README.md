@@ -16,6 +16,13 @@ I may have been too ambitious with this project as I started copying code from r
 
 After these anntoations, some files may have changed/been refactored/abstracted (particularly so patients and hopsitals have similar request cycles). 
 
+#### ToDos
+- Send a GCalendar/Microsoft Calendar invite to the `email` of the user. 
+- Patient/hospital is sent a satisfaction form (stars + testimonial (optional))
+- Artist can mark request as complete manually, or is marked complete after the appointment day is over, or is marked as complete if a testimonial for that request has been completed 
+- Add service rating to testimonials section OF SERVICE. Make a star visual for ratings  
+
+
 #### How React Renders My Website: 
 ![React Rendering Visual](media/ReactRenderingVisualV3.png)
 
