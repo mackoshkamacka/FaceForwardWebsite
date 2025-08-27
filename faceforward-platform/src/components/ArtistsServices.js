@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { 
-  collection, query, where, getDocs, 
+  collection, query, where, 
   updateDoc, doc, deleteDoc,
   onSnapshot  // Added for real-time updates
 } from 'firebase/firestore';

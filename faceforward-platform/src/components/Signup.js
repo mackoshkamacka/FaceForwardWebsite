@@ -8,13 +8,13 @@ export default function Signup() {                  //Component setup (exports a
     const [password, setPassword] = useState('');   //email, password, role, name = pieces of state  
     const [role, setRole] = useState("patient");    //set_X_ updates the values when inputs change 
     const [name, setName] = useState('');           //Note: state = data component keeps track of i.e. memory (React rerenders it) 
-    const [error, setError] = useState(null); 
-    const [loading, setLoading] = useState(false); 
+    //const [error, setError] = useState(null); 
+    //const [loading, setLoading] = useState(false); 
     
     const handleSignup = async (e) => {             //Signup function runs when form is 'submitted' 
         e.preventDefault();                         //Prevents browser from reloading the page 
-        setError(null);                             //"There are no errors"
-        setLoading(true);                           //"Signup is still in progress"
+        //setError(null);                           //"There are no errors"
+        //setLoading(true);                         //"Signup is still in progress"  ....used for debugging
 
         try {
             //Calls Firebase Auth to create a new user account with the given email and password 
@@ -53,7 +53,7 @@ export default function Signup() {                  //Component setup (exports a
 
         } catch (err) {
             console.error("Error code:", err.code, "Message:", err.message);
-            setError(err.message); //Error state updated (no longer null)
+            //setError(err.message); //Error state updated (no longer null)
             
             // Specific error messages
             if (err.code === "auth/email-already-in-use") {
@@ -64,7 +64,7 @@ export default function Signup() {                  //Component setup (exports a
                 alert("Signup failed: " + err.message);
             }
         } finally { 
-            setLoading(false); //Submission "complete" - state updated.
+            //setLoading(false); //Submission "complete" - state updated.
         }
     }; //handleSignup function is now defined 
 

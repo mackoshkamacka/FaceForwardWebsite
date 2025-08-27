@@ -40,7 +40,7 @@ export default function ArtistRequests() {
       }
     };
     fetchRequests(); //this keeps top level pure (no side effects when rendering) - this only happens once at the right moment: 
-  }, []);
+  });
 
   //this decides whether requests if the request is completed 
   const filterVisibleRequests = (requests, showCompleted) => {

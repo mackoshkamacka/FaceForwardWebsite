@@ -1,6 +1,6 @@
 import ServicesList from './ServiceList';
-import PatientAdminRequest from './PatientAdminRequest';
 import PatientRequests from './Requests';
+//import PatientAdminRequest from './PatientAdminRequest';
 
 export default function PatientDashboard() {
   return (
