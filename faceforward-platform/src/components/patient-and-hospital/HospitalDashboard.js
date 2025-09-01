@@ -1,5 +1,5 @@
 import HospitalServicesList from "./HospitalSerivesList";
-import PatientRequests from "./Requests";
+import PatientRequests from "./PatientRequests";
 
 export default function HospitalDashboard() {
   return (

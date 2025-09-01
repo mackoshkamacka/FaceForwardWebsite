@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-ro
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ProtectedRoute from './components/ProtectedRoute';
-import ArtistDashboard from './components/ArtistDashboard';
+import ArtistDashboard from './components/artist/ArtistDashboard';
 import PatientDashboard from './components/patient-and-hospital/PatientDashboard';
-import HospitalDashboard from './components/HospitalDashboard'; 
+import HospitalDashboard from './components/patient-and-hospital/HospitalDashboard'; 
 
 function App() {
   return (

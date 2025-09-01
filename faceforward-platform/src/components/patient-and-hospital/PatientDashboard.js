@@ -1,4 +1,4 @@
-import ServicesList from '../ServiceList';
+import ServicesList from './ServiceList';
 import PatientRequests from './PatientRequests';
 //import PatientAdminRequest from './PatientAdminRequest';
 

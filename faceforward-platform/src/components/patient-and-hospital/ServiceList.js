@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, getDocs, query, where, addDoc, doc, getDoc } from 'firebase/firestore';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 
-export default function ServicesList() {
+export default function ServiceList() {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [requestDetails, setRequestDetails] = useState({

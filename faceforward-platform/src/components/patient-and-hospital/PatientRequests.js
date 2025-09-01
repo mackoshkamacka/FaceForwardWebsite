@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { db, auth } from '../../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { FaSync } from 'react-icons/fa';
-import './styling/Requests.css'; 
+import './styling/PatientRequests.css'; 
 
 export default function Requests() {
   const [requests, setRequests] = useState([]);
