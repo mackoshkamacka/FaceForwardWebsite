@@ -1,0 +1,89 @@
+.homeContainer {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    color: #111;
+}
+
+.hero {
+    display: flex;
+    flex-wrap: wrap; /* ensures responsive stacking on mobile */
+    
+    min-height: 70vh;
+    padding-left: 5rem; 
+    padding-right: 5rem; 
+}
+
+.title {
+    font-size: 5rem; 
+    padding-left: 1rem; 
+    justify-content: right;
+}
+
+.heroRight {
+    flex: 5; /* takes half of the hero width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: flex-end; left-aligned */
+    padding: 1rem;
+    gap: 1.5rem;
+    /* background-color: red; */
+}
+
+.title {
+    align-items: flex-end;
+}
+
+.heroRightText {
+    align-items: flex-start; 
+}
+
+.heroLeft {
+    flex: 5;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* subtle splash gradient */
+    border-radius: 2rem; /* rounded splash edges */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: blue;
+    width: 5rem; 
+}
+
+.heroLeft::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background: radial-gradient(circle, rgba(255, 201, 100, 0.545), transparent 70%);
+    animation: rotateSplash 15s linear infinite;
+    background-color: blue;
+    pointer-events: none;
+}
+  
+
+@keyframes rotateSplash {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+@media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+    }
+  
+    .heroLeft, .heroRight {
+      flex: none;
+      width: 100%;
+      padding: 1.5rem;
+    }
+}

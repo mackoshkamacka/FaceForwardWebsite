@@ -14,7 +14,7 @@
       "isolatedModules": true,
       "jsx": "preserve"
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "api/sendWelcomeEmail.js", "src/emails/WelcomeEmail.js"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "api/sendWelcomeEmail.js", "src/emails/WelcomeEmail.js", "src/lib/utils.js"],
     "exclude": ["node_modules"]
   }
   
