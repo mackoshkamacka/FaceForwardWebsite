@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import './styling/ArtistRequests.css'; 
 
 export default function ArtistRequests() {

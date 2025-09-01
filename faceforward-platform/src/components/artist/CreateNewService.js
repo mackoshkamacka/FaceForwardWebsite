@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { db, auth } from '../firebase';
+import { db, auth } from '../../firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 export default function CreateNewService() {

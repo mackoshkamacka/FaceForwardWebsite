@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db, auth } from '../firebase';
+import { db, auth } from '../../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { FaSync } from 'react-icons/fa';
 import './styling/Requests.css'; 

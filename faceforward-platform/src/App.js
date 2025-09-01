@@ -7,7 +7,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ProtectedRoute from './components/ProtectedRoute';
 import ArtistDashboard from './components/ArtistDashboard';
-import PatientDashboard from './components/PatientDashboard';
+import PatientDashboard from './components/patient-and-hospital/PatientDashboard';
 import HospitalDashboard from './components/HospitalDashboard'; 
 
 function App() {
