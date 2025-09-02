@@ -1,6 +1,6 @@
 .homeContainer {
     width: 100%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     font-family: 'Poppins', sans-serif;
@@ -12,7 +12,7 @@
     display: flex;
     flex-wrap: wrap; /* ensures responsive stacking on mobile */
     
-    min-height: 85vh;
+    min-height: 90vh;
     padding-left: 5rem; 
     padding-right: 5rem; 
 
@@ -20,13 +20,13 @@
 }
 
 .title {
-    text-align: right;
-    width: 100%; 
-    padding-right: 6rem; 
+    text-align: right; 
+    margin-top: 3rem; 
+    padding-right: 2rem;
 } 
 
 .title1, .title2 {
-    font-size: 10rem; 
+    font-size: 12rem;  
     align-items: flex-end;
     justify-content: center;
     color: white; 
@@ -35,14 +35,14 @@
     margin-top: 0; 
 }
 .title2 {
-    font-size: 5.1rem; 
+    font-size: 6.1rem; 
     margin-top: -35px; 
 }
 
 .subtitle {
     padding-top: 0rem; 
     padding-right: 3rem; 
-    font-size: 2.11rem; 
+    font-size: 2.5rem; 
     margin-top: -15px; 
     color: white; 
 }
@@ -61,13 +61,13 @@
 }
 
 .heroDesc {
-    padding-left: 2rem;  
+    padding: 0rem 3rem 1vh 2rem;  
+    box-sizing: border-box; 
+    word-wrap: break-word; 
     text-align: left;
     bottom: 20px; 
-    width: 50rem; 
+    width: 80%; 
     text-align: left; 
-    left: 0; 
-    text-wrap: ;
 }
 
 
@@ -116,19 +116,63 @@
     to { transform: rotate(360deg); }
 }
 
+.grainOrb {
+    position: absolute;
+    top: 0;      /* tweak for placement */
+    left: 0;     /* tweak for placement */
+    width: 1000px;
+    height: 1000px;
+  
+    pointer-events: none;
+    mix-blend-mode: soft-light; /* blends into gradient */
+    opacity: 0.6;
+    z-index: 1.5; /* sits below your text in heroTop */
+}
+  
+@keyframes orbFloat {
+    0%   { transform: translate3d(0,0,0) scale(1); }
+    50%  { transform: translate3d(8px,6px,0) scale(1.03); }
+    100% { transform: translate3d(0,0,0) scale(1); }
+}
+  
+.grainOrb {
+    animation: orbFloat 12s ease-in-out infinite;
+}
+
 
 @media (max-width: 768px) {
+
     .hero {
-      flex-direction: column;
+        padding-left: 3rem;
+        padding-right: 3rem; 
     }
   
-    .heroLeft, .heroRight {
+    .heroTop .heroBottom {
       flex: none;
-      width: 100%;
-      padding: 1.5rem;
+    }
+
+    .heroTop {
+        padding-bottom: 5rem;
     }
 
     .title {
-        right: 10%; 
+        padding: 0;
+        text-align: center; 
+        
+    }
+
+    .heroDesc {
+        width: 85%; 
+        padding-right: 0; 
+        padding-left: 2rem; 
+    }
+
+    .missionStatementP {
+        width: 80%; 
+    }
+
+    .title {
+        right: 10%;
+        padding-left: 1rem; 
     }
 }
