@@ -1,4 +1,5 @@
 import "./styling/Home.css"; 
+import ContactUsForm from "./ContactUsForm"; 
 
 export default function Home() {
   return (
@@ -51,23 +52,36 @@ export default function Home() {
                 </div>
                 <div className="heroDesc">                    
                     <h3 className = "missionStatement">Mission Statement: </h3>
-                    <p className = "missionStatementP">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-                        nisi ut aliquip ex ea commodo consequat. "</p>
+                    <p className = "missionStatementP">"Face Forward is an Ontario-based organization
+                        that strives to bring comfort and dignity to hospitalized individuals through 
+                        complementary beauty services. We connect cosmetic and facepaint artists with 
+                        hospitals to host makeover events for adults and children at no charge to patients"</p>
                 </div>
             </div>
             
         </div>
         <div className="impact">
-            <p>...stats...hospitals associated (if too large make it # of), # of patients helped, # of artists etc.</p>    
+            <p>0 Hospitals Associated, 0 Patients Helped, 0 Artists Participating.</p>    
         </div>
         <div className="testimonials">
             {/* card carosel component  */}
         </div>
         <div className="updates">
-            {/* card carosel component  */}
-        </div>      
+            <div className="updateCarosel">
+                <div className="caroselTrack"> 
+                    <span>  UPDATES  </span>
+                    <span>  UPDATES  </span>
+                    <span>  UPDATES  </span>
+                    <span>  UPDATES  </span>
+                    <span>  UPDATES  </span>
+                </div>
+            </div>
+            <div className="updateCardCarosel">
+                {/* card carosel component  */}
+                <p>updates coming soon!!</p>
+            </div>
+        </div>
+        <ContactUsForm />       
     </div>
   );
 }

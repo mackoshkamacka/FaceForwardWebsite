@@ -17,7 +17,7 @@ function App() {
     <Router>
       <div className="App">
         {/* Navbar */}
-        <nav style={{ padding: '1rem' }}>
+        <nav className="navBar">
             <Link to="/" style={{ padding: '0.5rem' }}>Home</Link>
             <Link to="/about" style={{ padding: '0.5rem' }} >About</Link>
             <Link to="/signup" style={{ padding: '0.5rem' }}>Signup</Link>

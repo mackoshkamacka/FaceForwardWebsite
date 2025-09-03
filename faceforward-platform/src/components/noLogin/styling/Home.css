@@ -16,6 +16,7 @@
     padding-left: 5rem; 
     padding-right: 5rem; 
 
+
     position: relative; 
 }
 
@@ -74,7 +75,7 @@
 .missionStatement, .missionStatementP {
     color: white; 
     opacity: 0.8; 
-    padding-right: 6rem; 
+    padding-right: rem; 
 }
 
 .missionStatement {
@@ -139,6 +140,61 @@
     animation: orbFloat 12s ease-in-out infinite;
 }
 
+.updateCarosel {
+    width: 100%; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    background: #6644cc; 
+}
+
+.caroselTrack {
+    display: inline-block; 
+    padding-left: 100%; 
+    animation: scroll 30s linear infinite; 
+    gap: 10rem; 
+}
+
+.caroselTrack span {
+    display: inline-block; 
+    padding: 0 6rem; 
+    font-size: 4rem; 
+    color: white; 
+    font-weight: bold; 
+    transform: scaleX(1.5); 
+    transform-origin: center; 
+    opacity: 0.5;
+}
+
+.impact {
+    padding-top: 20px; 
+    text-align: right; 
+    padding-right: 6rem; 
+}
+
+.impact p {
+    color:#333355; 
+}
+
+.updateCardCarosel {
+    min-height: 50vh;
+    background-color: #d8d8f3;
+    border-bottom-width: 1.5rem;
+    border-color: #544aa0;
+    border-style: solid;
+    align-items: center; 
+    display:flex; 
+    justify-content: center; 
+    text-align: center;
+}
+
+
+@keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+
+
 
 @media (max-width: 768px) {
 
@@ -175,4 +231,7 @@
         right: 10%;
         padding-left: 1rem; 
     }
+
+
+
 }

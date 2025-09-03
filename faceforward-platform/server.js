@@ -39,4 +39,21 @@ app.post("/api/sendWelcomeEmail", async (req, res) => {
   }
 });
 
+app.post("/api/ContactUsForm", async (req, res) => {
+    const { name, email, message } = req.body;
+  
+    try {
+      await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: "mackoshkamacka@gmail.com",
+        subject: `Face Forward Contact from ${name}`,
+        html: `<p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
+      });
+  
+      res.status(200).json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: "Email failed" });
+    }
+  });
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
