@@ -18,17 +18,17 @@ export default function ContactUsForm() {
     setStatus("Sending...");
 
     try {
-      const res = await fetch("http://localhost:5000/api/ContactUsForm", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+        const res = await fetch("/api/contact-us-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
 
-      if (res.ok) {
-        setStatus("Message sent");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("Failed to send");
+        if (res.ok) {
+            setStatus("Message sent");
+            setFormData({ name: "", email: "", message: "" });
+        } else {
+            setStatus("Failed to send");
       }
     } catch (err) {
       setStatus("Error");
