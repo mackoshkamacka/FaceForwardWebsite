@@ -1,7 +1,7 @@
 import "./styling/Home.css"; 
 import ContactUsForm from "./ContactUsForm"; 
 
-export default function Home() {
+export default function HomeComponent() {
   return (
     <div className="homeContainer">
         <div className="hero">

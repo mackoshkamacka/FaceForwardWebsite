@@ -3,14 +3,14 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 
 // Components
-import Signup from "./components/noLogin/Signup";
-import Login from "./components/noLogin/Login";
-import ProtectedRoute from './components/ProtectedRoute';
-import ArtistDashboard from './components/artist/ArtistDashboard';
-import PatientDashboard from './components/patient-and-hospital/PatientDashboard';
-import HospitalDashboard from './components/patient-and-hospital/HospitalDashboard'; 
-import Home from "./components/noLogin/Home"; 
-import About from "./components/noLogin/About"; 
+import Signup from "../app/components/noLogin/Signup";
+import Login from "../app/components/noLogin/Login";
+import ProtectedRoute from '../app/components/ProtectedRoute';
+import ArtistDashboard from '../app/components/artist/ArtistDashboard';
+import PatientDashboard from '../app/components/patient-and-hospital/PatientDashboard';
+import HospitalDashboard from '../app/components/patient-and-hospital/HospitalDashboard'; 
+import Home from "../app/components/noLogin/Home"; 
+import About from "../app/components/noLogin/About"; 
 
 function App() {
   return (
