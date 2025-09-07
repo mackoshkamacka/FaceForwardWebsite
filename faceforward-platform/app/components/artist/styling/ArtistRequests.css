@@ -1,42 +1,42 @@
 .artist-requests {
     position: relative;
-  }
-  
-  .filter {
+}
+
+.filter {
     margin-bottom: 1rem;
-  }
-  
-  .requests-grid {
+}
+
+.requests-grid {
     display: grid;
     gap: 1rem;
-  }
-  
-  .request-card {
+}
+
+.request-card {
     border: 1px solid #ccc;
     padding: 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: box-shadow 0.2s ease;
-  }
-  
-  .request-card:hover {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
-  
-  .modal-overlay {
+}
+
+.request-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -44,35 +44,48 @@
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-  }
-  
-  .request-details {
+}
+
+.request-details {
     margin-bottom: 1rem;
-  }
-  
-  .status-buttons {
+}
+
+.status-buttons {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
     margin-bottom: 1rem;
-  }
-  
-  .btn {
+}
+
+.btn {
     padding: 0.5rem 1rem;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .btn-approve { background-color: #4CAF50; }
-  .btn-complete { background-color: #2196F3; }
-  .btn-reject { background-color: #f44336; }
-  .btn-pending { background-color: #FF9800; }
-  .btn-close { background-color: #666; }
-  
-  .btn-disabled {
+}
+
+.btn-approve {
+    background-color: #4CAF50;
+}
+
+.btn-complete {
+    background-color: #2196F3;
+}
+
+.btn-reject {
+    background-color: #f44336;
+}
+
+.btn-pending {
+    background-color: #FF9800;
+}
+
+.btn-close {
+    background-color: #666;
+}
+
+.btn-disabled {
     background-color: #ccc !important;
     cursor: not-allowed;
-  }
-  
+}

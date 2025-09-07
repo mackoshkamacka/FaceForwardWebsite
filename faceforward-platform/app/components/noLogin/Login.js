@@ -14,7 +14,7 @@ export default function Login() {
         try {
             //Authenticate = ensure that the password, and email match the Firebase Authentication
             const userCred = await signInWithEmailAndPassword(auth, email, password);
-            
+
             //Assuming userCred it correct, userDocRef makes reference to the user's document in Firestore
             //then getDoc(userDocRef) actually fetches the document 
             const userDocRef = doc(db, "users", userCred.user.uid);
@@ -28,41 +28,40 @@ export default function Login() {
             //Gets the data from the userDocSnap, then gets the role
             const userData = userDocSnap.data();
             const userRole = userData.role;
-            
+
             //With the userRole, navigation proceeds. 
             if (userRole === "artist") {
                 navigate("/artist-dashboard");
-              } else if (userRole === "patient") {
+            } else if (userRole === "patient") {
                 navigate("/patient-dashboard");
-              } else if (userRole === "hospital") {
+            } else if (userRole === "hospital") {
                 navigate("/hospital-dashboard");
-              } else {
+            } else {
                 navigate("/"); // fallback if role is undefined
             }
-            
+
         } catch (err) {
             console.error("Full error:", err);
             alert(`Login failed: ${err.message}`);
         }
     };
-    
+
     return (
         <form onSubmit={handleLogin}>
-          <h2>Login</h2>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Login</button>
+            <h2>Login</h2>
+            <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Login</button>
         </form>
     );
 }
-  
