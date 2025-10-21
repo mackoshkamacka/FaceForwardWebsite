@@ -14,7 +14,7 @@ export default function HomeComponent() {
                     <div className="title">
                         <h1 className="title1">FACE</h1>
                         <h1 className="title2">FORWARD</h1>
-                        <h2 className="subtitle">Humanitarian Association </h2>
+                        <h2 className="subtitle"> Humanitarian Association</h2>
                     </div>
                     <div className="heroDesc">
                         <h3 className="missionStatement">Mission Statement: </h3>

@@ -257,29 +257,31 @@
     .heroTop {
         padding-bottom: 5rem;
         padding-left: 1rem; 
+        padding-right: 1rem; 
     }
 
     .title {
         padding-top: 1rem;
         text-align: center;
-        padding-right: 0; 
-        width:100%; 
+        padding-right: 0;  
+        margin-left: -1rem; 
     }
 
     .title1 {
-        font-size: 9.5rem; 
+        font-size: 35vw;   
     }
 
     .title2 {
-        font-size: 4.3rem; 
-        margin-top: -4rem; 
+        font-size: 16.2vw; 
+        margin-top: -15vw; 
     }
 
     .subtitle {
-        font-size: 1.8rem; 
-        margin-top: -1rem;
+        font-size: 7vw; 
+        margin-top: -1.5vw;
         align-items: flex-end;
         justify-content: center;
+        font-style: italic;
     }
 
     .heroDesc {
@@ -288,8 +290,12 @@
         margin-top: 2rem; 
     }
 
+    .missionStatement {
+        width: 100%; 
+    }
+
     .missionStatementP {
-        width:auto; 
+        font-size: clamp(0.5rem, 4vw, 1rem);
     }
 
     .impact {
