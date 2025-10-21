@@ -1,11 +1,11 @@
 .homeContainer {
-    width: 100%;
+    
     min-height: 90vh;
     display: flex;
     flex-direction: column;
-    font-family: 'Poppins', sans-serif;
     color: #111;
     justify-content: center;
+    margin-bottom: 2rem; 
 }
 
 .hero {
@@ -14,8 +14,8 @@
     /* ensures responsive stacking on mobile */
 
     min-height: 90vh;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
 
 
     position: relative;
@@ -23,43 +23,50 @@
 
 .title {
     text-align: right;
-    margin-top: 3rem;
-    padding-right: 2rem;
+    padding-right: 5rem;
+    padding-bottom: 2rem; 
 }
 
 .title1,
 .title2 {
-    font-size: 12rem;
+    font-size: 16rem;
     align-items: flex-end;
     justify-content: center;
     color: white;
-    padding-right: 3rem;
+    
     margin-bottom: 0;
     margin-top: 0;
+    font-weight:700;
+    /* font-family: "Merriweather Sans", sans-serif; */
 }
 
 .title2 {
-    font-size: 6.1rem;
-    margin-top: -35px;
+    font-size: 7.25rem;
+    margin-top: -8rem;
+    padding-left: 0.7rem; 
 }
 
 .subtitle {
     padding-top: 0rem;
-    padding-right: 3rem;
-    font-size: 2.5rem;
-    margin-top: -15px;
+    padding-right: 0rem; 
+    font-size: 3.2rem;
+    margin-top: -35px;
     color: white;
+    font-weight: 400; 
+
+    align-items: flex-end;
+    justify-content: center;
+    
 }
 
 .heroTop {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 85%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1rem;
+    padding: 2rem;
     z-index: 2;
     /* background-color: red; */
 }
@@ -80,10 +87,14 @@
     color: white;
     opacity: 0.8;
     padding-right: rem;
+    line-height: 1.2;
 }
 
 .missionStatement {
-    margin-bottom: -10px;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-style: italic;
 }
 
 .heroBottom {
@@ -163,6 +174,12 @@
     animation: orbFloat 12s ease-in-out infinite;
 }
 
+.updates {
+    padding-left: 0; 
+    
+}
+
+
 .updateCarosel {
     width: 100%;
     overflow: hidden;
@@ -192,10 +209,12 @@
     padding-top: 20px;
     text-align: right;
     padding-right: 6rem;
+    padding-bottom: 1rem; 
 }
 
 .impact p {
     color: #333355;
+    font-style: italic;
 }
 
 .updateCardCarosel {
@@ -227,8 +246,8 @@
 @media (max-width: 768px) {
 
     .hero {
-        padding-left: 3rem;
-        padding-right: 3rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .heroTop .heroBottom {
@@ -237,28 +256,46 @@
 
     .heroTop {
         padding-bottom: 5rem;
+        padding-left: 1rem; 
     }
 
     .title {
-        padding: 0;
+        padding-top: 1rem;
         text-align: center;
+        width: 100%; 
+    }
 
+    .title1 {
+        font-size: 9.5rem; 
+    }
+
+    .title2 {
+        font-size: 4.3rem; 
+        margin-top: -4rem; 
+    }
+
+    .subtitle {
+        font-size: 1.8rem; 
+        margin-top: -1rem;
+        align-items: flex-end;
+        justify-content: center;
     }
 
     .heroDesc {
-        width: 85%;
-        padding-right: 0;
-        padding-left: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem; 
+        margin-top: 2rem; 
     }
 
     .missionStatementP {
-        width: 80%;
+        width:auto; 
     }
 
-    .title {
-        right: 10%;
-        padding-left: 1rem;
+    .impact {
+        padding-right: 2rem; 
+        font-size: 13px; 
     }
+    
 
 
 
