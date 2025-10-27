@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeComponent from "./components/noLogin/Home";
+import AboutSection from "./components/noLogin/About"; 
 
 export default function Home() {
     return (
@@ -14,6 +15,7 @@ export default function Home() {
             {/* Main content */}
             <div className="mt-6">
                 <HomeComponent />
+                <AboutSection />
             </div>
         </main>
     );
