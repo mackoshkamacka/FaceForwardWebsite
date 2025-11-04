@@ -1,6 +1,7 @@
 import "./ContactUsForm.css"; 
 
 export default function GrainVisual() {
+    return (
     <svg className="grainOrb" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
             <filter id="grain">
@@ -37,5 +38,6 @@ export default function GrainVisual() {
             <circle cx="100" cy="100" r="98" fill="url(#orbShade)" />
         </g>
     </svg>
+    ); 
 }
 
