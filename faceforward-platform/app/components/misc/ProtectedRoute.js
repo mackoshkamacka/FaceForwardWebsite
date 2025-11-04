@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { auth, db } from '../../src/firebase';
+import { auth, db } from '../../../src/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 export default function ProtectedRoute({ children, role }) {
