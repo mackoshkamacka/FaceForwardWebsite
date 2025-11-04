@@ -1,0 +1,33 @@
+.aboutPage {
+    padding: 2rem; 
+}
+
+.heroSection {
+    display: flex; 
+    padding-bottom: 2rem; 
+    gap:2rem; 
+}
+
+.nHeader {
+    font-size: 4rem; 
+}
+
+.nnHeader {
+    font-size: 2.4rem; 
+}
+
+.heroImageContainer {
+    padding-left: 2rem; 
+}
+
+.sponsorSection {
+    padding-bottom: 2rem; 
+}
+
+.whoWeAreSection {
+    padding-bottom: 2rem;
+}
+
+.roadmapSection {
+    padding-bottom: 2rem;
+}
