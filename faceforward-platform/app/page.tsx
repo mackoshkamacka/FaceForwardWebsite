@@ -7,7 +7,6 @@ export default function Home() {
             {/* Main content */}
             <div className="mt-6">
                 <HomeComponent />
-                <AboutSection />
             </div>
         </main>
     );

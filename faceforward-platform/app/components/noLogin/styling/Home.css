@@ -13,10 +13,10 @@
     flex-wrap: wrap;
     /* ensures responsive stacking on mobile */
 
-    min-height: 90vh;
+    min-height: 100vh;
     padding-left: 3rem;
     padding-right: 3rem;
-
+    padding-bottom: -2rem; 
 
     position: relative;
 }
