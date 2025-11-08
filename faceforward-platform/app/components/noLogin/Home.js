@@ -22,6 +22,10 @@ export default function HomeComponent() {
                             that strives to bring comfort and dignity to hospitalized individuals through
                             complementary beauty services. We connect cosmetic and facepaint artists with
                             hospitals to host makeover events for adults and children at no charge to patients"</p>
+
+                        <p className="missionStatementP2">Proudly a Canadian Government Registered Foundation 
+                            and 501(c)(3) in the United States of America. 
+                        </p>
                     </div>
                 </div>
 
@@ -32,7 +36,7 @@ export default function HomeComponent() {
             <div className="testimonials">
                 {/* card carosel component  */}
             </div>
-            <div className="updates">
+            {/* <div className="updates">
                 <div className="updateCarosel">
                     <div className="caroselTrack">
                         <span>  UPDATES  </span>
@@ -43,10 +47,9 @@ export default function HomeComponent() {
                     </div>
                 </div>
                 <div className="updateCardCarosel">
-                    {/* card carosel component  */}
                     <p>updates coming soon!!</p>
                 </div>
-            </div>
+            </div> */}
             <ContactUsForm />
         </div>
     );

@@ -20,7 +20,8 @@ p {
     background-image: radial-gradient(
         farthest-corner at 40px 40px,
         #613dbd 0%,
-        #9c95d1 100%);
+        #63aff7 70%, 
+        #c7e0f0 80%);
 
     padding: 2rem; 
     border-radius: 2rem;
@@ -58,10 +59,11 @@ p {
     background-color: #ccc8ec;
     /* background-image: radial-gradient(to right, rgb(114, 89, 203), #ccc8ec);
      */
-    background-image: radial-gradient(
+     background-image: radial-gradient(
         farthest-corner at 40px 40px,
         #613dbd 0%,
-        #ccc8ec 100%); 
+        #63aff7 50%, 
+        #c7e0f0 70%);
     margin-top: 1.3rem; 
     border-radius: 2rem;
 }
