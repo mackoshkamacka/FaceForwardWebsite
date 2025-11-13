@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../../../src/firebase";
 import { setDoc, doc } from "firebase/firestore";
 
 export default function Signup() {                  //Component setup (exports a function when called)
