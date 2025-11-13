@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { auth } from "../../../src/firebase";
+import { db } from '../../../firebase';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { auth } from "../../../src/firebase"; 
 import './styling/ArtistRequests.css';
