@@ -1,12 +1,11 @@
-import HomeComponent from "./components/noLogin/Home";
-import AboutSection from "./components/noLogin/About"; 
+import HomePage from "./home/Home";
 
 export default function Home() {
     return (
         <main className="p-4">
-            {/* Main content */}
+            {/* this file exists for file structure coherence  */}
             <div className="mt-6">
-                <HomeComponent />
+                <HomePage />
             </div>
         </main>
     );

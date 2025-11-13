@@ -24,5 +24,5 @@ After these anntoations, some files may have changed/been refactored/abstracted 
 
 
 #### How React Renders My Website: 
-![React Rendering Visual](media/ReactRenderingVisualV3.png)
+![React Rendering Visual](faceforward-platform/public/ReactRenderingVisualV3.png)
 

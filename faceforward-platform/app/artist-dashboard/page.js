@@ -1,6 +1,6 @@
-import CreateNewService from "./CreateNewService";
-import ArtistsServices from "./ArtistsServices";
-import ArtistRequest from "./ArtistRequest";
+import CreateNewService from "../components/artist/CreateNewService";
+import ArtistsServices from "../components/artist/ArtistsServices";
+import ArtistRequest from "../components/artist/ArtistRequest";
 
 export default function ArtistDashboard() {
     return (

@@ -1,8 +1,8 @@
-import "./styling/Home.css";
-import ContactUsForm from "./ContactUsForm";
-import GrainVisual from "./styling/GrainVisual";  
+import "./Home.css";
+import ContactUsForm from "../components/home/ContactUsForm";
+import GrainVisual from "../components/home/GrainVisual";  
 
-export default function HomeComponent() {
+export default function HomePage() {
     return (
         <div className="homeContainer">
             <div className="hero">
