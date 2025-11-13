@@ -1,0 +1,170 @@
+.GIContainer {
+    background-image: radial-gradient(
+        farthest-corner at 40px 40px,
+        #613dbd 0%,
+        #63aff7 70%, 
+        #c7e0f0 80%);
+
+    height: 85vh; 
+    margin: 2vw; 
+    border-radius: 3rem; 
+    padding: 2vw; 
+
+    margin-top: 1.5rem; 
+
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+
+    position: relative; 
+    z-index: 1; 
+
+
+    
+}
+
+.centralCard {
+    width: 50vw;
+    min-width: 18.5rem;  
+    background-color: rgba(219, 236, 245, 0.534);
+    padding: 2vw; 
+    border-radius: 2rem;
+    border-width: 5px;
+    border-color: rgba(240, 248, 255, 0.578);
+    
+    z-index: 2; 
+    position: absolute;
+     
+    
+    height: 70vh; 
+    max-height: 50rem; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.GIBottom {
+    flex: 10;
+    min-height: 95%;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f7fa4d, #c3cfe24f);
+    /* subtle splash gradient */
+    border-radius: 2rem;
+    /* rounded splash edges */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    width: 5rem;
+    
+}
+
+.GIBottom::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background: radial-gradient(circle, rgba(85, 150, 220, 0), transparent 70%);
+    animation: rotateSplash 15s linear infinite;
+    pointer-events: none;
+}
+
+
+@keyframes rotateSplash {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.grainOrb {
+    position: absolute;
+    top: 0;
+    /* tweak for placement */
+    left: 0;
+    /* tweak for placement */
+    width: 1000px;
+    height: 1000px;
+
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    /* blends into gradient */
+    opacity: 0.6;
+    z-index: 1.5;
+    /* sits below your text in heroTop */
+}
+
+.GITop {
+    height: 90%; 
+    position: absolute; 
+
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.GIheader {
+    font-size: max(5vw, 2.2rem); 
+    
+    font-weight: 600;
+    padding: 0 1.5vh; 
+    text-transform: uppercase;
+    color: #281656; 
+}
+
+.GIH1 {
+    font-size: max(9rem, 15vw);
+    margin-top: min(-2rem, -4vh); 
+}
+
+.GIH2 {
+    font-size: max(3.1rem, 6.2vw); 
+    margin-top: min(-3.4rem, -6vw); 
+}
+
+
+
+.preamble {
+    text-align: left;
+    font-size: max(1.2vw, 0.9rem); 
+    padding: 1.5vh; 
+    color: #4B2C6F; 
+}
+
+.GIButtons {
+    display: flex; 
+    justify-content: center;
+}
+
+.GIB {
+    background-color: #4557b9;
+    margin: 4px; 
+    padding: 0.5rem 2rem; 
+    border-radius: 10px;
+    color: white; 
+    width: 15vw; 
+    min-width: 7.5rem; 
+}
