@@ -1,9 +1,9 @@
 "use client"; 
 
 import { useState, useEffect } from 'react';
-import { db } from '../../firebase';
+import { db } from '../../../src/firebase';
 import { collection, getDocs, query, where, addDoc, doc, getDoc } from 'firebase/firestore';
-import { auth } from '../../firebase';
+import { auth } from '../../../src/firebase';
 
 export default function ServiceList() {
     const [services, setServices] = useState([]);

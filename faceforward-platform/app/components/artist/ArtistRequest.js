@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { db } from '../../firebase';
+import { auth } from "../../../src/firebase";
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
-import { auth } from '../../firebase';
+import { auth } from "../../../src/firebase"; 
 import './styling/ArtistRequests.css';
 
 export default function ArtistRequests() {
