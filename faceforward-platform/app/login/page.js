@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../src/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); //Allows for page changing (e.g. go to /artist-dashboard is login is valid, and artist)
+    const router = useRouter(); //Allows for page changing (e.g. go to /artist-dashboard is login is valid, and artist)
 
     const handleLogin = async (e) => {
         e.preventDefault(); //Stops page from refreshing
@@ -33,13 +33,13 @@ export default function Login() {
 
             //With the userRole, navigation proceeds. 
             if (userRole === "artist") {
-                navigate("/artist-dashboard");
+                router.push("/artist-dashboard");
             } else if (userRole === "patient") {
-                navigate("/patient-dashboard");
+                router.push("/patient-dashboard");
             } else if (userRole === "hospital") {
-                navigate("/hospital-dashboard");
+                router.push("/hospital-dashboard");
             } else {
-                navigate("/"); // fallback if role is undefined
+                router.push("/"); // fallback if role is undefined
             }
 
         } catch (err) {
