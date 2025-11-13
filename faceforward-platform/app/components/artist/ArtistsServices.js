@@ -1,5 +1,7 @@
 "use client"; 
 
+import "./styling/ArtistServices.css"
+
 import { useState, useEffect } from 'react';
 import { db, auth } from '../../../src/firebase';
 import {

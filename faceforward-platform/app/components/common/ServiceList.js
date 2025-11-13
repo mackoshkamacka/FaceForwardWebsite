@@ -1,5 +1,7 @@
 "use client"; 
 
+import "./ServiceList.css"; 
+
 import { useState, useEffect } from 'react';
 import { db } from '../../../src/firebase';
 import { collection, getDocs, query, where, addDoc, doc, getDoc } from 'firebase/firestore';

@@ -1,11 +1,15 @@
 .contactUsFormContainer {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 22rem;
+    margin: 2rem auto;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    background-color: rgb(247, 247, 255);
+
+    border-width: 2px;
+    border-color: #84b5e2;
 }
 
 .contactUsField {
@@ -20,6 +24,7 @@
 
 textarea.contactUsField {
     min-height: 150px;
+    background-color: white;
 }
 
 .contactHeader {
@@ -31,9 +36,9 @@ textarea.contactUsField {
 }
 
 .contactUsButton {
-    width: 100%;
+    width: 80%;
     padding: 0.2rem 0;
-    background-color: #63aff7;
+    background-color: #65a5e0;
     border-radius: 5px;
     color: white;
     border-color: aliceblue;

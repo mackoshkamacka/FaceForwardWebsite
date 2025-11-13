@@ -1,7 +1,7 @@
 .GIContainer {
     background-image: radial-gradient(
         farthest-corner at 40px 40px,
-        #613dbd 0%,
+        #3e2186 0%,
         #63aff7 70%, 
         #c7e0f0 80%);
 
@@ -26,12 +26,14 @@
 .centralCard {
     width: 50vw;
     min-width: 18.5rem;  
-    background-color: rgba(219, 236, 245, 0.534);
+    background: linear-gradient(135deg, #cbe3f271, #b9bcdf15);
+
     padding: 2vw; 
     border-radius: 2rem;
     border-width: 5px;
-    border-color: rgba(240, 248, 255, 0.578);
+    border-color: rgb(210, 223, 234);
     
+
     z-index: 2; 
     position: absolute;
      
@@ -53,7 +55,7 @@
     align-items: center;
     padding: 2rem;
     overflow: hidden;
-    background: linear-gradient(135deg, #f5f7fa4d, #c3cfe24f);
+    background: linear-gradient(135deg, #f5f7fa23, #c3cfe24f);
     /* subtle splash gradient */
     border-radius: 2rem;
     /* rounded splash edges */
@@ -132,17 +134,20 @@
     font-weight: 600;
     padding: 0 1.5vh; 
     text-transform: uppercase;
-    color: #281656; 
+    color: #ffffff; 
+    
 }
 
 .GIH1 {
     font-size: max(9rem, 15vw);
-    margin-top: min(-2rem, -4vh); 
+    margin-top: -12vh; 
+    letter-spacing: -5px;
 }
 
 .GIH2 {
     font-size: max(3.1rem, 6.2vw); 
     margin-top: min(-3.4rem, -6vw); 
+    letter-spacing: -5px;
 }
 
 
@@ -151,7 +156,7 @@
     text-align: left;
     font-size: max(1.2vw, 0.9rem); 
     padding: 1.5vh; 
-    color: #4B2C6F; 
+    color: #ffffff; 
 }
 
 .GIButtons {
@@ -160,11 +165,15 @@
 }
 
 .GIB {
-    background-color: #4557b9;
+    background-color: #5161be;
     margin: 4px; 
     padding: 0.5rem 2rem; 
     border-radius: 10px;
     color: white; 
     width: 15vw; 
-    min-width: 7.5rem; 
+    min-width: 7.8rem; 
+}
+
+.GIB:hover {
+    background-color: #3c4eb4;
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { db } from '../../../src/firebase';
 import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
 import { auth } from "../../../src/firebase"; 
-import './styling/ArtistRequests.css';
+import './styling/ArtistRequest.css';
 
 export default function ArtistRequests() {
     const [allRequests, setAllRequests] = useState([]);           //holds all the requests from firestore 

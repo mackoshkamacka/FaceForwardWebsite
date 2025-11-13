@@ -13,15 +13,18 @@ p {
 }
 
 .heroSection {
+
+    height: 50vh; 
     display: flex; 
     padding-bottom: 2rem; 
     gap:2rem; 
 
     background-image: radial-gradient(
-        farthest-corner at 40px 40px,
-        #613dbd 0%,
-        #63aff7 70%, 
-        #c7e0f0 80%);
+        farthest-corner at 50px 300px,
+        #462792 0%,
+        #6a8de0 40%, 
+        #c7e0f0 80%,
+        white 100%);
 
     padding: 2rem; 
     border-radius: 2rem;
@@ -61,11 +64,13 @@ p {
      */
      background-image: radial-gradient(
         farthest-corner at 40px 40px,
-        #613dbd 0%,
-        #63aff7 50%, 
-        #c7e0f0 70%);
+        #462792 0%,
+        #6a8de0 40%, 
+        #c7e0f0 80%,
+        white 100%);
     margin-top: 1.3rem; 
     border-radius: 2rem;
+    height: 90vh; 
 }
 
 .roadmapSection {

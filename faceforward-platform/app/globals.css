@@ -47,3 +47,47 @@ body {
         padding-right: 1.5rem;
     }
 }
+
+button:hover {
+    background-color: #5308b6;
+}
+
+
+form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: white;
+}
+
+input, select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+input:focus, select:focus {
+    border-color: #4557b9;
+    box-shadow: 0 0 5px rgba(0,112,243,0.3);
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    background-color: #4e3ff3;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
