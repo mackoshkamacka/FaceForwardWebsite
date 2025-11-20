@@ -39,7 +39,7 @@ export default function ContactUsForm() {
 
     return (
         <div> 
-        <div className = "dummy"></div>
+
         <form
             onSubmit={handleSubmit}
             className="contactUsFormContainer"

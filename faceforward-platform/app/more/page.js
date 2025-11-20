@@ -70,10 +70,27 @@ export default function More() {
                 ))}
             </div>
             <div className = "ourImpactSection">
-                <h1 className = "OISHeader">
-                    our impact
-                </h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            
+                <div className = "seperater">
+                    <h1 className = "OISHeader">
+                        our impact
+                    </h1>
+                    <div className = "measuringImpact">
+                        <h2 className = "how">How we measure impact: </h2>
+                        <ul className="unordered">
+                            <li>Patient satisfaction & feedback</li>
+                            <li>Positive event ratings</li>
+                            <li>Increased dialogue between students, artists, and healthcare teams</li>
+                        </ul>
+                        <em>Success means smiles, conversations, and community building.</em>
+                    </div>
+                </div>
+                
+                
+                
+
+                
 
             </div>
 

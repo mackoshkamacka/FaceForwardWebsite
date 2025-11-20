@@ -9,23 +9,43 @@ export default function AboutPage() {
             <div className="heroSection">
                 <div className="heroText">
                     <h1 className = "nHeader">OUR MISSION</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Face Forward Canada brings free beauty and face-painting services to hospitalized inpatients—especially those experiencing mobility challenges, chronic or acute pain, or the stress and isolation that often come with a hospital stay.</p> 
+                    <br /> <strong>Our goal is simple: to bring beauty, dignity, and joy to every face.</strong> 
                 </div>
 
                 <div className = "heroImageContainer">
                     {/* hero image  */}
-                    <p>image goes here!</p>
+                    <img className = "heroImage" src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4' />
                 </div>
             </div>
 
-            {/* volunteer section */}
-            <div className = "volunteerSection">
-                <div className = "nnHeader">VOLUNTEER WITH US</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <div className = "button-container">
-                    <button className = "volButton">...action...</button>
+
+            <div className = "mergeSection">
+                {/* what we do section */}
+                <div className = "whatWeDoSection">
+                    <h1 className = "nnHeader">WHAT WE DO</h1>
+                    <p>We connect professional makeup artists, face painters, and volunteer photographers with hospitals across Toronto to create uplifting, artistic experiences for patients. <br /> <br/ >
+                    <strong> Every event is designed to support well-being, boost self-esteem, and create meaningful human connection.</strong></p>
+                    <h1 className = "nnHeader2">WHY IT MATTERS</h1>
+                    <p className = "why">A moment of care can shift an entire hospital stay. <br /> <br />
+                    By bringing visual arts, conversation, and community into clinical spaces, we create moments that matter—for patients, artists, and student volunteers alike.</p>
+                    
+                </div>
+
+                {/* volunteer section */}
+                <div className = "volunteerSection">
+                    <div className = "nnHeader">VOLUNTEER WITH US</div>
+                    <p>From medicine to social work to fine arts—Face Forward welcomes all.
+                    Volunteer as an event assistant, photographer, or liaison and contribute to the well-being of patients through creativity and connection.</p>
+
+                    <h2 className = "nnHeader peer">PEER AMBASADORS</h2>
+                    <p>Volunteers who spread the word across disciplines—bringing more voices, talents, and passions into the initiative.</p>
+                    <div className = "button-container">
+                        <button className = "volButton">...action...</button>
+                    </div>
                 </div>
             </div>
+            
 
             {/* annual statement section  */}
             <div className = "annualStatementSection">
@@ -73,6 +93,7 @@ export default function AboutPage() {
                 </div>
             </div> */}
             <div className = "uh"></div>
+            <div className = "dummy2"></div>
             <ContactUsForm />
       </div>
     );

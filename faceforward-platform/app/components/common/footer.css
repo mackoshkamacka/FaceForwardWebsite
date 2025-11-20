@@ -1,5 +1,6 @@
 .legalInfo {
     display: flex; 
+    flex-direction: column;
     justify-content: center;
     text-align: center;
     margin-top: 1rem;
@@ -7,9 +8,14 @@
     #6351da 20%,
     #7598ea 100%);
     color: white; 
-    font-size: 0.75rem; 
+    font-size: 1rem; 
     padding: 1rem; 
 }
+
+/* .instagram {
+     
+} */
+
 
 .sponsors {
     display: flex; 
@@ -48,6 +54,8 @@
 .dummy {
     margin-bottom: 0.5rem; 
     height: 1rem; 
+    
+    overflow: hidden;
     width: 100%; 
 }
 
@@ -60,6 +68,17 @@
     );
     background-size: 400% 400%;
     animation: waterFlow 15s ease infinite;
+}
+
+.legal {
+    padding-bottom: 1rem;
+}
+
+.socials {
+    display:flex; 
+    justify-content: right;
+    gap: 0.5rem; 
+    padding-right: 5vw;
 }
 
 @keyframes waterFlow {

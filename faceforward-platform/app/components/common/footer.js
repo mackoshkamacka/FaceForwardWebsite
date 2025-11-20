@@ -1,4 +1,5 @@
 import "./footer.css"; 
+import Image from 'next/image';
 
 export default function Footer() {
     return (
@@ -23,7 +24,30 @@ export default function Footer() {
                         &nbsp; 1744416-8
                     </strong>
                 </p>
+                <div className = "socials">
+                    <a href="https://instagram.com/yourusername" target="_blank">
+                        <Image 
+                            src="/Instagram_logo_2022.svg.webp" 
+                            alt="Instagram" 
+                            className="instagram"
+                            width={30}
+                            height={30}
+                        />
+                    </a>
+                    <a href="https://instagram.com/yourusername" target="_blank">
+                        <Image 
+                            src="/LinkedIn_logo_initials.png" 
+                            alt="Instagram" 
+                            className="instagram"
+                            width={30}
+                            height={30}
+                        />
+                    </a>
+                    
+                </div>
             </div>
+
+            
         </div>
 
     );

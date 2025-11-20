@@ -49,7 +49,24 @@ export default function HomePage() {
                     <p>updates coming soon!!</p>
                 </div>
             </div> */}
-            
+            <div className = "infoContainer">
+                <div className = "info">
+                    <p>
+                        <strong> Thousands of Canadians spend weeks to months in hospital each year </strong>
+                        —often away from loved ones, routines, and the comforts of daily life. Long hospital stays can leave patients feeling disconnected, unseen, and stripped of their sense of self. <br /> <br/> 
+                        Many inpatients experience mobility challenges or chronic pain, limiting their ability to participate in daily activities or creative outlets. Yet small moments of human connection and self-expression can profoundly improve the hospital experience. In Toronto alone, hundreds of patients each day could benefit from programs that bring joy, confidence, and creativity to their bedside. <br />
+                    </p>
+                </div>
+                <div className = "info2">
+                    <p>
+                        <strong className = "exists"> Face Forward Canada exists to support that. </strong> <br /> <br/>
+                        <em>We connect professional makeup artists, face painters, and student volunteers with hospitals to bring beauty, dignity, and joy to every face.</em>
+                    </p>
+                </div>
+            </div>
+
+
+
         </div>
     );
 }

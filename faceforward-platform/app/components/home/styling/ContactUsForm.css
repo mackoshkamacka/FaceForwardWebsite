@@ -75,29 +75,3 @@ textarea.contactUsField {
     color: white
 }
 
-.dummy {
-    width: 1000rem; 
-    margin-left: -50%; 
-    
-    height: 1rem;  
-    background: linear-gradient(
-        45deg,
-        #4469d0,
-        #a2b8e3,
-        #4844c7
-    );
-    background-size: 400% 400%;
-    animation: waterFlow 15s ease infinite;
-}
-
-@keyframes waterFlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }

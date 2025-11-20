@@ -72,9 +72,12 @@
     word-wrap: break-word;
     text-align: left;
     bottom: 20px;
+    
     width: 80%;
     text-align: left;
     padding-bottom: 2rem; 
+    
+
     
     border-radius: 1rem;
     border-width: 3px;
@@ -264,6 +267,46 @@
 }
 
 
+
+.infoContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 1rem; 
+}
+
+
+.info, .info2 {
+    background: radial-gradient(
+    farthest-corner at 0px 0px,
+    #5645c5 0%, 
+    #6657cd 10%, 
+    #63AFF7 100%);
+
+    max-width: 1000px; 
+    margin: 0.5rem auto; 
+    padding: 2rem; 
+    border-radius: 2rem;
+    
+    color: white; 
+    font-size: 0.9rem;
+
+}
+
+.exists {
+    font-size: 1.5rem;
+    line-height: 0.9;
+    padding-bottom: 1rem;
+}
+
+
+
+
+
+
+
+
+
 @keyframes scroll {
     0% {
         transform: translateX(0);
@@ -323,7 +366,9 @@
         padding-left: 1rem;
         padding-right: 1rem; 
         margin-top: 2rem; 
-        width: 100%; 
+        margin-right: 2rem; 
+        width: 96%; 
+    
     }
 
     .missionStatement {
@@ -340,7 +385,7 @@
         font-size: 13px; 
     }
     
-
+    
 
 
 }

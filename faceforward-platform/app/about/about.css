@@ -3,13 +3,17 @@ p {
 }
 
 .aboutPage {
-    padding: 2rem; 
+    /* padding: 2rem;  */
     /* max-width: max(500px, 70vw);  */
     /* display:inline-flex; 
     justify-content: center; 
     align-items: center;  
     width: max(500px, 70vw);  */
-    margin:0 10vh; 
+
+    display:flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;  
 }
 
 .uh {
@@ -20,10 +24,8 @@ p {
 
 .heroSection {
 
-    height: 50vh; 
     display: flex; 
-    padding-bottom: 2rem; 
-    gap:2rem; 
+    gap:1rem; 
 
     background-image: radial-gradient(
         farthest-corner at 50px 300px,
@@ -32,32 +34,65 @@ p {
         #c7e0f0 80%,
         white 100%);
 
-    padding: 2rem; 
     border-radius: 2rem;
     
     align-items: center;
+    
+    width: 94%; 
+    max-width: 1000px; 
+
+    /* image fixed to right */
+    padding-right:0; 
+
 }
 
 .heroText {
     color: white; 
+    padding-left: 2rem; 
+    padding-top: 2rem; 
+    padding-bottom: 2rem; 
 }
 
 .nHeader {
     font-size: 4rem;
     font-weight: 600;
-    color: white; 
+    color: white;
+    line-height: 1;
+    padding-bottom: 1rem;  
 }
 
-.nnHeader {
-    font-size: 2.4rem; 
+.nnHeader, .nnHeader2 {
+    font-size: min(7vw, 2.6rem); 
     font-weight: 600; 
     color: white; 
 }
 
-.heroImageContainer {
-    padding-left: 2rem; 
-    width: 110vh; 
+.nnHeader2 {
+    padding-top: 2rem;
+    text-align: right;
 }
+
+
+.heroImageContainer {
+    height: 50vh; 
+    min-width: 248px;
+    width: 200vw;  
+    overflow: hidden; 
+    border-radius: inherit;       
+}
+
+.heroImage {
+    height:100%; 
+    width: 100%; 
+    object-fit: cover; 
+    object-position: center;
+}
+
+
+
+
+
+
 
 .sponsorSection {
     padding-bottom: 2rem; 
@@ -65,15 +100,19 @@ p {
 
 .heroSection, .whoWeAreSection, 
 .sponsorSection, .roadmapSection, 
-.volunteerSection {
+.volunteerSection, .whatWeDoSection {
     background: radial-gradient(
     farthest-corner at 0px 0px,
     #5645c5 0%, 
     #6657cd 10%, 
     #63AFF7 100%);
+
+    max-width: 1000px; 
+    margin: 2rem; 
+    line-height: 1.25;
 }
 .whoWeAreSection, .sponsorSection, 
-.roadmapSection, .volunteerSection {
+.roadmapSection, .volunteerSection, .whatWeDoSection {
     padding: 2rem;
     background-color: #ccc8ec;
     margin-top: 1.3rem; 
@@ -87,6 +126,39 @@ p {
 #5350AC
 #462792
 #15172E */
+
+.mergeSection {
+    display: flex; 
+    max-width: 1000px; 
+    margin: 0 2rem; 
+    gap: 2rem; 
+}
+
+.whatWeDoSection {
+    margin: 0; 
+    flex: 1; 
+}
+
+.volunteerSection {
+    margin: 0; 
+    flex: 1;
+
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+}
+
+.peer {
+    padding-top: 2rem; 
+}
+
+.why {
+    text-align: right;
+}
+
+
+
+
 
 
 
@@ -131,7 +203,32 @@ p {
 
 
 
+.dummy2 {
+    /* width: 1000rem;  */
+    width: 100%; 
+    
+    height: 1rem;  
+    background: linear-gradient(
+        45deg,
+        #4469d0,
+        #a2b8e3,
+        #4844c7
+    );
+    background-size: 400% 400%;
+    animation: waterFlow 15s ease infinite;
+}
 
+@keyframes waterFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
 
 
@@ -155,7 +252,7 @@ p {
 
 @media (max-width: 755px) {
     .aboutPage{
-        padding: 1rem; 
+        /* padding: 1rem;  */
         margin: 0; 
     }
 
@@ -164,18 +261,36 @@ p {
     }
 
     .heroSection {
-        padding: 1.7rem;
-        flex-direction: column; 
+        
+        margin: 1rem; 
+        flex-direction: column;
+        padding-bottom: 1rem;  
     }
+
+    .mergeSection {
+        margin: 1rem; 
+        display: inline; 
+    }
+
+    .whatWeDoSection {
+        margin-bottom: 2rem; 
+    }
+
+
 
     .heroImageContainer {
         order: -1; 
         width: 100%; 
-        height: 100px; 
+        height: 200px; 
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0; 
     }
+    
 
     .heroText {
         width: 100%; 
     }
+
+
 
 }
