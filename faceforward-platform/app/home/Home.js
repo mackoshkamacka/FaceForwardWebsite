@@ -1,5 +1,4 @@
 import "./Home.css";
-import ContactUsForm from "../components/home/ContactUsForm";
 import GrainVisual from "../components/home/GrainVisual";  
 
 export default function HomePage() {
@@ -50,7 +49,7 @@ export default function HomePage() {
                     <p>updates coming soon!!</p>
                 </div>
             </div> */}
-            <ContactUsForm />
+            
         </div>
     );
 }

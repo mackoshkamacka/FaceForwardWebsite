@@ -12,6 +12,12 @@ p {
     margin:0 10vh; 
 }
 
+.uh {
+    height: 3rem; 
+}
+
+
+
 .heroSection {
 
     height: 50vh; 
@@ -22,7 +28,7 @@ p {
     background-image: radial-gradient(
         farthest-corner at 50px 300px,
         #462792 0%,
-        #6a8de0 40%, 
+        #7B55C2 30%, 
         #c7e0f0 80%,
         white 100%);
 
@@ -39,7 +45,7 @@ p {
 .nHeader {
     font-size: 4rem;
     font-weight: 600;
-    
+    color: white; 
 }
 
 .nnHeader {
@@ -57,25 +63,94 @@ p {
     padding-bottom: 2rem; 
 }
 
-.whoWeAreSection, .sponsorSection, .roadmapSection{
+.heroSection, .whoWeAreSection, 
+.sponsorSection, .roadmapSection, 
+.volunteerSection {
+    background: radial-gradient(
+    farthest-corner at 0px 0px,
+    #5645c5 0%, 
+    #6657cd 10%, 
+    #63AFF7 100%);
+}
+.whoWeAreSection, .sponsorSection, 
+.roadmapSection, .volunteerSection {
     padding: 2rem;
     background-color: #ccc8ec;
-    /* background-image: radial-gradient(to right, rgb(114, 89, 203), #ccc8ec);
-     */
-     background-image: radial-gradient(
-        farthest-corner at 40px 40px,
-        #462792 0%,
-        #6a8de0 40%, 
-        #c7e0f0 80%,
-        white 100%);
     margin-top: 1.3rem; 
     border-radius: 2rem;
-    height: 90vh; 
+    min-height: 2rem; 
 }
+
+/* #F8FEFF 
+#C7E0F0
+#63AFF7
+#5350AC
+#462792
+#15172E */
+
+
 
 .roadmapSection {
     padding-bottom: 2rem;
 }
+
+
+
+.volunteerSection {
+    padding-bottom: 2rem; 
+}
+
+
+.button-container {
+    display: flex; 
+    justify-content: right;
+    padding-top: 1rem; 
+}
+
+.volButton {
+    padding: 0.5rem 1.2rem; 
+    border-color: white;
+    border-width: 2px; 
+    border-style: solid; 
+    background-color: #6265e4f4;
+}
+
+.volButton:hover {
+    background-color: #3a1bb5c7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (max-width: 755px) {

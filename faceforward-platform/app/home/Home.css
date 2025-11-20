@@ -74,6 +74,25 @@
     bottom: 20px;
     width: 80%;
     text-align: left;
+    padding-bottom: 2rem; 
+    
+    border-radius: 1rem;
+    border-width: 3px;
+    border-color: #dad9fe;
+    
+    background: radial-gradient(circle, 
+                                        #c1dff1a1 0%, 
+                                        #7d99eba6 70%, 
+                                        transparent 100%);
+    background-color: #6c4a9935;
+
+    transition: all 0.5s ease, border-color 0.5s ease;
+}
+
+.heroDesc:hover {
+    transform: translateY(-15px); 
+    background-color: #6c4a9935;
+
 }
 
 
@@ -93,6 +112,7 @@
     font-weight: 700;
     text-transform: uppercase;
     padding-top: 2rem; 
+    
 }
 
 .missionStatementP2 {
@@ -125,13 +145,22 @@
     height: 300%;
     top: -100%;
     left: -100%;
-    background: radial-gradient(circle, rgba(190, 55, 156, 0.616) 0%, 
-                                        rgba(0, 42, 255, 0.356) 70%, 
-                                        transparent 82%);
+    background: radial-gradient(circle, 
+                                        #281794 0%, 
+                                        #4e3cbf 10%, 
+                                        #63AFF7 40%,
+                                        #e1f0ff 72%,
+                                        transparent 100%);
     animation: rotateSplash 15s linear infinite;
-    background-color: #3979cd;
     pointer-events: none;
 }
+
+/* #F8FEFF 
+#C7E0F0
+#63AFF7
+#5350AC
+#462792
+#15172E */
 
 
 @keyframes rotateSplash {

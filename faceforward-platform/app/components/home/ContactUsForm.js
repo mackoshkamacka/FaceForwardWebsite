@@ -38,6 +38,8 @@ export default function ContactUsForm() {
     };
 
     return (
+        <div> 
+        <div className = "dummy"></div>
         <form
             onSubmit={handleSubmit}
             className="contactUsFormContainer"
@@ -90,5 +92,6 @@ export default function ContactUsForm() {
 
             {status && <p className="text-center text-sm">{status}</p>}
         </form>
+        </div>
     );
 }
