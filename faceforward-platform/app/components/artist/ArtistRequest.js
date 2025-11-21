@@ -1,177 +1,184 @@
 "use client";
 
+import "./styling/ArtistRequest.css";
+
 import { useState, useEffect } from 'react';
-import { db } from '../../../src/firebase';
-import { collection, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
-import { auth } from "../../../src/firebase"; 
-import './styling/ArtistRequest.css';
+import { db, auth } from '../../../src/firebase';
+import {
+    collection, query, where,
+    updateDoc, doc,
+    onSnapshot
+} from 'firebase/firestore';
 
 export default function ArtistRequests() {
-    const [allRequests, setAllRequests] = useState([]);           //holds all the requests from firestore 
-    const [visibleRequests, setVisibleRequests] = useState([]);   //subset of visible requests that should be show (filtered by status)
-    const [loading, setLoading] = useState(true);                 //sees if the requests are still loading 
-    const [selectedRequest, setSelectedRequest] = useState(null); //the request currently opened in the modal 
-    const [showCompleted, setShowCompleted] = useState(false);    //bool that toggles completed visibility 
+    const [requests, setRequests] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
+    const [filter, setFilter] = useState('all');
+    const [selectedRequest, setSelectedRequest] = useState(null);
 
     useEffect(() => {
-        const fetchRequests = async () => {
-            if (!auth.currentUser) return; //if the user is not logged in, do not fetch anything
-            try {
-                const q = query(
-                    collection(db, 'requests'),
-                    where('artistId', '==', auth.currentUser.uid)
-                ); //looks in requests collection in firestore, then filters by artistId
-                //builds the query object 
+        if (!auth.currentUser) {
+            setLoading(false);
+            return;
+        }
 
-                const snapshot = await getDocs(q); //snapshot gets all documents that match the query 
-
-                //converts snapshot docs into usable objects 
-                const requestsData = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data(),
-                    requestedDate: doc.data().requestedDate?.toDate?.() || doc.data().requestedDate, //converts firestore
-                    createdAt: doc.data().createdAt?.toDate?.() || doc.data().createdAt              //stamps into JS dates 
-                })).sort((a, b) => b.createdAt - a.createdAt); //then sort by date 
-
-                setAllRequests(requestsData); //update the state 
-                filterVisibleRequests(requestsData, showCompleted); //filter the state for visable requests
-            } catch (error) {
-                console.error('Error fetching requests:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchRequests(); //this keeps top level pure (no side effects when rendering) - this only happens once at the right moment: 
-    });
-
-    //this decides whether requests if the request is completed 
-    const filterVisibleRequests = (requests, showCompleted) => {
-        setVisibleRequests(
-            showCompleted ? requests : requests.filter(request => request.status !== 'completed')
+        const q = query(
+            collection(db, 'requests'),
+            where('artistId', '==', auth.currentUser.uid)
         );
-    };
 
-    //updates the state of show copmleted (inverses) then reruns filterVisibleRequests
-    const toggleShowCompleted = () => {
-        const newValue = !showCompleted;
-        setShowCompleted(newValue);
-        filterVisibleRequests(allRequests, newValue);
-    };
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            setRequests(snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            })));
+            setLoading(false); // Set loading to false when data arrives
+        }, (error) => {
+            console.error("Error fetching requests:", error);
+            setLoading(false);
+        });
 
-    //updates a request's status in Firestore 
-    const updateStatus = async (newStatus) => {
-        if (!selectedRequest) return; //if nothing is selected, exit 
+        return unsubscribe;
+    }, []);
 
-        //updates the doc in Firestore 
+    const handleStatusUpdate = async (requestId, newStatus) => {
         try {
-            await updateDoc(doc(db, 'requests', selectedRequest.id), {
-                status: newStatus,
-                updatedAt: new Date()
+            await updateDoc(doc(db, 'requests', requestId), {
+                status: newStatus
             });
-
-            //updates the local state so UI doesn't lag behind 
-            const updatedRequests = allRequests.map(req =>
-                req.id === selectedRequest.id ? { ...req, status: newStatus } : req
-            );
-
-            //refreshes filtered requests, 
-            setAllRequests(updatedRequests);
-            filterVisibleRequests(updatedRequests, showCompleted);
-
-            alert(`Status updated to ${newStatus}!`);
-            setSelectedRequest(null); //closes modal 
+            alert('Request status updated!');
         } catch (error) {
             console.error('Error updating request:', error);
             alert('Failed to update status');
         }
     };
 
-    if (loading) return <div>Loading requests...</div>; //loading message 
+    const filteredRequests = requests.filter(req =>
+        filter === 'all' || req.status === filter
+    );
+
+    // Loading state UI
+    if (loading) {
+        return (
+            <div className="artist-requests">
+                <h2 className="requestHeader">Service Requests</h2>
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p className="loading-text">Loading your requests...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Empty state UI
+    if (requests.length === 0) {
+        return (
+            <div className="artist-requests">
+                <h2 className="requestHeader">Service Requests</h2>
+                <div className="empty-state">
+                    <p>No service requests yet.</p>
+                    <p>Requests will appear here when clients book your services!</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="artist-requests">
-            <h2>Your Service Requests</h2>
-
+            <h2 className="requestHeader">Service Requests</h2>
+            
             <div className="filter">
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={showCompleted}
-                        onChange={toggleShowCompleted}
-                    />
-                    Show completed requests
-                </label>
+                <label>Filter by status: </label>
+                <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="completed">Completed</option>
+                    <option value="rejected">Rejected</option>
+                </select>
             </div>
 
-            {visibleRequests.length === 0 ? (
-                <p>No requests found for your services.</p>
+            {filteredRequests.length === 0 ? (
+                <div className="empty-state">
+                    <p>No {filter} requests found.</p>
+                    <p>Try selecting a different filter.</p>
+                </div>
             ) : (
                 <div className="requests-grid">
-                    {visibleRequests.map(request => (
+                    {filteredRequests.map(request => (
                         <div
                             key={request.id}
-                            onClick={() => setSelectedRequest(request)}
                             className="request-card"
+                            onClick={() => setSelectedRequest(request)}
                         >
-                            <h3>Request #{request.id.slice(0, 6)}</h3>
-                            <p>Service: {request.serviceName || request.serviceId}</p>
-                            <p>From: {request.name || 'Unknown User'}</p>
-                            <p>Status: {request.status}</p>
-                            <p>Requested Date: {request.requestedDate?.toLocaleDateString?.() || request.requestedDate}</p>
+                            <h3 className="serviceHeader">{request.serviceTitle}</h3>
+                            <div className="sub">
+                                <p className="blob">Status: {request.status}</p>
+                                <p className="blob">Date: {request.date}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
             )}
 
             {selectedRequest && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h3>Request Details</h3>
+                <div className="modal-overlay" onClick={() => setSelectedRequest(null)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>{selectedRequest.serviceTitle}</h2>
                         <div className="request-details">
-                            <p><strong>Name:</strong> {selectedRequest.name || 'Not available'}</p>
-                            <p><strong>Email:</strong> {selectedRequest.email || 'Not available'}</p>
-                            <p><strong>Number of Patients: </strong> {selectedRequest.numberOfPatients}</p>
-                            <p><strong>Service Requested:</strong> {selectedRequest.serviceName || selectedRequest.serviceId}</p>
-                            <p><strong>Status:</strong> {selectedRequest.status}</p>
-                            <p><strong>Requested Date:</strong> {selectedRequest.requestedDate?.toLocaleDateString?.() || selectedRequest.requestedDate}</p>
-                            <p><strong>Created:</strong> {selectedRequest.createdAt?.toLocaleDateString?.() || selectedRequest.createdAt}</p>
-                            <p><strong>Notes:</strong></p>
-                            <p>{selectedRequest.notes || 'No additional notes'}</p>
+                            <div className="stats">
+                                <div className="personalInformation">
+                                    <h3>Client Information</h3>
+                                    <p><strong>Name:</strong> {selectedRequest.clientName}</p>
+                                    <p><strong>Email:</strong> {selectedRequest.clientEmail}</p>
+                                    <p><strong>Phone:</strong> {selectedRequest.clientPhone}</p>
+                                </div>
+                                <div className="requestInformation">
+                                    <h3>Request Details</h3>
+                                    <p><strong>Date:</strong> {selectedRequest.date}</p>
+                                    <p><strong>Time:</strong> {selectedRequest.time}</p>
+                                    <p><strong>Status:</strong> {selectedRequest.status}</p>
+                                </div>
+                            </div>
+                            <p><strong>Notes:</strong> {selectedRequest.notes || 'No additional notes'}</p>
                         </div>
 
                         <div className="status-buttons">
                             <button
-                                onClick={() => updateStatus('approved')}
+                                className={`btn btn-pending ${selectedRequest.status === 'pending' ? 'btn-disabled' : ''}`}
+                                onClick={() => handleStatusUpdate(selectedRequest.id, 'pending')}
+                                disabled={selectedRequest.status === 'pending'}
+                            >
+                                Mark Pending
+                            </button>
+                            <button
+                                className={`btn btn-approve ${selectedRequest.status === 'approved' ? 'btn-disabled' : ''}`}
+                                onClick={() => handleStatusUpdate(selectedRequest.id, 'approved')}
                                 disabled={selectedRequest.status === 'approved'}
-                                className={`btn ${selectedRequest.status === 'approved' ? 'btn-disabled' : 'btn-approve'}`}
                             >
                                 Approve
                             </button>
                             <button
-                                onClick={() => updateStatus('completed')}
+                                className={`btn btn-complete ${selectedRequest.status === 'completed' ? 'btn-disabled' : ''}`}
+                                onClick={() => handleStatusUpdate(selectedRequest.id, 'completed')}
                                 disabled={selectedRequest.status === 'completed'}
-                                className={`btn ${selectedRequest.status === 'completed' ? 'btn-disabled' : 'btn-complete'}`}
                             >
                                 Complete
                             </button>
                             <button
-                                onClick={() => updateStatus('rejected')}
+                                className={`btn btn-reject ${selectedRequest.status === 'rejected' ? 'btn-disabled' : ''}`}
+                                onClick={() => handleStatusUpdate(selectedRequest.id, 'rejected')}
                                 disabled={selectedRequest.status === 'rejected'}
-                                className={`btn ${selectedRequest.status === 'rejected' ? 'btn-disabled' : 'btn-reject'}`}
                             >
                                 Reject
-                            </button>
-                            <button
-                                onClick={() => updateStatus('pending')}
-                                disabled={selectedRequest.status === 'pending'}
-                                className={`btn ${selectedRequest.status === 'pending' ? 'btn-disabled' : 'btn-pending'}`}
-                            >
-                                Set Pending
                             </button>
                         </div>
 
                         <div className="modal-footer">
-                            <button onClick={() => setSelectedRequest(null)} className="btn btn-close">
+                            <button
+                                className="btn btn-close"
+                                onClick={() => setSelectedRequest(null)}
+                            >
                                 Close
                             </button>
                         </div>

@@ -1,9 +1,11 @@
 .GIContainer {
-    background-image: radial-gradient(
-        farthest-corner at 40px 40px,
-        #3e2186 0%,
-        #63aff7 70%, 
-        #c7e0f0 80%);
+    background: radial-gradient(circle, 
+                                        #2d1c96 0%, 
+                                        #3724b3 40%, 
+                                        #547fca 80%, 
+                                        rgb(205, 206, 245) 100%);
+    background-color: #281794;
+                            
 
     height: 85vh; 
     margin: 2vw; 
@@ -24,14 +26,20 @@
 }
 
 .centralCard {
-    width: 50vw;
+    width: 60vw;
     min-width: 18.5rem;  
-    background: linear-gradient(135deg, #cbe3f271, #b9bcdf15);
+    
+
+    background: radial-gradient(circle, 
+                                        #c1dff1a1 0%, 
+                                        #7d99eba6 70%, 
+                                        transparent 100%);
+    background-color: #6c4a9935;
 
     padding: 2vw; 
     border-radius: 2rem;
     border-width: 5px;
-    border-color: rgb(210, 223, 234);
+    border-color: rgba(157, 211, 255, 0.779);
     
 
     z-index: 2; 
@@ -55,13 +63,16 @@
     align-items: center;
     padding: 2rem;
     overflow: hidden;
-    background: linear-gradient(135deg, #f5f7fa23, #c3cfe24f);
+    /* background: linear-gradient(135deg, #f5f7fa23, #c3cfe24f); */
     /* subtle splash gradient */
     border-radius: 2rem;
     /* rounded splash edges */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     
     width: 5rem;
+
+    border-width: 3px; 
+    border-color: rgba(94, 220, 255, 0.422); 
     
 }
 
@@ -154,9 +165,10 @@
 
 .preamble {
     text-align: left;
-    font-size: max(1.2vw, 0.9rem); 
+    font-size: max(1.5vh, 1rem); 
     padding: 1.5vh; 
     color: #ffffff; 
+    padding-bottom: 2rem; 
 }
 
 .GIButtons {
@@ -165,15 +177,26 @@
 }
 
 .GIB {
-    background-color: #5161be;
+    background-color: #3142a0;
     margin: 4px; 
     padding: 0.5rem 2rem; 
     border-radius: 10px;
     color: white; 
     width: 15vw; 
-    min-width: 7.8rem; 
+    min-width: 8rem; 
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: white; 
 }
 
 .GIB:hover {
-    background-color: #3c4eb4;
+    background-color: #5c6ed5;
+}
+
+@media (max-width: 755px) {
+    .centralCard {
+        width: 20rem;
+    }
+    
 }

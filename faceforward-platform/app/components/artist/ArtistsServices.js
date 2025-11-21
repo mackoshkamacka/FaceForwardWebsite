@@ -7,50 +7,54 @@ import { db, auth } from '../../../src/firebase';
 import {
     collection, query, where,
     updateDoc, doc, deleteDoc,
-    onSnapshot  // Added for real-time updates
+    onSnapshot
 } from 'firebase/firestore';
 
 export default function ArtistServicesList() {
     const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
     const [editingService, setEditingService] = useState(null);
     const [editForm, setEditForm] = useState({
         title: '',
         description: '',
         price: '',
-        type: 'makeup',  // Default value
-        status: 'active' // Required for your rules
+        type: 'makeup',
+        status: 'active'
     });
 
     useEffect(() => {
-        if (!auth.currentUser) return; //if not the artist, quit
+        if (!auth.currentUser) {
+            setLoading(false);
+            return;
+        }
 
         const q = query(
             collection(db, 'services'),
             where('artistId', '==', auth.currentUser.uid)
         );
 
-        //real-time updates for artist's services, keeps listening for 
-        //changes made in the database. Whenever q is added, updated, or deleted, 
-        //Firestore calls the callback function to rerender UI 
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setServices(snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })));
+            setLoading(false); // Set loading to false when data arrives
+        }, (error) => {
+            console.error("Error fetching services:", error);
+            setLoading(false);
         });
 
         return unsubscribe;
     }, []);
 
-    //allows for edits to be made 
     const handleEditClick = (service) => {
         setEditingService(service);
         setEditForm({
             title: service.title,
             description: service.description,
-            price: service.price.toString(), // Ensure string for controlled input
+            price: service.price.toString(),
             type: service.type,
-            status: service.status // Maintain existing status
+            status: service.status
         });
     };
 
@@ -60,17 +64,16 @@ export default function ArtistServicesList() {
         try {
             await updateDoc(doc(db, 'services', editingService.id), {
                 ...editForm,
-                price: Number(editForm.price) // Convert to number for Firestore
+                price: Number(editForm.price)
             });
             setEditingService(null);
             alert('Service updated successfully!');
         } catch (error) {
             console.error('Error updating service:', error);
             alert(`Update failed: ${error.message}`);
-        }
+        } 
     };
 
-    //deletes a service if permissions are met. 
     const handleDelete = async (serviceId) => {
         if (window.confirm('Permanently delete this service?')) {
             try {
@@ -82,9 +85,35 @@ export default function ArtistServicesList() {
         }
     };
 
+    // Loading state UI
+    if (loading) {
+        return (
+            <div className="artist-services">
+                <h2 className="manageHeader">Manage Services</h2>
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p className="loading-text">Loading your services...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Empty state UI
+    if (services.length === 0) {
+        return (
+            <div className="artist-services">
+                <h2 className="manageHeader">Manage Services</h2>
+                <div className="empty-state">
+                    <p>You haven't created any services yet.</p>
+                    <p>Create your first service above to get started!</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="artist-services">
-            <h2>Manage My Services</h2>
+            <h2 className="manageHeader">Manage Services</h2>
             <div className="services-grid">
                 {services.map(service => (
                     <div key={service.id} className="service-card">
@@ -136,8 +165,8 @@ export default function ArtistServicesList() {
                             </div>
                         ) : (
                             <>
-                                <h3>{service.title}</h3>
-                                <p>{service.description}</p>
+                                <h3 className="serviceHeader">{service.title}</h3>
+                                <p>Description: {service.description}</p>
                                 <p>Price: ${service.price}</p>
                                 <p>Type: {service.type}</p>
                                 <p>Status: {service.status}</p>

@@ -1,9 +1,96 @@
 .artist-requests {
     position: relative;
+    display:flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2rem;
 }
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    min-height: 200px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 1rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.empty-state {
+    background: radial-gradient(circle, 
+                                #dcf1fe6c 0%, 
+                                #7690e072 70%, 
+                                transparent 100%);
+    background-color: #6c4a9935;
+    border: 2px solid white;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    margin-top: 1rem; 
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.empty-state p:first-child {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.requestHeader{
+    color:white; 
+    font-size: 2rem; 
+    font-weight: 550;
+}
+
+.serviceHeader {
+    font-size: 1.5rem; 
+}
+
 
 .filter {
     margin-bottom: 1rem;
+    color: white;
 }
 
 .requests-grid {
@@ -17,11 +104,47 @@
     border-radius: 8px;
     cursor: pointer;
     transition: box-shadow 0.2s ease;
+    background: radial-gradient(circle, 
+                                        #c1dff17b 0%, 
+                                        #7d99eb72 70%, 
+                                        transparent 100%);
+    background-color: #6c4a9935;
+    max-width: 500px;
+
+    color: white; 
 }
 
 .request-card:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px); 
+    transition: all 0.5s ease, border-color 0.5s ease;
 }
+
+.blob {
+    background-color: #e5e9fa48;
+    padding: 0.5rem 1rem; 
+    line-height: 1.2;
+    border-radius: 0.5rem;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.57);
+}
+
+.sub {
+    display: flex;
+    gap: 1rem; 
+    padding-top:1rem; 
+}
+
+
+
+
+
+
+
+
+
+
+
 
 .modal-overlay {
     position: fixed;
@@ -37,17 +160,40 @@
 }
 
 .modal-content {
-    background-color: white;
+    background: radial-gradient(circle, 
+                                        #93bed9eb 0%, 
+                                        #7d99ebe0 70%, 
+                                        #7d99eb72 100%);
+
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 2rem;
     max-width: 600px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
+    color:white; 
 }
 
 .request-details {
     margin-bottom: 1rem;
+}
+
+.stats {
+    display:flex; 
+}
+
+.personalInformation, .requestInformation {
+    flex: 1; 
+}
+
+
+
+.modal-footer {
+    text-align: right; 
 }
 
 .status-buttons {
@@ -63,29 +209,45 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    border-width: 1px; 
+    border-color: white;
+    border-style: solid;
+    background-color: #1a35e336;
 }
 
-.btn-approve {
-    background-color: #4CAF50;
+.btn-approve:hover {
+    background-color: #559058;
 }
 
-.btn-complete {
-    background-color: #2196F3;
+.btn-complete:hover {
+    background-color: #4a9ee2;
 }
 
-.btn-reject {
-    background-color: #f44336;
+.btn-reject:hover {
+    background-color: #cd4ead;
 }
 
-.btn-pending {
-    background-color: #FF9800;
+.btn-pending:hover {
+    background-color: #e6a33e;
 }
 
 .btn-close {
-    background-color: #666;
+    background-color: #afafaf3b;
+    color:#ffffff  
+}
+
+.btn-close:hover {
+    background-color: #b91f34c8;
 }
 
 .btn-disabled {
-    background-color: #ccc !important;
+    background-color: #3f2bd7 !important;
     cursor: not-allowed;
+}
+
+@media (max-width: 768px) { 
+    .stats {
+        display:inline; 
+    }
+
 }

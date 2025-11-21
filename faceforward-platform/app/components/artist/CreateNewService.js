@@ -1,5 +1,7 @@
 "use client"; 
 
+import "./styling/createNewService.css"; 
+
 import { useState } from 'react';
 import { db, auth } from '../../../src/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
@@ -12,6 +14,7 @@ export default function CreateNewService() {
         type: 'makeup', // Default service type
     });
     const [submitted, setSubmitted] = useState(false);
+    const [showForm, setShowForm] = useState(false); // Add this state
 
     const serviceTypes = [
         { value: 'makeup', label: 'Makeup' },
@@ -19,7 +22,6 @@ export default function CreateNewService() {
         { value: 'manicure', label: 'Manicure' },
         { value: 'hair-styling', label: 'Hair Styling' },
     ];
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,6 +41,7 @@ export default function CreateNewService() {
                 status: 'active'
             });
             setSubmitted(true);
+            setShowForm(false); // Hide form after submission
             // Reset form
             setService({
                 title: '',
@@ -56,15 +59,36 @@ export default function CreateNewService() {
         return (
             <div className="success-message">
                 <p>Service created successfully!</p>
-                <button onClick={() => setSubmitted(false)}>Add Another Service</button>
+                <button 
+                    className="formButton"
+                    onClick={() => {
+                        setSubmitted(false);
+                        setShowForm(true); // Show form when adding another
+                    }}
+                >
+                    Add Another Service
+                </button>
             </div>
         );
     }
 
     return (
-        <div className="create-new-service">
-            <h2>Create New Service</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="createNewService">
+            <div className="serviceHeaderContainer">
+                <h2 className="serviceHeader2">Create Service</h2>
+                <button 
+                    className="toggleFormButton"
+                    onClick={() => setShowForm(!showForm)}
+                    aria-expanded={showForm}
+                >
+                    {showForm ? '− Hide Form' : '+ New Service'}
+                </button>
+            </div>
+            
+            <form 
+                className={`createForm ${showForm ? 'formVisible' : 'formHidden'}`}
+                onSubmit={handleSubmit}
+            >
                 <div className="form-group">
                     <label>Service Title*</label>
                     <input
@@ -81,6 +105,7 @@ export default function CreateNewService() {
                         value={service.description}
                         onChange={(e) => setService({ ...service, description: e.target.value })}
                         required
+                        className="textAreaService"
                     />
                 </div>
 
@@ -110,7 +135,7 @@ export default function CreateNewService() {
                     </select>
                 </div>
 
-                <button type="submit">Create Service</button>
+                <button type="submit" className="formButton">Create Service</button>
             </form>
         </div>
     );

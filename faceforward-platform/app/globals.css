@@ -48,9 +48,7 @@ body {
     }
 }
 
-button:hover {
-    background-color: #5308b6;
-}
+
 
 
 form {
@@ -90,4 +88,12 @@ button {
     color: white;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    
+    border-color: rgba(255, 255, 255, 0.622);
+    border-width: 2px; 
+    border-style: solid; 
+}
+
+button:hover {
+    background-color: rgb(68, 61, 195);
 }

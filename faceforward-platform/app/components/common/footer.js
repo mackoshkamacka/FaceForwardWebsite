@@ -1,12 +1,11 @@
 import "./footer.css"; 
 import Image from 'next/image';
+import WaterBar from "./waterBar"; 
 
 export default function Footer() {
     return (
         <div className = "footer">
-            <div className = "dummy">
-
-            </div>
+            <WaterBar />
             <h2 className = "sponsorHeader">
                     Supported By
                 </h2>
@@ -25,7 +24,7 @@ export default function Footer() {
                     </strong>
                 </p>
                 <div className = "socials">
-                    <a href="https://instagram.com/yourusername" target="_blank">
+                    <a href="https://instagram.com/faceforwardcanada" target="_blank">
                         <Image 
                             src="/Instagram_logo_2022.svg.webp" 
                             alt="Instagram" 
@@ -34,11 +33,11 @@ export default function Footer() {
                             height={30}
                         />
                     </a>
-                    <a href="https://instagram.com/yourusername" target="_blank">
+                    <a href="https://linkedin.com" target="_blank">
                         <Image 
                             src="/LinkedIn_logo_initials.png" 
-                            alt="Instagram" 
-                            className="instagram"
+                            alt="LinkedIn" 
+                            className="linkedIn"
                             width={30}
                             height={30}
                         />

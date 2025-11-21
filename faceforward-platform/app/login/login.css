@@ -1,4 +1,6 @@
-.signupPage {
+.loginPage {
+    height: 60vh;     
+    
     background-color: rgb(53, 43, 140);
 
     background: radial-gradient(circle, 
@@ -24,7 +26,7 @@
     }
 }
 
-.signupForm {
+.loginForm {
     min-width: 20rem; 
     border-width: 3px;
     border-color: rgb(139, 163, 251);
@@ -46,8 +48,3 @@
     padding-right: 1rem; 
     color:rgb(76, 90, 243); 
 }
-
-
-
-
-

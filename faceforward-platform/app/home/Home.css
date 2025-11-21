@@ -139,7 +139,7 @@
     box-shadow: 0 10px 30px rgba(240, 34, 34, 0.1);
     background-color: #63aff7;
     width: 5rem;
-}
+} 
 
 .heroBottom::before {
     content: '';

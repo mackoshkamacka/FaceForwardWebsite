@@ -1,7 +1,17 @@
+"use client"
+
 import "./about.css"; 
 import ContactUsForm from "../components/home/ContactUsForm"; 
 
+import { useRouter } from "next/navigation"; 
+
 export default function AboutPage() {
+    const router = useRouter(); 
+
+    const clickGetInvolved = () => {
+        router.push("/get-involved"); 
+    };
+
     return ( 
         <div className = "aboutPage">
             
@@ -38,10 +48,12 @@ export default function AboutPage() {
                     <p>From medicine to social work to fine arts—Face Forward welcomes all.
                     Volunteer as an event assistant, photographer, or liaison and contribute to the well-being of patients through creativity and connection.</p>
 
+
                     <h2 className = "nnHeader peer">PEER AMBASADORS</h2>
                     <p>Volunteers who spread the word across disciplines—bringing more voices, talents, and passions into the initiative.</p>
                     <div className = "button-container">
-                        <button className = "volButton">...action...</button>
+                        <button className = "volButton" 
+                        onClick={clickGetInvolved}>Volunteer</button>
                     </div>
                 </div>
             </div>

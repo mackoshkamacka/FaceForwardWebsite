@@ -6,6 +6,10 @@ import { auth, db } from "../../src/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
+import Link from "next/link";
+
+import "./login.css"; 
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -49,21 +53,25 @@ export default function Login() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <h2>Login</h2>
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button type="submit">Login</button>
-        </form>
+        <div className = "loginPage"> 
+            <form onSubmit={handleLogin}
+                  className = "loginForm">
+                <h2 className = "formHeader">Login</h2>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <button type="submit" className="formButton">Login</button>
+                <Link href="/signup" className = "altLink">Sign Up</Link>
+            </form>
+        </div>
     );
 }
