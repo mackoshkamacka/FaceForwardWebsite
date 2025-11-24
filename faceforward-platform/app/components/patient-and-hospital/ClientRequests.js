@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { db, auth } from '../../../src/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { FaSync } from 'react-icons/fa';
-import './styling/PatientRequests.css';
+import './styling/ClientRequest.css';
 
 export default function Requests() {
     const [requests, setRequests] = useState([]);
@@ -66,7 +66,7 @@ export default function Requests() {
     return (
         <div className="requests-container">
             <div className="requests-header">
-                <h2>Your Requested Services</h2>
+                <h2 className = "nR-header">Requested Services</h2>
                 <button onClick={handleRefresh} disabled={loading} className="refresh-button">
                     <FaSync className={loading ? 'spin' : ''} />
                     {loading ? 'Refreshing...' : 'Refresh'}
@@ -108,17 +108,18 @@ export default function Requests() {
             {selectedRequest && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <h2>{selectedRequest.serviceName}</h2>
-                        <div className="modal-header">
+                    <div className="modal-header">
                             <span className={`modal-status ${getStatusClass(selectedRequest.status)}`}>
                                 {selectedRequest.status}
                             </span>
                             <button onClick={() => setSelectedRequest(null)} className="close-button">
-                                Close
+                                X
                             </button>
                         </div>
+                        <h2 className = "serviceName">{selectedRequest.serviceName}</h2>
+                        
                         <div>
-                            <h3>Request Details</h3>
+                            {/* <h3>Request Details</h3> */}
                             <div className="request-dates">
                                 <p><strong>Requested Date:</strong> {formatDate(selectedRequest.requestedDate)}</p>
                                 <p><strong>Submitted On:</strong> {formatDate(selectedRequest.createdAt)}</p>
@@ -127,7 +128,7 @@ export default function Requests() {
                             </div>
                         </div>
                         <div>
-                            <h3>Notes</h3>
+                            <h3 className = "noteHeader">Notes</h3>
                             <div className="notes-box">{selectedRequest.notes || 'No additional notes provided'}</div>
                         </div>
                     </div>

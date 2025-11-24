@@ -1,16 +1,16 @@
-import "./HospitalDashboard.css"; 
+import "./PatHopDashboard.css"; 
 import GrainVisual from "../components/home/GrainVisual"; 
 
-import HospitalServicesList from "../components/patient-and-hospital/HospitalSerivesList";
-import PatientRequests from "../components/patient-and-hospital/PatientRequests";
+import HospitalServicesList from "../components/patient-and-hospital/SerivesRequest";
+import PatientRequests from "../components/patient-and-hospital/ClientRequests";
 
 export default function HospitalDashboard() {
     return (
         <div className="patHopDash">
-            <div className="dashBottom">
+            <div className="dashBottom2">
                 <GrainVisual />
             </div>
-            <div className="dashTop">
+            <div className="dashTop2">
                 <div className="welcome">
                     <h1 className="nHeader">Welcome _name_</h1>
                     <div className="howTo">

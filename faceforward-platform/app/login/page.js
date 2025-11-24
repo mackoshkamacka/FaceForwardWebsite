@@ -39,9 +39,9 @@ export default function Login() {
             if (userRole === "artist") {
                 router.push("/artist-dashboard");
             } else if (userRole === "patient") {
-                router.push("/patient-dashboard");
+                router.push("/pat-hop-dashboard");
             } else if (userRole === "hospital") {
-                router.push("/hospital-dashboard");
+                router.push("/pat-hop-dashboard");
             } else {
                 router.push("/"); // fallback if role is undefined
             }
