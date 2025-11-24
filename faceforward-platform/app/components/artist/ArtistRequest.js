@@ -12,7 +12,7 @@ import {
 
 export default function ArtistRequests() {
     const [requests, setRequests] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
     const [selectedRequest, setSelectedRequest] = useState(null);
 
@@ -32,7 +32,7 @@ export default function ArtistRequests() {
                 id: doc.id,
                 ...doc.data()
             })));
-            setLoading(false); // Set loading to false when data arrives
+            setLoading(false);
         }, (error) => {
             console.error("Error fetching requests:", error);
             setLoading(false);
@@ -88,8 +88,8 @@ export default function ArtistRequests() {
             <h2 className="requestHeader">Service Requests</h2>
             
             <div className="filter">
-                <label>Filter by status: </label>
-                <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+                <label className="filterLabel">Filter by status: </label>
+                <select className = "filterBox" value={filter} onChange={(e) => setFilter(e.target.value)}>
                     <option value="all">All</option>
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
@@ -111,10 +111,10 @@ export default function ArtistRequests() {
                             className="request-card"
                             onClick={() => setSelectedRequest(request)}
                         >
-                            <h3 className="serviceHeader">{request.serviceTitle}</h3>
+                            <h3 className="serviceHeader">{request.serviceName}</h3>
                             <div className="sub">
                                 <p className="blob">Status: {request.status}</p>
-                                <p className="blob">Date: {request.date}</p>
+                                <p className="blob">Date: {request.requestedDate}</p>
                             </div>
                         </div>
                     ))}
@@ -124,23 +124,36 @@ export default function ArtistRequests() {
             {selectedRequest && (
                 <div className="modal-overlay" onClick={() => setSelectedRequest(null)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>{selectedRequest.serviceTitle}</h2>
+                    <div className="modal-footer">
+                      <button className="btn btn-close"
+                        onClick={() => setSelectedRequest(null)}>
+                            X
+                        </button>
+
+                    </div>
+                        <h2 className = "serviceName">{selectedRequest.serviceName}</h2>
                         <div className="request-details">
                             <div className="stats">
                                 <div className="personalInformation">
-                                    <h3>Client Information</h3>
-                                    <p><strong>Name:</strong> {selectedRequest.clientName}</p>
-                                    <p><strong>Email:</strong> {selectedRequest.clientEmail}</p>
-                                    <p><strong>Phone:</strong> {selectedRequest.clientPhone}</p>
+                                    <h3 className = "modalHeader">Client Information</h3>
+                                    <p><strong>Name:</strong> {selectedRequest.name}</p>
+                                    <p><strong>Email:</strong> {selectedRequest.email}</p>
+                                    <p><strong>Type:</strong> {selectedRequest.type}</p>
+                                    {selectedRequest.numberOfPatients && (
+                                        <p><strong>Number of Patients:</strong> {selectedRequest.numberOfPatients}</p>
+                                    )}
                                 </div>
                                 <div className="requestInformation">
-                                    <h3>Request Details</h3>
-                                    <p><strong>Date:</strong> {selectedRequest.date}</p>
-                                    <p><strong>Time:</strong> {selectedRequest.time}</p>
+                                    <h3 className = "modalHeader">Request Details</h3>
+                                    <p><strong>Requested Date:</strong> {selectedRequest.requestedDate}</p>
                                     <p><strong>Status:</strong> {selectedRequest.status}</p>
+                                    <p><strong>Created:</strong> {selectedRequest.createdAt?.toDate().toLocaleDateString()}</p>
+                                    {selectedRequest.updatedAt && (
+                                        <p><strong>Updated:</strong> {selectedRequest.updatedAt?.toDate().toLocaleDateString()}</p>
+                                    )}
                                 </div>
                             </div>
-                            <p><strong>Notes:</strong> {selectedRequest.notes || 'No additional notes'}</p>
+                            <p className = "requestNotes"><strong>Notes:</strong> {selectedRequest.notes || 'No additional notes'}</p>
                         </div>
 
                         <div className="status-buttons">
@@ -171,15 +184,6 @@ export default function ArtistRequests() {
                                 disabled={selectedRequest.status === 'rejected'}
                             >
                                 Reject
-                            </button>
-                        </div>
-
-                        <div className="modal-footer">
-                            <button
-                                className="btn btn-close"
-                                onClick={() => setSelectedRequest(null)}
-                            >
-                                Close
                             </button>
                         </div>
                     </div>

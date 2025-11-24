@@ -30,28 +30,58 @@
 }
 
 .serviceHeader {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
+    color: white; 
+    font-weight: 550;
 }
+
+.manageDesc {
+    color: rgba(255, 255, 255, 0.815); 
+    padding-bottom: 1rem; 
+}
+
+.manageInfoContainer {
+    display: flex;   
+    gap: 1rem;  
+}
+
+.manageInfo {
+    background-color: rgba(255, 255, 255, 0.198);
+    padding: 0.25rem 1rem; 
+    border-radius: 9px;
+    border-color: white;
+    border-width: 1px; 
+    text-transform: capitalize;
+    color:white; 
+}
+
+
+
+
+
+
+
+
 
 
 /* Individual service card */
 .service-card {
-    padding: 20px;
+    padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #dce7ff75;
 
     background: radial-gradient(circle, 
                                         #b2c0f8b3 0%, 
-                                        #829ef2a6 70%, 
-                                        #7597fc72 100%);
+                                        #829ef257 70%, 
+                                        #7597fc24 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     transition: all 0.2s ease;
 }
 
 .service-card:hover {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
 }
 
 /* Edit form inside card */
@@ -99,21 +129,21 @@
 }
 
 .form-actions button:first-child {
-    background-color: #28a745;
+    background-color: #28a746bc;
     color: white;
 }
 
 .form-actions button:first-child:hover {
-    background-color: #218838;
+    background-color: #2eb47e;
 }
 
 .form-actions button:last-child {
-    background-color: #dc3545;
+    background-color: #e85f6d;
     color: white;
 }
 
 .form-actions button:last-child:hover {
-    background-color: #c82333;
+    background-color: #ec3648;
 }
 
 /* Display info for normal card */

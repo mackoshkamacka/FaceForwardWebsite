@@ -91,11 +91,25 @@
 .filter {
     margin-bottom: 1rem;
     color: white;
+    padding: 0; 
 }
+
+.filterBox {
+    padding: 0.25rem 1rem; 
+    margin-left: 1rem; 
+    background-color: rgba(255, 255, 255, 0.405);
+    color: rgb(72, 59, 255);
+}
+
+.filterLabel {
+    color:white; 
+}
+
 
 .requests-grid {
     display: grid;
     gap: 1rem;
+    width: 100%; 
 }
 
 .request-card {
@@ -109,10 +123,15 @@
                                         #7d99eb72 70%, 
                                         transparent 100%);
     background-color: #6c4a9935;
-    max-width: 500px;
+    width:100%; 
+
+
 
     color: white; 
 }
+
+
+
 
 .request-card:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -161,8 +180,8 @@
 
 .modal-content {
     background: radial-gradient(circle, 
-                                        #93bed9eb 0%, 
-                                        #7d99ebe0 70%, 
+                                        #a192deeb 0%, 
+                                        #7d99ebe0 90%, 
                                         #7d99eb72 100%);
 
     border-style: solid;
@@ -178,12 +197,30 @@
     color:white; 
 }
 
+.modalHeader {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.requestNotes {
+    padding-top: 1rem; 
+}
+
+.serviceName {
+    font-size: 2rem; 
+    text-transform: capitalize;
+    font-weight: 550;
+}
+
+
+
 .request-details {
     margin-bottom: 1rem;
 }
 
 .stats {
     display:flex; 
+    padding-top: 2rem; 
 }
 
 .personalInformation, .requestInformation {

@@ -1,4 +1,4 @@
-.artistDash {
+.patHopDash {
     padding: 1rem; 
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@
     width: 100%;
 }
 
-.dashBottom::before {
+.patHopDash::before {
     content: '';
     position: absolute;
     width: 300%;
@@ -194,7 +194,7 @@
 
 
 @media (max-width: 768px) {
-    .artistDash {
+    .patHopDash {
         padding: 0.5rem;
     }
     

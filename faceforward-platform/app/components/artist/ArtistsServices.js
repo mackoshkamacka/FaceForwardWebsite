@@ -166,10 +166,13 @@ export default function ArtistServicesList() {
                         ) : (
                             <>
                                 <h3 className="serviceHeader">{service.title}</h3>
-                                <p>Description: {service.description}</p>
-                                <p>Price: ${service.price}</p>
-                                <p>Type: {service.type}</p>
-                                <p>Status: {service.status}</p>
+                                <p className = "manageDesc">Description: {service.description}</p>
+                                <div className = "manageInfoContainer">
+                                    <p className = "manageInfo"> ${service.price}</p>
+                                    <p className = "manageInfo"> {service.type}</p>
+                                    <p className = "manageInfo"> {service.status}</p>
+                                </div>
+                                
 
                                 <div className="card-actions">
                                     <button
