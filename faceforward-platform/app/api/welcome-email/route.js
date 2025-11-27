@@ -3,24 +3,24 @@ import { WelcomeEmail } from "../../../src/emails/WelcomeEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
+export async function POST(req) {
+  const { name, email } = await req.json();
 
-    const { firstName, email } = req.body;
+  if (!email) {
+    return Response.json({ error: "Missing email" }, { status: 400 });
+  }
 
-    try {
-        await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: email,
-            subject: "Welcome to FaceForward!",
-            react: WelcomeEmail({ firstName }),
-        });
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: email,
+      subject: "Welcome to FaceForward!",
+      react: WelcomeEmail({ name }),
+    });
 
-        res.status(200).json({ message: "Email sent successfully!" });
-    } catch (err) {
-        console.error("Error sending email:", err);
-        res.status(500).json({ error: "Failed to send email" });
-    }
+    return Response.json({ message: "sent" });
+  } catch (err) {
+    console.error(err);
+    return Response.json({ error: err.message }, { status: 500 });
+  }
 }

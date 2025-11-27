@@ -1,74 +1,60 @@
 import {
-  Body,
-  Container,
-  Head,
-  Heading,
-  Hr,
-  Html,
-  Img,
-  Link,
-  Preview,
-  Section,
-  Text,
-} from '@react-email/components';
-
-interface WelcomeEmailProps {
-  magicLink?: string;
-}
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : '';
-
-export const WelcomeEmail = ({
-  magicLink,
-}: WelcomeEmailProps) => (
-  <Html>
-    <Head />
-    <Body style={main}>
-      <Preview>Welcome to Face Forward</Preview>
-      <Container style={container}>
-        <Img
-          src={`${baseUrl}/static/raycast-logo.png`}
-          width={48}
-          height={48}
-          alt="FF Logo"
-        />
-        <Heading style={heading}>WELCOME TO FACEFORWARD</Heading>
-        <Section style={body}>
-          <Text style={paragraph}>
-            <Link style={link} href={magicLink}>
-              Click here to verify your account in [DOES NOT YET WORK]
-            </Link>
-          </Text>
-          <Text style={paragraph}>
-            This is the body text for the welcome email... 
-            Kindly ignore this email if you did not create an account with us... 
-          </Text>
-        </Section>
-        <Text style={paragraph}>
-          Best,
-          <br />- Face Forward Team
-        </Text>
-        <Hr style={hr} />
-        <Img
-          src={`${baseUrl}/static/raycast-logo.png`}
-          width={32}
-          height={32}
-          style={{
-            WebkitFilter: 'grayscale(100%)',
-            filter: 'grayscale(100%)',
-            margin: '20px 0',
-          }}
-        />
-        <Text style={footer}>Face Forward Humanitarian Association</Text>
-        <Text style={footer}>
-          ...address goes here if applicable idkk... 
-        </Text>
-      </Container>
-    </Body>
-  </Html>
-);
+    Body,
+    Container,
+    Head,
+    Heading,
+    Hr,
+    Html,
+    Img,
+    Link,
+    Preview,
+    Section,
+    Text,
+  } from '@react-email/components';
+  
+  interface WelcomeEmailProps {
+    name: string;
+    magicLink?: string;
+  }
+  
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : '';
+  
+  export const WelcomeEmail = ({
+    name,
+    magicLink,
+  }: WelcomeEmailProps) => (
+    <Html>
+      <Head />
+      <Body style={main}>
+        <Preview>Welcome to Face Forward</Preview>
+        <Container style={container}>
+          <Heading style={heading}>WELCOME TO FACEFORWARD</Heading>
+  
+          <Text style={paragraph}>Hi {name},</Text>
+  
+          <Section style={body}>
+            {magicLink && (
+              <Text style={paragraph}>
+                <Link style={link} href={magicLink}>
+                  Click here to verify your account
+                </Link>
+              </Text>
+            )}
+  
+            <Text style={paragraph}>
+              We're excited to have you join the FaceForward community!
+            </Text>
+          </Section>
+  
+          <Hr style={hr} />
+  
+          <Text style={footer}>Face Forward Humanitarian Association</Text>
+        </Container>
+      </Body>
+    </Html>
+  );
 
 WelcomeEmail.PreviewProps = {
   magicLink: 'https://raycast.com', // !!! change this to verification 

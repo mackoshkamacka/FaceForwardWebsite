@@ -38,12 +38,13 @@ export default function Signup() {                  //Component setup (exports a
                 email,
                 name,
                 role,
+                verified: false,
                 createdAt: new Date()
             });
 
             //sending welcome email
             try {
-                const res = await fetch("http://localhost:5000/api/sendWelcomeEmail", {
+                const res = await fetch("/api/welcome-email", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name, email }),

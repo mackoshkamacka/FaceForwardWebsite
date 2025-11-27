@@ -34,9 +34,12 @@ export default function Login() {
             //Gets the data from the userDocSnap, then gets the role
             const userData = userDocSnap.data();
             const userRole = userData.role;
+            const userVerified = userData.verified; 
 
             //With the userRole, navigation proceeds. 
-            if (userRole === "artist") {
+            if (!userVerified) {
+                router.push("/awaiting-verification");
+            } else if (userRole === "artist") {
                 router.push("/artist-dashboard");
             } else if (userRole === "patient") {
                 router.push("/pat-hop-dashboard");
