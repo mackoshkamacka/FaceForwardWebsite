@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/login/page.js", "src/emails/WelcomeEmail.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/login/page.js", "src/emails/WelcomeEmail.tsx", "app/awaiting-verification/page.js"],
   "exclude": ["node_modules"]
 }
