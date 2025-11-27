@@ -13,7 +13,7 @@ export default function More() {
         { url: 'https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5', caption: 'Ocean Waves' },
         { url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b', caption: 'Desert Sunset' },
         { url: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e', caption: 'Lake Reflection' }
-    ];
+    ]; 
 
     const nextPhoto = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
@@ -28,50 +28,53 @@ export default function More() {
     };
 
     return (
-        <div className="album-container">
-            <div className="album-header">
-                <h1>our work</h1>
-            </div>
-            
-            <div className="album-viewer">
-                <button className="nav-button prev" onClick={prevPhoto}>
-                    ‹
-                </button>
-                
-                <div className="photo-frame">
-                    <img 
-                        src={photos[currentIndex].url} 
-                        alt={photos[currentIndex].caption}
-                        className="photo"
-                    />
-                    <div className="photo-caption">
-                        {photos[currentIndex].caption}
-                    </div>
+        <div className = "morePage">
+            {/* Our Work section */}
+            <div className="album-container">
+                <div className="album-header">
+                    <h1>our work</h1>
                 </div>
                 
-                <button className="nav-button next" onClick={nextPhoto}>
-                    ›
-                </button>
-            </div>
-            
-            {/* <div className="photo-counter">
-                {currentIndex + 1} / {photos.length}
-            </div> */}
-            
-            <div className="thumbnail-container">
-                {photos.map((photo, index) => (
-                    <div
-                        key={index}
-                        className={`thumbnail ${index === currentIndex ? 'active' : ''}`}
-                        onClick={() => goToPhoto(index)}
-                    >
-                        <img src={photo.url} alt={photo.caption} />
+                <div className="album-viewer">
+                    <button className="nav-button prev" onClick={prevPhoto}>
+                        ‹
+                    </button>
+                    
+                    <div className="photo-frame">
+                        <img 
+                            src={photos[currentIndex].url} 
+                            alt={photos[currentIndex].caption}
+                            className="photo"
+                        />
+                        <div className="photo-caption">
+                            {photos[currentIndex].caption}
+                        </div>
                     </div>
-                ))}
+                    
+                    <button className="nav-button next" onClick={nextPhoto}>
+                        ›
+                    </button>
+                </div>
+                
+                {/* <div className="photo-counter">
+                    {currentIndex + 1} / {photos.length}
+                </div> */}
+                
+                <div className="thumbnail-container">
+                    {photos.map((photo, index) => (
+                        <div
+                            key={index}
+                            className={`thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToPhoto(index)}
+                        >
+                            <img src={photo.url} alt={photo.caption} />
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className = "ourImpactSection">
 
-            
+            {/* Our impact Section */}
+            <div className = "ourImpactSection">
                 <div className = "seperater">
                     <h1 className = "OISHeader">
                         our impact
@@ -86,14 +89,8 @@ export default function More() {
                         <em>Success means smiles, conversations, and community building.</em>
                     </div>
                 </div>
-                
-                
-                
-
-                
-
             </div>
-
         </div>
+
     );
 }
