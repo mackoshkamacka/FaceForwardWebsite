@@ -178,7 +178,7 @@
     z-index: 1000;
 }
 
-.modal-content {
+.modal-content2 {
     background: radial-gradient(circle, 
                                         #a192deeb 0%, 
                                         #7d99ebe0 90%, 
@@ -197,9 +197,10 @@
     color:white; 
 }
 
-.modalHeader {
+.modalHeader3 {
     font-size: 1.3rem;
     font-weight: 600;
+    padding-bottom: 0;  
 }
 
 .requestNotes {
@@ -216,17 +217,26 @@
 
 .request-details {
     margin-bottom: 1rem;
+    padding-top: 0; 
 }
 
 .stats {
     display:flex; 
-    padding-top: 2rem; 
+    padding-top: 0; 
 }
 
 .personalInformation, .requestInformation {
     flex: 1; 
 }
 
+
+.time-input, .location-input {
+    background-color: transparent;
+    background: none;
+    color: white; 
+    border-width: 0px;
+    padding: 0; 
+}
 
 
 .modal-footer {
@@ -238,6 +248,7 @@
     gap: 0.5rem;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+    padding-top: 1rem; 
 }
 
 .btn {
