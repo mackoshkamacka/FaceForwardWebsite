@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
 
     // Send email with React Email template
     const { data, error } = await resend.emails.send({
-      from: 'Face Forward <onboarding@resend.dev>',
+      from: "test@faceforwardcanada.org",
       to: recipientEmail,
       subject: `Your appointment with ${artistName} is confirmed!`,
       react: ArtistApprovedEmail({
