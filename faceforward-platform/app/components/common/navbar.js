@@ -10,7 +10,7 @@ export default function NavBar() {
                 <Link href="/">Home</Link>
                 <Link href="/about">About</Link>
                 <Link href="/more">More</Link>
-                <Link href="/get-involved">Get Involved</Link> 
+                {/* <Link href="/get-involved">Get Involved</Link>  */}
             </nav>
             <WaterBar />
         </div>
