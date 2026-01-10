@@ -25,7 +25,7 @@ export default function AboutPage() {
 
                 <div className = "heroImageContainer">
                     {/* hero image  */}
-                    <img className = "heroImage" src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4' />
+                    <img className = "heroImage" src = "../about-1.png" />
                 </div>
             </div>
 
@@ -33,17 +33,21 @@ export default function AboutPage() {
             <div className = "mergeSection">
                 {/* what we do section */}
                 <div className = "whatWeDoSection">
-                    <h1 className = "nnHeader">WHAT WE DO</h1>
-                    <p>We connect professional makeup artists, face painters, and volunteer photographers with hospitals across Toronto to create uplifting, artistic experiences for patients. <br /> <br/ >
-                    <strong> Every event is designed to support well-being, boost self-esteem, and create meaningful human connection.</strong></p>
-                    <h1 className = "nnHeader2">WHY IT MATTERS</h1>
-                    <p className = "why">A moment of care can shift an entire hospital stay. <br /> <br />
-                    By bringing visual arts, conversation, and community into clinical spaces, we create moments that matter—for patients, artists, and student volunteers alike.</p>
-                    
+                    <img className = "whatWeImage" src = "../about-2.jpg" /> 
+                    <div className = "whatWeText"> 
+                        <h1 className = "nnHeader">WHAT WE DO</h1>
+                        <p>We connect professional makeup artists, face painters, and volunteer photographers with hospitals across Toronto to create uplifting, artistic experiences for patients. <br /> <br/ >
+                        <strong> Every event is designed to support well-being, boost self-esteem, and create meaningful human connection.</strong></p>
+                        <h1 className = "nnHeader2">WHY IT MATTERS</h1>
+                        <p className = "why">A moment of care can shift an entire hospital stay. <br /> <br />
+                        By bringing visual arts, conversation, and community into clinical spaces, we create moments that matter—for patients, artists, and student volunteers alike.</p>
+                    </div> 
                 </div>
 
                 {/* volunteer section */}
                 <div className = "volunteerSection">
+                    <img className = "whatWeImage" src = "../about-3.jpg" /> 
+                    <div className = "whatWeText">
                     <div className = "nnHeader">VOLUNTEER WITH US</div>
                     <p>From medicine to social work to fine arts—Face Forward welcomes all.
                     Volunteer as an event assistant, photographer, or liaison and contribute to the well-being of patients through creativity and connection.</p>
@@ -54,6 +58,7 @@ export default function AboutPage() {
                     <div className = "button-container">
                         <button className = "volButton" 
                         onClick={clickGetInvolved}>Volunteer</button>
+                    </div>
                     </div>
                 </div>
             </div>

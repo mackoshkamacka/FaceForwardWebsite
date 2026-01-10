@@ -31,7 +31,7 @@ export default function GetInvolved() {
                         </h1>
                     </div>
                     <p className = "preamble">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    If you are a hospital, patient, artist, or volunteer please feel free to make an account with us. For all other inquiries, please reach out to us via email to connect with us more directly. If you already have an account with us, log in below!
                     </p>
                     <div className = "GIButtons">
                         <button className = "GIB" onClick={clickSignup}>

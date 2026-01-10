@@ -136,16 +136,32 @@ p {
 
 .whatWeDoSection {
     margin: 0; 
+    padding: 0; 
     flex: 1; 
+}
+
+.whatWeImage {
+    padding-bottom: 1rem;
+    border-radius: 2rem;
+}
+
+.whatWeText {
+    padding: 1.5rem; 
+    margin-bottom: 1rem; 
+}
+
+.VolunteerText {
+    padding: 1.5rem; 
+    margin-bottom: 1rem; 
 }
 
 .volunteerSection {
     margin: 0; 
     flex: 1;
+    padding: 0; 
 
     display: flex; 
     flex-direction: column;
-    justify-content: center;
 }
 
 .peer {
