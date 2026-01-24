@@ -178,6 +178,7 @@ p {
 
 
 
+
 .roadmapSection {
     padding-bottom: 2rem;
 }
@@ -193,6 +194,7 @@ p {
     display: flex; 
     justify-content: right;
     padding-top: 1rem; 
+    gap: 1rem; 
 }
 
 .volButton {

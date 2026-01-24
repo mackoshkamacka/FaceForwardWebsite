@@ -63,11 +63,6 @@ export default function HomePage() {
                         <strong className = "exists"> Face Forward Canada exists to support that. </strong> <br /> <br/>
                         <em>We connect professional makeup artists, face painters, and student volunteers with hospitals to bring beauty, dignity, and joy to every face.</em>
                     </p>
-                    <a href = "https://docs.google.com/forms/d/e/1FAIpQLSe7DvRU7DiW87wAMJalSd_jUqPycHeOWJ_JIzabuGMAqo2MIw/viewform">
-                    <button className = "execButton">
-                        Executive Recruitment Form
-                    </button>
-                </a>
                 </div>
             </div>
 

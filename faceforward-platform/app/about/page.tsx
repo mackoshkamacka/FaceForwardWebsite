@@ -56,8 +56,13 @@ export default function AboutPage() {
                     <h2 className = "nnHeader peer">PEER AMBASADORS</h2>
                     <p>Volunteers who spread the word across disciplines—bringing more voices, talents, and passions into the initiative.</p>
                     <div className = "button-container">
-                        <button className = "volButton" 
+                        <button className = "execButton" 
                         onClick={clickGetInvolved}>Volunteer</button>
+                        <a href = "https://docs.google.com/forms/d/e/1FAIpQLSe7DvRU7DiW87wAMJalSd_jUqPycHeOWJ_JIzabuGMAqo2MIw/viewform">
+                    <button className = "execButton">
+                        Executive Recruitment Form
+                    </button>
+                </a>
                     </div>
                     </div>
                 </div>
