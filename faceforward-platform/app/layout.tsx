@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     title: "Face Forward Humanitarian Association",
-    description: "Face Forward Humanitarian Association is a registered charitable organization in Canada, under the registration number: 1744416-8",
+    description: "Face Forward is an Ontario-based organization that strives to bring comfort and dignity to hospitalized individuals through complementary beauty services. We connect cosmetic and facepaint artists with hospitals to host makeover events for adults and children at no charge to patients",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
                 className={`${geistSans.variable} 
                             ${geistMono.variable} 

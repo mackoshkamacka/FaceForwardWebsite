@@ -99,6 +99,9 @@
 }
 
 
+
+
+
 .missionStatement,
 .missionStatementP, 
 .missionStatementP2 {
@@ -122,6 +125,22 @@
      padding-top: 2rem;
      font-weight: bold;
 }
+
+.ffLogo {
+    position:relative; 
+    align-self: self-end;
+    z-index: 5;
+}
+
+
+
+
+
+
+
+
+
+
 
 .heroBottom {
     flex: 10;
@@ -211,6 +230,15 @@
     animation: orbFloat 12s ease-in-out infinite;
 }
 
+
+
+
+
+
+
+
+
+
 .updates {
     padding-left: 0; 
     
@@ -271,8 +299,12 @@
 .infoContainer {
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0 1rem; 
+    margin: 2rem; 
+    gap: 2rem;
+    line-height: 1.2;
+
 }
 
 
@@ -283,20 +315,22 @@
     #6657cd 10%, 
     #63AFF7 100%);
 
-    max-width: 920px; 
+    /* max-width: 920px;  */
     margin: 0.5rem auto; 
-    padding: 2rem; 
+    padding: 2rem;
+    padding-top: 3rem; 
     border-radius: 2rem;
-    
+      
     color: white; 
-    font-size: 0.9rem;
-
+    font-size: 1rem;
+    align-content: center; 
 }
 
 .exists {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     line-height: 0.9;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    text-decoration: underline;
 }
 
 .execButton {

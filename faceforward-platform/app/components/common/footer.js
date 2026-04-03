@@ -7,13 +7,14 @@ export default function Footer() {
         <div className = "footer">
             <WaterBar />
             <h2 className = "sponsorHeader">
-                    Supported By
+                    Supported By & In Collaboration With
                 </h2>
             <div className = "sponsors">
                     <img className = "sponsor" src="https://www.ontario.ca/themes/ontario_2021/assets/ontario@2x-print.png"/>
-                    <img className = "sponsor" src = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Canada_wordmark.svg/2560px-Canada_wordmark.svg.png" />
+                    <img className = "sponsor" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTluLETzYoTaS5aBauzorP1bmqqxv4hp5IeQQ&s" />
+                    <img className = "sponsor" src = "https://sunnybrook.vertoengage.com/engage/assets/generic-open-clinic/src/assets/logos/sunnybrook.png" />
             </div>
-            <p className = "copy">© 2025 by FFC. All Rights Reserved</p>
+            <p className = "copy">© 2026 by FFC. All Rights Reserved</p>
 
 
             <div className = "legalInfo">

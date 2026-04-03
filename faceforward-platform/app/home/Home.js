@@ -1,4 +1,5 @@
 import "./Home.css";
+import Image from 'next/image';
 import GrainVisual from "../components/home/GrainVisual";  
 
 export default function HomePage() {
@@ -28,9 +29,24 @@ export default function HomePage() {
                     </div>
                 </div>
 
+                {/* TODO: MAKE A LOGO AT THE BOTTOM RIGHT CORNER OF HERO */}
+                {/* <div className = "ffLogo">
+                    <Image 
+                        src="/app/public/FaceForwardLogo.png" 
+                        width={80}
+                        height={80}
+                        alt="Face Forward Logo"
+                        />
+                    
+                </div> */}
             </div>
+
+
             <div className="impact">
-                <p>0 Hospitals Associated, 0 Patients Helped, 0 Artists Participating.</p>
+                {/* <p>0 Hospitals Associated, 0 Patients Helped, 0 Artists Participating.</p> */}
+                <p>
+                    Proudly in collaboration with Sunnybrook Health Sciences Centre (Sunnybrook Hospital), Toronto, Ontario
+                </p>
             </div>
             <div className="testimonials">
                 {/* card carosel component  */}
@@ -53,6 +69,7 @@ export default function HomePage() {
             <div className = "infoContainer">
                 <div className = "info">
                     <p>
+                        <strong className = "exists"> WHAT FACE FORWARD ADDRESSES: </strong> <br /> <br/>
                         <strong> Thousands of Canadians spend weeks to months in hospital each year </strong>
                         —often away from loved ones, routines, and the comforts of daily life. Long hospital stays can leave patients feeling disconnected, unseen, and stripped of their sense of self. <br /> <br/> 
                         Many inpatients experience mobility challenges or chronic pain, limiting their ability to participate in daily activities or creative outlets. Yet small moments of human connection and self-expression can profoundly improve the hospital experience. In Toronto alone, hundreds of patients each day could benefit from programs that bring joy, confidence, and creativity to their bedside. <br />
@@ -60,7 +77,7 @@ export default function HomePage() {
                 </div>
                 <div className = "info2">
                     <p>
-                        <strong className = "exists"> Face Forward Canada exists to support that. </strong> <br /> <br/>
+                        <strong className = "exists"> HOW WE TACKLE IT: </strong> <br /> <br/>
                         <em>We connect professional makeup artists, face painters, and student volunteers with hospitals to bring beauty, dignity, and joy to every face.</em>
                     </p>
                 </div>
