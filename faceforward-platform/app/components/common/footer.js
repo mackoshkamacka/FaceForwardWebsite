@@ -12,7 +12,7 @@ export default function Footer() {
             <div className = "sponsors">
                     <img className = "sponsor" src="https://www.ontario.ca/themes/ontario_2021/assets/ontario@2x-print.png"/>
                     <img className = "sponsor" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTluLETzYoTaS5aBauzorP1bmqqxv4hp5IeQQ&s" />
-                    <img className = "sponsor" src = "https://sunnybrook.vertoengage.com/engage/assets/generic-open-clinic/src/assets/logos/sunnybrook.png" />
+                    {/* <img className = "sponsor" src = "https://sunnybrook.vertoengage.com/engage/assets/generic-open-clinic/src/assets/logos/sunnybrook.png" /> */}
             </div>
             <p className = "copy">© 2026 by FFC. All Rights Reserved</p>
 
