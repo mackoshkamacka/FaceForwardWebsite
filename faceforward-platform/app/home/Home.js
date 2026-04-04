@@ -44,9 +44,9 @@ export default function HomePage() {
 
             <div className="impact">
                 {/* <p>0 Hospitals Associated, 0 Patients Helped, 0 Artists Participating.</p> */}
-                <p>
+                {/* <p>
                     Proudly in collaboration with Sunnybrook Health Sciences Centre (Sunnybrook Hospital), Toronto, Ontario
-                </p>
+                </p> */}
             </div>
             <div className="testimonials">
                 {/* card carosel component  */}
