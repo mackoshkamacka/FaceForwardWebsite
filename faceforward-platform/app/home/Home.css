@@ -165,15 +165,14 @@
     content: '';
     position: absolute;
     width: 800%;
-    height: 400%;
+    height: 400vh;
     top: -100%;
     left: -100%;
     background: linear-gradient( 
-                                        #281794 10%, 
+                                        #331dc2 10%, 
                                         #6151ca 30%, 
                                         #6984ee 60%,
-                                        #a0c6ed 72%,
-                                        transparent 100%);
+                                        #a0c6ed 82%);
     animation: rotateSplash 10s linear infinite;
     pointer-events: none;
 }
@@ -363,7 +362,7 @@
     .hero {
         padding-left: 1rem;
         padding-right: 1rem;
-        min-height: 180vh; 
+        min-height: 140vh; 
     }
 
     .heroTop .heroBottom {
