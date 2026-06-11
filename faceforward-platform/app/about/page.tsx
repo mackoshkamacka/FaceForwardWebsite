@@ -25,7 +25,7 @@ export default function AboutPage() {
 
                 <div className = "heroImageContainer">
                     {/* hero image  */}
-                    <img className = "heroImage" src = "../about-1.png" />
+                    <img className = "heroImage" src = "../about-1.webp" />
                 </div>
             </div>
 
@@ -33,7 +33,7 @@ export default function AboutPage() {
             <div className = "mergeSection">
                 {/* what we do section */}
                 <div className = "whatWeDoSection">
-                    <img className = "whatWeImage" src = "../about-2.jpg" /> 
+                    <img className = "whatWeImage" src = "../about-2.webp" /> 
                     <div className = "whatWeText"> 
                         <h1 className = "nnHeader">WHAT WE DO</h1>
                         <p>We connect professional makeup artists, face painters, and volunteer photographers with hospitals across Toronto to create uplifting, artistic experiences for patients. <br /> <br/ >
@@ -46,14 +46,14 @@ export default function AboutPage() {
 
                 {/* volunteer section */}
                 <div className = "volunteerSection">
-                    <img className = "whatWeImage" src = "../about-3.jpg" /> 
+                    <img className = "whatWeImage" src = "../about-3.webp" /> 
                     <div className = "whatWeText">
                     <div className = "nnHeader">VOLUNTEER WITH US</div>
                     <p>From medicine to social work to fine arts—Face Forward welcomes all.
                     Volunteer as an event assistant, photographer, or liaison and contribute to the well-being of patients through creativity and connection.</p>
 
 
-                    <h2 className = "nnHeader peer">PEER AMBASADORS</h2>
+                    <h2 className = "nnHeader peer">PEER AMBASSADORS</h2>
                     <p>Volunteers who spread the word across disciplines—bringing more voices, talents, and passions into the initiative.</p>
                     <div className = "button-container">
                         <button className = "execButton" 

@@ -211,6 +211,20 @@
 @media (max-width: 755px) {
     .centralCard {
         width: 20rem;
+        min-height: 105vh; 
+    }
+    
+    .GIContainer {
+        min-height: 120vh;
+    }
+
+    .preamble {
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .GIB, .GIB2 {
+        font-size: 0.8rem;
     }
     
 }

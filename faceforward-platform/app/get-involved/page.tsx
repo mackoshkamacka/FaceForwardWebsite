@@ -46,9 +46,9 @@ export default function GetInvolved() {
                      
                     <div>
                         <a href = "https://docs.google.com/forms/d/e/1FAIpQLSe7DvRU7DiW87wAMJalSd_jUqPycHeOWJ_JIzabuGMAqo2MIw/viewform">
-                    <button className = "GIB2">
-                        Executive Recruitment Form
-                    </button>
+                        <button className = "GIB2">
+                            Executive Recruitment Form
+                        </button>
                     </a>
                     </div>
                 </div>

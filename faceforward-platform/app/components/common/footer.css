@@ -81,6 +81,13 @@
     padding-right: 5vw;
 }
 
+@media (max-width: 755px) {
+    .legalInfo {
+        font-size: 0.7rem;
+    }
+    
+}
+
   
 
   

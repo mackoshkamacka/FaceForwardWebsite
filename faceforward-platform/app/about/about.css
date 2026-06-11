@@ -283,6 +283,11 @@ p {
         margin: 1rem; 
         flex-direction: column;
         padding-bottom: 1rem;  
+        font-size: 0.9rem;
+    }
+
+    .heroText {
+        padding-right: 2rem; 
     }
 
     .mergeSection {
@@ -292,6 +297,7 @@ p {
 
     .whatWeDoSection {
         margin-bottom: 2rem; 
+        font-size: 0.9rem;
     }
 
 
@@ -307,6 +313,11 @@ p {
 
     .heroText {
         width: 100%; 
+    }
+
+    .volunteerSection {
+        font-size: 0.9rem; 
+    
     }
 
 

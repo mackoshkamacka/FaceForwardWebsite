@@ -297,12 +297,12 @@
 
 
 .infoContainer {
-    display: flex;
+    display: inline-block;
     justify-content: center;
     flex-direction: row;
     padding: 0 1rem; 
-    margin: 2rem; 
-    gap: 2rem;
+    margin: 0rem; 
+    gap: 4rem;
     line-height: 1.2;
 
 }
@@ -316,13 +316,13 @@
     #63AFF7 100%);
 
     /* max-width: 920px;  */
-    margin: 0.5rem auto; 
+    margin: 1rem auto; 
     padding: 2rem;
     padding-top: 3rem; 
     border-radius: 2rem;
       
     color: white; 
-    font-size: 1rem;
+    font-size: 0.9rem;
     align-content: center; 
 }
 
@@ -362,7 +362,7 @@
     .hero {
         padding-left: 1rem;
         padding-right: 1rem;
-        min-height: 120vh; 
+        min-height: 180vh; 
     }
 
     .heroTop .heroBottom {
@@ -423,6 +423,8 @@
     }
     
     
-
+    .grainOrb {
+        display: none; 
+    }
 
 }
