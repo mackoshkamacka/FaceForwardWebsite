@@ -75,3 +75,12 @@ textarea.contactUsField {
     color: white
 }
 
+    @media (max-width: 755px) {
+        .contactUsFormContainer {
+            width: 100%; 
+            font-size: 0.9rem;
+        }
+    }
+    
+
+

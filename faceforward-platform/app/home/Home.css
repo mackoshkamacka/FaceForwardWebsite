@@ -145,6 +145,7 @@
 .heroBottom {
     flex: 10;
     min-height: 100%;
+    min-width: 100%; 
     position: relative;
     flex-direction: column;
     justify-content: center;
@@ -156,24 +157,24 @@
     border-radius: 2rem;
     /* rounded splash edges */
     box-shadow: 0 10px 30px rgba(240, 34, 34, 0.1);
-    background-color: #63aff7;
+    background-color: #90bce5;
     width: 5rem;
 } 
 
 .heroBottom::before {
     content: '';
     position: absolute;
-    width: 300%;
-    height: 300%;
+    width: 800%;
+    height: 400%;
     top: -100%;
     left: -100%;
-    background: radial-gradient(circle, 
-                                        #281794 0%, 
-                                        #4e3cbf 10%, 
-                                        #63AFF7 40%,
-                                        #e1f0ff 72%,
+    background: linear-gradient( 
+                                        #281794 10%, 
+                                        #6151ca 30%, 
+                                        #6984ee 60%,
+                                        #a0c6ed 72%,
                                         transparent 100%);
-    animation: rotateSplash 15s linear infinite;
+    animation: rotateSplash 10s linear infinite;
     pointer-events: none;
 }
 
