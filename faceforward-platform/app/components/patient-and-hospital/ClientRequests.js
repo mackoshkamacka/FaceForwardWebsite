@@ -1,136 +1,119 @@
-"use client"; 
+"use client";
 
-import { useState, useEffect } from 'react';
-import { db, auth } from '../../../src/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { FaSync } from 'react-icons/fa';
-import './styling/ClientRequest.css';
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
-export default function Requests() {
+import { db } from "../../../src/firebase";
+import { useDashboardUser } from "../../lib/useCurrentUser";
+import { formatDate } from "../../lib/platform";
+
+/** Organization/client widget: live list of the user's own requests. */
+export default function ClientRequests() {
+    const { user } = useDashboardUser();
     const [requests, setRequests] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [selectedRequest, setSelectedRequest] = useState(null);
-    const [showCompleted, setShowCompleted] = useState(false);
-    const [refreshCount, setRefreshCount] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [showClosed, setShowClosed] = useState(false);
+    const [selected, setSelected] = useState(null);
 
-    const formatDate = (date) => {
-        if (!date) return 'Not specified';
-        try {
-            if (date.toDate) return date.toDate().toLocaleDateString();
-            if (date instanceof Date) return date.toLocaleDateString();
-            const parsedDate = new Date(date);
-            return !isNaN(parsedDate.getTime()) ? parsedDate.toLocaleDateString() : 'Invalid date';
-        } catch {
-            return 'Invalid date';
-        }
-    };
+    useEffect(() => {
+        const q = query(collection(db, "requests"), where("userId", "==", user.uid));
+        return onSnapshot(
+            q,
+            (snapshot) => {
+                const rows = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+                rows.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
+                setRequests(rows);
+                setLoading(false);
+            },
+            (err) => {
+                console.error("Error fetching requests:", err);
+                setLoading(false);
+            }
+        );
+    }, [user.uid]);
 
-    const fetchRequests = async () => {
-        if (!auth.currentUser) return;
-        setLoading(true);
-        try {
-            const q = query(collection(db, 'requests'), where('userId', '==', auth.currentUser.uid));
-            const snapshot = await getDocs(q);
-            const requestsData = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    ...data,
-                    requestedDate: data.requestedDate?.toDate?.() || data.requestedDate,
-                    createdAt: data.createdAt?.toDate?.() || data.createdAt
-                };
-            }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setRequests(requestsData);
-        } catch (error) {
-            console.error('Error fetching requests:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => { fetchRequests(); }, [refreshCount]);
-    const handleRefresh = () => setRefreshCount(prev => prev + 1);
-
-    const filteredRequests = showCompleted ? requests : requests.filter(r => r.status !== 'completed');
-
-    const getStatusClass = (status) => {
-        switch (status) {
-            case 'pending': return 'status-pending';
-            case 'approved': return 'status-approved';
-            case 'completed': return 'status-completed';
-            case 'rejected': return 'status-rejected';
-            default: return 'status-default';
-        }
-    };
+    const isClosed = (r) => r.status === "completed" || r.status === "rejected";
+    const visible = showClosed ? requests : requests.filter((r) => !isClosed(r));
+    const selectedLive = selected && requests.find((r) => r.id === selected);
 
     return (
-        <div className="requests-container">
-            <div className="requests-header">
-                <h2 className = "nR-header">Requested Services</h2>
-                <button onClick={handleRefresh} disabled={loading} className="refresh-button">
-                    <FaSync className={loading ? 'spin' : ''} />
-                    {loading ? 'Refreshing...' : 'Refresh'}
-                </button>
+        <div className="widget">
+            <div className="widgetHeader">
+                <h2 className="sectionTitle">Your Requests</h2>
+                {requests.some(isClosed) && (
+                    <label className="inlineFilter">
+                        <input
+                            type="checkbox"
+                            checked={showClosed}
+                            onChange={() => setShowClosed(!showClosed)}
+                        />
+                        Show completed &amp; declined
+                    </label>
+                )}
             </div>
 
-            <label className="filter-checkbox">
-                <input
-                    type="checkbox"
-                    checked={showCompleted}
-                    onChange={() => setShowCompleted(!showCompleted)}
-                />
-                Show completed requests
-            </label>
-
-            {loading && filteredRequests.length === 0 ? (
-                <div>Loading your requests...</div>
-            ) : filteredRequests.length === 0 ? (
-                <p>No service requests found.</p>
+            {loading ? (
+                <div className="spinner" role="status" aria-label="Loading requests" />
+            ) : visible.length === 0 ? (
+                <div className="glassInset emptyState">
+                    <strong>{requests.length === 0 ? "No requests yet" : "No open requests"}</strong>
+                    {requests.length === 0
+                        ? "Choose a service to send your first request."
+                        : "Everything is wrapped up. Requests you send will show here."}
+                </div>
             ) : (
-                <div className="request-list">
-                    {filteredRequests.map(request => (
-                        <div key={request.id} className="request-card" onClick={() => setSelectedRequest(request)}>
-                            <div className="request-card-header">
-                                <h3>{request.serviceName}</h3>
-                                <span className={`request-status ${getStatusClass(request.status)}`}>
-                                    {request.status}
-                                </span>
+                <div className="cardList">
+                    {visible.map((request) => (
+                        <button
+                            key={request.id}
+                            className="glassInset itemCard"
+                            onClick={() => setSelected(request.id)}
+                        >
+                            <div className="itemCardHeader">
+                                <h3 className="itemCardTitle">{request.serviceName}</h3>
+                                <span className={`pill pill-${request.status}`}>{request.status}</span>
                             </div>
-                            <div className="request-dates">
-                                <p><strong>Requested:</strong> {formatDate(request.requestedDate)}</p>
-                                <p><strong>Submitted:</strong> {formatDate(request.createdAt)}</p>
+                            <div className="itemMeta">
+                                <span>Preferred date: {formatDate(request.requestedDate)}</span>
+                                <span>Sent: {formatDate(request.createdAt)}</span>
                             </div>
-                        </div>
+                        </button>
                     ))}
                 </div>
             )}
 
-            {selectedRequest && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                            <span className={`modal-status ${getStatusClass(selectedRequest.status)}`}>
-                                {selectedRequest.status}
-                            </span>
-                            <button onClick={() => setSelectedRequest(null)} className="close-button">
-                                X
+            {selectedLive && (
+                <div className="modalOverlay" onClick={() => setSelected(null)}>
+                    <div
+                        className="glass modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={selectedLive.serviceName}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="modalHeader">
+                            <div>
+                                <span className={`pill pill-${selectedLive.status}`}>{selectedLive.status}</span>
+                                <h2 className="sectionTitle">{selectedLive.serviceName}</h2>
+                            </div>
+                            <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)} aria-label="Close">
+                                ✕
                             </button>
                         </div>
-                        <h2 className = "serviceName">{selectedRequest.serviceName}</h2>
-                        
-                        <div>
-                            {/* <h3>Request Details</h3> */}
-                            <div className="request-dates">
-                                <p><strong>Requested Date:</strong> {formatDate(selectedRequest.requestedDate)}</p>
-                                <p><strong>Submitted On:</strong> {formatDate(selectedRequest.createdAt)}</p>
-                                <p><strong>Artist ID:</strong> {selectedRequest.artistId}</p>
-                                <p><strong>Service ID:</strong> {selectedRequest.serviceId}</p>
-                            </div>
+                        <div className="detailGrid">
+                            <p><strong>Preferred date:</strong> {formatDate(selectedLive.requestedDate)}</p>
+                            <p><strong>Sent:</strong> {formatDate(selectedLive.createdAt)}</p>
+                            {selectedLive.location && <p><strong>Location:</strong> {selectedLive.location}</p>}
+                            {(selectedLive.numberOfParticipants ?? selectedLive.numberOfPatients) && (
+                                <p>
+                                    <strong>Participants:</strong>{" "}
+                                    {selectedLive.numberOfParticipants ?? selectedLive.numberOfPatients}
+                                </p>
+                            )}
                         </div>
-                        <div>
-                            <h3 className = "noteHeader">Notes</h3>
-                            <div className="notes-box">{selectedRequest.notes || 'No additional notes provided'}</div>
-                        </div>
+                        <p className="glassInset itemCard">
+                            <strong>Notes:</strong> {selectedLive.notes || "No additional notes."}
+                        </p>
                     </div>
                 </div>
             )}

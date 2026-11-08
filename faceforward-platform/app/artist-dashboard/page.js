@@ -1,41 +1,28 @@
-import "./ArtistDashboard.css"; 
-import GrainVisual from "../components/home/GrainVisual"
-
+import DashboardShell from "../components/dashboard/DashboardShell";
 import CreateNewService from "../components/artist/CreateNewService";
-import ArtistsServices from "../components/artist/ArtistsServices";
-import ArtistRequest from "../components/artist/ArtistRequest";
+import ArtistServices from "../components/artist/ArtistsServices";
+import ArtistRequests from "../components/artist/ArtistRequest";
+import { ROLES } from "../lib/platform";
+
+const INTROS = {
+    [ROLES.ARTIST]: [
+        "Thank you for volunteering your talent. List the services you can offer, such as hair, makeup, nail art or skincare, and partner organizations and clients will be able to request them. Every Face Forward service is free of charge.",
+        "Review new requests on the right. Approving one sends the requester a confirmation email with a calendar invite. At every event, please follow our health and sanitization procedures: masks on, long hair tied back, one personal single-use kit per client.",
+    ],
+};
 
 export default function ArtistDashboard() {
     return (
-        <div className="artistDash">
-            <div className = "dashBottom">
-                <GrainVisual /> 
-            </div>
-            <div className = "dashTop">
-                <div className = "welcome">
-                    <h1 className = "nHeader">Welcome _name_</h1>
-                    <div className = "howTo"> 
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </div>
-                </div>
-                
-                <div className = "services">
-                    <div className = "leftServices">
-                        <CreateNewService />
-                        <ArtistsServices />
-                    </div>
-                    <div className="rightServices">
-                        <ArtistRequest />
-                    </div>
-                </div>
-                
-                
-            </div>
-            
-
-            
-        </div>
+        <DashboardShell
+            allowedRoles={[ROLES.ARTIST]}
+            intros={INTROS}
+            left={
+                <>
+                    <CreateNewService />
+                    <ArtistServices />
+                </>
+            }
+            right={<ArtistRequests />}
+        />
     );
 }

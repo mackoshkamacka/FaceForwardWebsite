@@ -1,267 +1,251 @@
 "use client";
 
-import "./styling/ArtistRequest.css";
+import { useEffect, useState } from "react";
+import { collection, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 
-import { useState, useEffect } from 'react';
-import { db, auth } from '../../../src/firebase';
-import {
-    collection, query, where,
-    updateDoc, doc,
-    onSnapshot
-} from 'firebase/firestore';
+import { db } from "../../../src/firebase";
+import { useDashboardUser } from "../../lib/useCurrentUser";
+import { REQUEST_STATUSES, ROLE_OPTIONS, formatDate } from "../../lib/platform";
 
+const roleLabel = (type) => ROLE_OPTIONS.find((r) => r.value === type)?.label ?? type;
+const participantsOf = (request) => request.numberOfParticipants ?? request.numberOfPatients;
+
+/** Artist widget: incoming requests for the artist's services, with approve/complete/decline. */
 export default function ArtistRequests() {
+    const { user } = useDashboardUser();
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [filter, setFilter] = useState('all');
-    const [selectedRequest, setSelectedRequest] = useState(null);
-    const [appointmentTime, setAppointmentTime] = useState('10:00');
-    const [appointmentLocation, setAppointmentLocation] = useState('Face Forward LA Clinic');
-    const [isApproving, setIsApproving] = useState(false);
+    const [filter, setFilter] = useState("all");
+    const [selected, setSelected] = useState(null);
 
     useEffect(() => {
-        if (!auth.currentUser) {
-            setLoading(false);
-            return;
-        }
-
-        const q = query(
-            collection(db, 'requests'),
-            where('artistId', '==', auth.currentUser.uid)
-        );
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            setRequests(snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })));
-            setLoading(false);
-        }, (error) => {
-            console.error("Error fetching requests:", error);
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, []);
-
-    const handleStatusUpdate = async (requestId, newStatus) => {
-        try {
-            await updateDoc(doc(db, 'requests', requestId), {
-                status: newStatus,
-                updatedAt: new Date()
-            });
-            alert('Request status updated!');
-        } catch (error) {
-            console.error('Error updating request:', error);
-            alert('Failed to update status');
-        }
-    };
-
-    const handleApproveRequest = async (requestId) => {
-        if (isApproving) return; // Prevent double-clicks
-        
-        setIsApproving(true);
-        try {
-            // Send the confirmation email (API will also update status to approved)
-            const response = await fetch('/api/send-appointment-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    requestId: requestId,
-                    appointmentTime: appointmentTime,
-                    location: appointmentLocation,
-                    duration: 60,
-                }),
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                alert('Request approved and confirmation email sent!');
-                setSelectedRequest(null); // Close modal
-            } else {
-                console.error('Failed to send email:', result.error);
-                alert(`Failed to approve request: ${result.error}`);
+        const q = query(collection(db, "requests"), where("artistId", "==", user.uid));
+        return onSnapshot(
+            q,
+            (snapshot) => {
+                const rows = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+                rows.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0));
+                setRequests(rows);
+                setLoading(false);
+            },
+            (err) => {
+                console.error("Error fetching requests:", err);
+                setLoading(false);
             }
-        } catch (error) {
-            console.error('Error approving request:', error);
-            alert('Failed to approve request. Please try again.');
-        } finally {
-            setIsApproving(false);
-        }
-    };
-
-    const filteredRequests = requests.filter(req =>
-        filter === 'all' || req.status === filter
-    );
-
-    // Loading state UI
-    if (loading) {
-        return (
-            <div className="artist-requests">
-                <h2 className="requestHeader">Service Requests</h2>
-                <div className="loading-container">
-                    <div className="loading-spinner"></div>
-                    <p className="loading-text">Loading your requests...</p>
-                </div>
-            </div>
         );
-    }
+    }, [user.uid]);
 
-    // Empty state UI
-    if (requests.length === 0) {
-        return (
-            <div className="artist-requests">
-                <h2 className="requestHeader">Service Requests</h2>
-                <div className="empty-state">
-                    <p>No service requests yet.</p>
-                    <p>Requests will appear here when clients book your services!</p>
-                </div>
-            </div>
-        );
-    }
+    const visible = requests.filter((r) => filter === "all" || r.status === filter);
+    // Keep the open modal in sync with live updates.
+    const selectedLive = selected && requests.find((r) => r.id === selected);
 
     return (
-        <div className="artist-requests">
-            <h2 className="requestHeader">Service Requests</h2>
-            
-            <div className="filter">
-                <label className="filterLabel">Filter by status: </label>
-                <select className="filterBox" value={filter} onChange={(e) => setFilter(e.target.value)}>
-                    <option value="all">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="completed">Completed</option>
-                    <option value="rejected">Rejected</option>
-                </select>
+        <div className="widget">
+            <div className="widgetHeader">
+                <h2 className="sectionTitle">Requests</h2>
+                {requests.length > 0 && (
+                    <label className="inlineFilter">
+                        Show
+                        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+                            <option value="all">All</option>
+                            {REQUEST_STATUSES.map((s) => (
+                                <option key={s} value={s}>
+                                    {s[0].toUpperCase() + s.slice(1)}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                )}
             </div>
 
-            {filteredRequests.length === 0 ? (
-                <div className="empty-state">
-                    <p>No {filter} requests found.</p>
-                    <p>Try selecting a different filter.</p>
+            {loading ? (
+                <div className="spinner" role="status" aria-label="Loading requests" />
+            ) : visible.length === 0 ? (
+                <div className="glassInset emptyState">
+                    <strong>{requests.length === 0 ? "No requests yet" : `No ${filter} requests`}</strong>
+                    {requests.length === 0
+                        ? "Requests from partner organizations and clients will appear here."
+                        : "Try a different filter."}
                 </div>
             ) : (
-                <div className="requests-grid">
-                    {filteredRequests.map(request => (
-                        <div
+                <div className="cardList">
+                    {visible.map((request) => (
+                        <button
                             key={request.id}
-                            className="request-card"
-                            onClick={() => {
-                                setSelectedRequest(request);
-                                // Reset appointment details when opening modal
-                                setAppointmentTime(request.appointmentTime || '10:00');
-                                setAppointmentLocation('Face Forward LA Clinic');
-                            }}
+                            className="glassInset itemCard"
+                            onClick={() => setSelected(request.id)}
                         >
-                            <h3 className="serviceHeader">{request.serviceName}</h3>
-                            <div className="sub">
-                                <p className="blob">Status: {request.status}</p>
-                                <p className="blob">Date: {request.requestedDate}</p>
+                            <div className="itemCardHeader">
+                                <h3 className="itemCardTitle">{request.serviceName}</h3>
+                                <span className={`pill pill-${request.status}`}>{request.status}</span>
                             </div>
-                        </div>
+                            <div className="itemMeta">
+                                <span>{request.name}</span>
+                                <span>{roleLabel(request.type)}</span>
+                                <span>Preferred date: {formatDate(request.requestedDate)}</span>
+                            </div>
+                        </button>
                     ))}
                 </div>
             )}
 
-            {selectedRequest && (
-                <div className="modal-overlay" onClick={() => setSelectedRequest(null)}>
-                    <div className="modal-content2" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-footer">
-                            <button className="btn btn-close" onClick={() => setSelectedRequest(null)}>
-                                X
-                            </button>
-                        </div>
-                        
-                        <h2 className="serviceName">{selectedRequest.serviceName}</h2>
-                        
-                        <div className="request-details">
-                            <div className="stats">
-                                <div className="personalInformation">
-                                    <h3 className="modalHeader3">Client Information</h3>
-                                    <p><strong>Name:</strong> {selectedRequest.name}</p>
-                                    <p><strong>Email:</strong> {selectedRequest.email}</p>
-                                    <p><strong>Type:</strong> {selectedRequest.type}</p>
-                                    {selectedRequest.numberOfPatients && (
-                                        <p><strong>Number of Patients:</strong> {selectedRequest.numberOfPatients}</p>
-                                    )}
-                                </div>
-                                <div className="requestInformation">
-                                    <h3 className="modalHeader3">Request Details</h3>
-                                    <p><strong>Requested Date:</strong> {selectedRequest.requestedDate}</p>
-                                    <p><strong>Status:</strong> {selectedRequest.status}</p>
-                                    <p><strong>Created:</strong> {selectedRequest.createdAt?.toDate().toLocaleDateString()}</p>
+            {selectedLive && (
+                <RequestModal
+                    key={selectedLive.id}
+                    request={selectedLive}
+                    getIdToken={() => user.getIdToken()}
+                    onClose={() => setSelected(null)}
+                />
+            )}
+        </div>
+    );
+}
 
+function RequestModal({ request, getIdToken, onClose }) {
+    const [time, setTime] = useState(request.appointmentTime || "10:00");
+    const [location, setLocation] = useState(request.location || "");
+    const [busy, setBusy] = useState(false);
+    const [message, setMessage] = useState(null);
 
-                                    {selectedRequest.updatedAt && (
-                                        <p><strong>Updated:</strong> {selectedRequest.updatedAt?.toDate().toLocaleDateString()}</p>
-                                    )}
-                                </div>
+    const setStatus = async (status) => {
+        setBusy(true);
+        setMessage(null);
+        try {
+            await updateDoc(doc(db, "requests", request.id), { status, updatedAt: new Date() });
+            setMessage({ kind: "success", text: `Marked as ${status}.` });
+        } catch (error) {
+            console.error("Error updating request:", error);
+            setMessage({ kind: "error", text: "Couldn't update the status. Please try again." });
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    const approve = async () => {
+        if (!location.trim()) {
+            setMessage({ kind: "error", text: "Please add a location before approving." });
+            return;
+        }
+        setBusy(true);
+        setMessage(null);
+        try {
+            const response = await fetch("/api/send-appointment-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${await getIdToken()}`,
+                },
+                body: JSON.stringify({
+                    requestId: request.id,
+                    appointmentTime: time,
+                    location: location.trim(),
+                    duration: 60,
+                }),
+            });
+            const result = await response.json();
+            if (!result.success) throw new Error(result.error || "Unknown error");
+            setMessage({ kind: "success", text: "Approved! A confirmation email is on its way." });
+        } catch (error) {
+            console.error("Error approving request:", error);
+            setMessage({ kind: "error", text: "Couldn't approve the request. Please try again." });
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    const participants = participantsOf(request);
+
+    return (
+        <div className="modalOverlay" onClick={onClose}>
+            <div
+                className="glass modal"
+                role="dialog"
+                aria-modal="true"
+                aria-label={request.serviceName}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div className="modalHeader">
+                    <div>
+                        <span className={`pill pill-${request.status}`}>{request.status}</span>
+                        <h2 className="sectionTitle">{request.serviceName}</h2>
+                    </div>
+                    <button className="btn btn-ghost btn-sm" onClick={onClose} aria-label="Close">
+                        ✕
+                    </button>
+                </div>
+
+                <div className="detailGrid">
+                    <p><strong>Requested by:</strong> {request.name}</p>
+                    <p><strong>Account:</strong> {roleLabel(request.type)}</p>
+                    <p><strong>Email:</strong> {request.email}</p>
+                    {participants && <p><strong>Participants:</strong> {participants}</p>}
+                    <p><strong>Preferred date:</strong> {formatDate(request.requestedDate)}</p>
+                    <p><strong>Submitted:</strong> {formatDate(request.createdAt)}</p>
+                    {request.location && <p><strong>Location:</strong> {request.location}</p>}
+                </div>
+                <p className="glassInset itemCard">
+                    <strong>Notes:</strong> {request.notes || "No additional notes."}
+                </p>
+
+                {request.status === "pending" && (
+                    <div className="stack mt-5">
+                        <h3 className="fieldLabel">Confirm appointment details</h3>
+                        <div className="detailGrid">
+                            <div className="field">
+                                <label htmlFor="appt-time">Time</label>
+                                <input
+                                    id="appt-time"
+                                    type="time"
+                                    value={time}
+                                    onChange={(e) => setTime(e.target.value)}
+                                />
                             </div>
-                            <p className="requestNotes"><strong>Notes:</strong> {selectedRequest.notes || 'No additional notes'}</p>
-                        </div>
-
-                        {/* Appointment details for approval */}
-                        {selectedRequest.status === 'pending' && (
-                            <div className="appointment-details">
-                                <h3 className="modalHeader3">Appointment Details</h3>
-                                <div className="appointment-inputs">
-                                    <div className="input-group">
-                                        <label><strong>Time:</strong></label>
-                                        <input
-                                            type="time"
-                                            value={appointmentTime}
-                                            onChange={(e) => setAppointmentTime(e.target.value)}
-                                            className="time-input"
-                                        />
-                                    </div>
-                                    <div className="input-group">
-                                        <label><strong>Location:</strong></label>
-                                        <input
-                                            type="text"
-                                            value={appointmentLocation}
-                                            onChange={(e) => setAppointmentLocation(e.target.value)}
-                                            className="location-input"
-                                            placeholder="Enter location"
-                                        />
-                                    </div>
-                                </div>
+                            <div className="field">
+                                <label htmlFor="appt-location">Location</label>
+                                <input
+                                    id="appt-location"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Organization name and address"
+                                />
                             </div>
-                        )}
-
-                        <div className="status-buttons">
-                            <button
-                                className={`btn btn-pending ${selectedRequest.status === 'pending' ? 'btn-disabled' : ''}`}
-                                onClick={() => handleStatusUpdate(selectedRequest.id, 'pending')}
-                                disabled={selectedRequest.status === 'pending'}
-                            >
-                                Mark Pending
-                            </button>
-                            <button
-                                className={`btn btn-approve ${selectedRequest.status === 'approved' ? 'btn-disabled' : ''}`}
-                                onClick={() => handleApproveRequest(selectedRequest.id)}
-                                disabled={selectedRequest.status === 'approved' || isApproving}
-                            >
-                                {isApproving ? 'Approving...' : 'Approve & Send Email'}
-                            </button>
-                            <button
-                                className={`btn btn-complete ${selectedRequest.status === 'completed' ? 'btn-disabled' : ''}`}
-                                onClick={() => handleStatusUpdate(selectedRequest.id, 'completed')}
-                                disabled={selectedRequest.status === 'completed'}
-                            >
-                                Complete
-                            </button>
-                            <button
-                                className={`btn btn-reject ${selectedRequest.status === 'rejected' ? 'btn-disabled' : ''}`}
-                                onClick={() => handleStatusUpdate(selectedRequest.id, 'rejected')}
-                                disabled={selectedRequest.status === 'rejected'}
-                            >
-                                Reject
-                            </button>
                         </div>
                     </div>
+                )}
+
+                {message && (
+                    <p className={`notice notice-${message.kind} mt-4`} role="status">
+                        {message.text}
+                    </p>
+                )}
+
+                <div className="btnRow mt-5">
+                    {request.status === "pending" && (
+                        <button className="btn" onClick={approve} disabled={busy}>
+                            {busy ? "Working…" : "Approve & Send Confirmation"}
+                        </button>
+                    )}
+                    {request.status === "approved" && (
+                        <button className="btn" onClick={() => setStatus("completed")} disabled={busy}>
+                            Mark Completed
+                        </button>
+                    )}
+                    {request.status !== "pending" && (
+                        <button className="btn btn-ghost" onClick={() => setStatus("pending")} disabled={busy}>
+                            Move Back to Pending
+                        </button>
+                    )}
+                    {request.status !== "rejected" && request.status !== "completed" && (
+                        <button
+                            className="btn btn-ghost btn-danger"
+                            onClick={() => setStatus("rejected")}
+                            disabled={busy}
+                        >
+                            Decline
+                        </button>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 }

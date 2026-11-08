@@ -1,39 +1,26 @@
-import "./PatHopDashboard.css"; 
-import GrainVisual from "../components/home/GrainVisual"; 
+import DashboardShell from "../components/dashboard/DashboardShell";
+import ServiceRequest from "../components/patient-and-hospital/SerivesRequest";
+import ClientRequests from "../components/patient-and-hospital/ClientRequests";
+import { ROLES } from "../lib/platform";
 
-import HospitalServicesList from "../components/patient-and-hospital/SerivesRequest";
-import PatientRequests from "../components/patient-and-hospital/ClientRequests";
+const INTROS = {
+    [ROLES.ORGANIZATION]: [
+        "Browse services offered by our volunteer artists and request one for an event at your organization. Every service is free of charge, and products can be adapted to your clients' needs, such as fragrance-free or sensitive-skin options.",
+        "Once an artist confirms, you'll receive an email with the details and a calendar invite. You can follow the status of each request on the right.",
+    ],
+    [ROLES.CLIENT]: [
+        "Browse services offered by our volunteer artists and request one for yourself. Every service is free of charge. Let us know about any sensitivities or product preferences in the notes.",
+        "Once an artist confirms, you'll receive an email with the details. You can follow the status of each request on the right.",
+    ],
+};
 
-export default function HospitalDashboard() {
+export default function ClientDashboard() {
     return (
-        <div className="patHopDash">
-            <div className="dashBottom2">
-                <GrainVisual />
-            </div>
-            <div className="dashTop2">
-                <div className="welcome">
-                    <h1 className="nHeader">Welcome _name_</h1>
-                    <div className="howTo">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="services">
-                    <div className="leftServices">
-                        <HospitalServicesList />
-                    </div>
-                    <div className="rightServices">
-                        <PatientRequests />
-                    </div>
-                </div>
-
-
-            </div>
-
-
-
-        </div>
+        <DashboardShell
+            allowedRoles={[ROLES.ORGANIZATION, ROLES.CLIENT]}
+            intros={INTROS}
+            left={<ServiceRequest />}
+            right={<ClientRequests />}
+        />
     );
 }

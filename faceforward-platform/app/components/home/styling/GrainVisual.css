@@ -1,0 +1,29 @@
+.grainOrb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1000px;
+    height: 1000px;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    opacity: 0.7;
+    animation: orbFloat 12s ease-in-out infinite;
+}
+
+@keyframes orbFloat {
+    50% {
+        transform: translate3d(8px, 6px, 0) scale(1.03);
+    }
+}
+
+@media (max-width: 768px) {
+    .grainOrb {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .grainOrb {
+        animation: none;
+    }
+}

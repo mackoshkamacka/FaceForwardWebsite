@@ -1,142 +1,108 @@
-"use client"; 
+"use client";
 
-import "./styling/createNewService.css"; 
+import { useState } from "react";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 
-import { useState } from 'react';
-import { db, auth } from '../../../src/firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db } from "../../../src/firebase";
+import { useDashboardUser } from "../../lib/useCurrentUser";
+import { SERVICE_TYPES } from "../../lib/platform";
 
+const EMPTY_SERVICE = { title: "", type: SERVICE_TYPES[0].value, description: "" };
+
+/** Artist widget: publish a new (free) service. */
 export default function CreateNewService() {
-    const [service, setService] = useState({
-        title: '',
-        description: '',
-        price: '',
-        type: 'makeup', // Default service type
-    });
-    const [submitted, setSubmitted] = useState(false);
-    const [showForm, setShowForm] = useState(false); // Add this state
+    const { user } = useDashboardUser();
+    const [open, setOpen] = useState(false);
+    const [service, setService] = useState(EMPTY_SERVICE);
+    const [message, setMessage] = useState(null);
+    const [saving, setSaving] = useState(false);
 
-    const serviceTypes = [
-        { value: 'makeup', label: 'Makeup' },
-        { value: 'face-painting', label: 'Face Painting' },
-        { value: 'manicure', label: 'Manicure' },
-        { value: 'hair-styling', label: 'Hair Styling' },
-    ];
+    const update = (key) => (e) => setService({ ...service, [key]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Validation - prevent empty services
-        if (!service.title.trim() || !service.description.trim() || !service.price) {
-            alert('Please fill in all required fields');
-            return;
-        }
+        setSaving(true);
+        setMessage(null);
 
         try {
-            await addDoc(collection(db, 'services'), {
-                ...service,
-                artistId: auth.currentUser.uid,
+            await addDoc(collection(db, "services"), {
+                title: service.title.trim(),
+                type: service.type,
+                description: service.description.trim(),
+                artistId: user.uid,
+                status: "active",
                 createdAt: Timestamp.now(),
-                price: Number(service.price),  // Ensure price is a number
-                status: 'active'
             });
-            setSubmitted(true);
-            setShowForm(false); // Hide form after submission
-            // Reset form
-            setService({
-                title: '',
-                description: '',
-                price: '',
-                type: 'makeup',
+            setService(EMPTY_SERVICE);
+            setOpen(false);
+            setMessage({
+                kind: "success",
+                text: "Service published! Partner organizations and clients can now request it.",
             });
         } catch (error) {
-            console.error("Error adding service: ", error);
-            alert("Failed to create service. Please try again.");
+            console.error("Error adding service:", error);
+            setMessage({ kind: "error", text: "Couldn't publish the service. Please try again." });
+        } finally {
+            setSaving(false);
         }
     };
 
-    if (submitted) {
-        return (
-            <div className="success-message">
-                <p>Service created successfully!</p>
-                <button 
-                    className="formButton"
-                    onClick={() => {
-                        setSubmitted(false);
-                        setShowForm(true); // Show form when adding another
-                    }}
-                >
-                    Add Another Service
-                </button>
-            </div>
-        );
-    }
-
     return (
-        <div className="createNewService">
-            <div className="serviceHeaderContainer">
-                <h2 className="serviceHeader2">Create Service</h2>
-                <button 
-                    className="toggleFormButton"
-                    onClick={() => setShowForm(!showForm)}
-                    aria-expanded={showForm}
+        <div className="widget">
+            <div className="widgetHeader">
+                <h2 className="sectionTitle">Offer a Service</h2>
+                <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setOpen(!open)}
+                    aria-expanded={open}
                 >
-                    {showForm ? '− Hide Form' : '+ New Service'}
+                    {open ? "Close" : "+ New Service"}
                 </button>
             </div>
-            
-            <form 
-                className={`createForm ${showForm ? 'formVisible' : 'formHidden'}`}
-                onSubmit={handleSubmit}
-            >
-                <div className="form-group">
-                    <label>Service Title*</label>
-                    <input
-                        type="text"
-                        value={service.title}
-                        onChange={(e) => setService({ ...service, title: e.target.value })}
-                        required
-                    />
-                </div>
 
-                <div className="form-group">
-                    <label>Description*</label>
-                    <textarea
-                        value={service.description}
-                        onChange={(e) => setService({ ...service, description: e.target.value })}
-                        required
-                        className="textAreaService"
-                    />
-                </div>
+            {message && (
+                <p className={`notice notice-${message.kind}`} role="status">
+                    {message.text}
+                </p>
+            )}
 
-                <div className="form-group">
-                    <label>Price CAD ($)*</label>
-                    <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={service.price}
-                        onChange={(e) => setService({ ...service, price: e.target.value })}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>Service Type*</label>
-                    <select
-                        value={service.type}
-                        onChange={(e) => setService({ ...service, type: e.target.value })}
-                    >
-                        {serviceTypes.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <button type="submit" className="formButton">Create Service</button>
-            </form>
+            {open && (
+                <form className="stack glassInset createServiceForm" onSubmit={handleSubmit}>
+                    <div className="field">
+                        <label htmlFor="service-title">Title</label>
+                        <input
+                            id="service-title"
+                            value={service.title}
+                            onChange={update("title")}
+                            placeholder="e.g. Natural everyday makeup"
+                            required
+                        />
+                    </div>
+                    <div className="field">
+                        <label htmlFor="service-type">Service type</label>
+                        <select id="service-type" value={service.type} onChange={update("type")}>
+                            {SERVICE_TYPES.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="field">
+                        <label htmlFor="service-description">Description</label>
+                        <textarea
+                            id="service-description"
+                            value={service.description}
+                            onChange={update("description")}
+                            placeholder="What you offer, how long it takes, and any products you can adapt (e.g. fragrance-free)."
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn" disabled={saving}>
+                        {saving ? "Publishing…" : "Publish Service"}
+                    </button>
+                </form>
+            )}
         </div>
     );
 }

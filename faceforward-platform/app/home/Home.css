@@ -1,475 +1,207 @@
+/* Home page. The animated splash behind the hero lives in
+   components/home/styling/HeroSplash.css. */
+
 .homeContainer {
     display: flex;
     flex-direction: column;
-    color: #111;
     justify-content: center;
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
+    color: #111;
 }
 
+/* ---------- hero ---------- */
 .hero {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     min-height: 120vh;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    padding-bottom: -2rem; 
-    position: relative;
-}
-
-.title {
-    text-align: right;
-    padding-right: 5rem;
-    padding-bottom: 2rem; 
-}
-
-.title1,
-.title2 {
-    font-size: 16rem;
-    align-items: flex-end;
-    justify-content: center;
-    color: white;
-    
-    margin-bottom: 0;
-    margin-top: 0;
-    font-weight:700;
-    /* font-family: "Merriweather Sans", sans-serif; */
-}
-
-.title2 {
-    font-size: 7.25rem;
-    margin-top: -8rem;
-    padding-left: 0.7rem; 
-}
-
-.subtitle {
-    padding-top: 0rem;
-    padding-right: 0rem; 
-    font-size: 3.2rem;
-    margin-top: -35px;
-    color: white;
-    font-weight: 400; 
-
-    align-items: flex-end;
-    justify-content: center;
-    
+    padding: 0 3rem;
 }
 
 .heroTop {
     position: absolute;
     top: 0;
+    z-index: 2;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
-    z-index: 2;
-    /* background-color: red; */
+}
+
+.title {
+    text-align: right;
+    padding-right: 5rem;
+    padding-bottom: 2rem;
+}
+
+.title1,
+.title2,
+.subtitle {
+    margin: 0;
+    color: white;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+    animation: riseIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.title1 {
+    font-size: 16rem;
+    font-weight: 700;
+    animation-delay: 1s;
+}
+
+.title2 {
+    font-size: 7.25rem;
+    font-weight: 700;
+    margin-top: -8rem;
+    padding-left: 0.7rem;
+    animation-delay: 1.15s;
+}
+
+.subtitle {
+    font-size: 3.2rem;
+    font-weight: 400;
+    margin-top: -35px;
+    animation-delay: 1.3s;
 }
 
 .heroDesc {
-    padding: 0rem 3rem 1vh 2rem;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    text-align: left;
-    bottom: 20px;
-    
     width: 80%;
+    padding: 0 3rem 2rem 2rem;
+    box-sizing: border-box;
     text-align: left;
-    padding-bottom: 2rem; 
-    
-
-    
+    overflow-wrap: break-word;
+    border: 3px solid #dad9fe;
     border-radius: 1rem;
-    border-width: 3px;
-    border-color: #dad9fe;
-    
-    background: radial-gradient(circle, 
-                                        #c1dff1a1 0%, 
-                                        #7d99eba6 70%, 
-                                        transparent 100%);
+    background: radial-gradient(circle, #c1dff1a1 0%, #7d99eba6 70%, transparent 100%);
     background-color: #6c4a9935;
-
-    transition: all 0.5s ease, border-color 0.5s ease;
+    transition: transform 0.5s ease;
+    animation: riseIn 0.9s 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
 .heroDesc:hover {
-    transform: translateY(-15px); 
-    background-color: #6c4a9935;
-
+    transform: translateY(-15px);
 }
 
-
-
-
+/* Uses the `translate` property so it never fights the hover `transform`. */
+@keyframes riseIn {
+    from {
+        opacity: 0;
+        translate: 0 40px;
+        filter: blur(8px);
+    }
+}
 
 .missionStatement,
-.missionStatementP, 
+.missionStatementP,
 .missionStatementP2 {
     color: white;
     opacity: 0.8;
     padding-right: 1rem;
     line-height: 1.2;
-    font-size: 1.1rem; 
+    font-size: 1.1rem;
 }
 
 .missionStatement {
     margin-bottom: 1rem;
+    padding-top: 2rem;
     font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
-    padding-top: 2rem; 
-    
 }
 
 .missionStatementP2 {
-     padding-top: 2rem;
-     font-weight: bold;
-}
-
-.ffLogo {
-    position:relative; 
-    align-self: self-end;
-    z-index: 5;
-}
-
-
-
-
-
-
-
-
-
-
-
-.heroBottom {
-    flex: 10;
-    min-height: 100%;
-    position: relative;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    overflow: hidden;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    /* subtle splash gradient */
-    border-radius: 2rem;
-    /* rounded splash edges */
-    box-shadow: 0 10px 30px rgba(240, 34, 34, 0.1);
-    background-color: #90bce5;
-    width: 5rem;
-} 
-
-.heroBottom::before {
-    content: '';
-    position: absolute;
-    width: 400vh;
-    height: 400vh;
-    top: -100%;
-    left: -100%;
-    background: linear-gradient( 
-                                        #331dc2 10%, 
-                                        #6151ca 30%, 
-                                        #6984ee 60%,
-                                        #a0c6ed 82%);
-    animation: rotateSplash 10s linear infinite;
-    pointer-events: none;
-}
-
-/* #F8FEFF 
-#C7E0F0
-#63AFF7
-#5350AC
-#462792
-#15172E */
-
-
-@keyframes rotateSplash {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.grainOrb {
-    position: absolute;
-    top: 0;
-    /* tweak for placement */
-    left: 0;
-    /* tweak for placement */
-    width: 1000px;
-    height: 1000px;
-
-    pointer-events: none;
-    mix-blend-mode: soft-light;
-    /* blends into gradient */
-    opacity: 0.7;
-    z-index: 1.5;
-    /* sits below your text in heroTop */
-}
-
-@keyframes orbFloat {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate3d(8px, 6px, 0) scale(1.03);
-    }
-
-    100% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-}
-
-.grainOrb {
-    animation: orbFloat 12s ease-in-out infinite;
-}
-
-
-
-
-
-
-
-
-
-
-.updates {
-    padding-left: 0; 
-    
-}
-
-
-.updateCarosel {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    background: #6644cc;
-}
-
-.caroselTrack {
-    display: inline-block;
-    padding-left: 100%;
-    animation: scroll 30s linear infinite;
-    gap: 10rem;
-}
-
-.caroselTrack span {
-    display: inline-block;
-    padding: 0 6rem;
-    font-size: 4rem;
-    color: white;
+    padding-top: 2rem;
     font-weight: bold;
-    transform: scaleX(1.5);
-    transform-origin: center;
-    opacity: 0.5;
 }
 
-.impact {
-    padding-top: 20px;
-    text-align: right;
-    padding-right: 6rem;
-    padding-bottom: 1rem; 
-}
-
-.impact p {
-    color: #333355;
-    font-style: italic;
-}
-
-.updateCardCarosel {
-    min-height: 50vh;
-    background-color: #d8d8f3;
-    border-bottom-width: 1.5rem;
-    border-color: #544aa0;
-    border-style: solid;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-
-
+/* ---------- info cards ---------- */
 .infoContainer {
     display: flex;
-    justify-content: center;
-    flex-direction: row;
-    padding: 0 3rem; 
-    margin: 0rem; 
     gap: 2rem;
+    margin-top: 2.25rem;
+    padding: 0 3rem;
     line-height: 1.2;
-
 }
 
-
-.info, .info2 {
-    background: radial-gradient(
-    farthest-corner at 0px 0px,
-    #5645c5 0%, 
-    #6657cd 10%, 
-    #63AFF7 100%);
-
-    /* max-width: 920px;  */
-    margin: 1rem auto; 
-    padding: 2rem;
-    padding-top: 3rem; 
+.info {
+    margin: 1rem auto;
+    padding: 3rem 2rem 2rem;
+    align-content: center;
     border-radius: 2rem;
-      
-    color: white; 
+    color: white;
     font-size: 0.9rem;
-    align-content: center; 
+    background: radial-gradient(farthest-corner at 0 0, #5645c5 0%, #6657cd 10%, #63aff7 100%);
 }
 
-.exists {
+.info p + p {
+    margin-top: 1em;
+}
+
+.infoHeading {
+    margin-bottom: 1.5rem;
     font-size: 1.6rem;
+    font-weight: 700;
     line-height: 0.9;
-    padding-bottom: 0.5rem;
     text-decoration: underline;
 }
 
-.execButton {
-    margin-top: 1rem; 
-}
-
-
-
-
-
-
-
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
-
-
-
+/* ---------- mobile ---------- */
 @media (max-width: 768px) {
-
     .hero {
-        padding-left: 1rem;
-        padding-right: 1rem;
-        min-height: 140vh; 
+        min-height: 140vh;
+        padding: 0 1rem;
     }
-
-    .heroTop .heroBottom {
-        flex: none;
-    }
-
-    .heroBottom {
-    flex: 10;
-    min-height: 100%;
-    min-width: 100%; 
-    position: relative;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    overflow: hidden;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    /* subtle splash gradient */
-    border-radius: 2rem;
-    /* rounded splash edges */
-    box-shadow: 0 10px 30px rgba(240, 34, 34, 0.1);
-    background-color: #90bce5;
-    width: 5rem;
-} 
-
-.heroBottom::before {
-    content: '';
-    position: absolute;
-    width: 800%;
-    height: 400vh;
-    top: -100%;
-    left: -100%;
-    background: linear-gradient( 
-                                        #331dc2 10%, 
-                                        #6151ca 30%, 
-                                        #6984ee 60%,
-                                        #a0c6ed 82%);
-    animation: rotateSplash 10s linear infinite;
-    pointer-events: none;
-}
 
     .heroTop {
-        padding-bottom: 5rem;
-        padding-left: 1rem; 
-        padding-right: 1rem; 
+        padding: 2rem 1rem 5rem;
     }
 
     .title {
         padding-top: 1rem;
+        padding-right: 0;
+        margin-left: -1rem;
         text-align: center;
-        padding-right: 0;  
-        margin-left: -1rem; 
     }
 
     .title1 {
-        font-size: 35vw;   
+        font-size: 35vw;
     }
 
     .title2 {
-        font-size: 16.2vw; 
-        margin-top: -15vw; 
+        font-size: 16.2vw;
+        margin-top: -15vw;
     }
 
     .subtitle {
-        font-size: 7vw; 
+        font-size: 7vw;
         margin-top: -1.5vw;
-        align-items: flex-end;
-        justify-content: center;
-        
     }
 
     .heroDesc {
+        width: 96%;
+        margin-top: 2rem;
+        margin-right: 2rem;
         padding-left: 1rem;
-        padding-right: 1rem; 
-        margin-top: 2rem; 
-        margin-right: 2rem; 
-        width: 96%; 
-    
+        padding-right: 1rem;
     }
 
-    .missionStatement {
-        width: 100%; 
-    }
-
-    .missionStatementP, 
+    .missionStatementP,
     .missionStatementP2 {
         font-size: clamp(0.5rem, 4vw, 1rem);
     }
 
-    .impact {
-        padding-right: 2rem; 
-        font-size: 13px; 
-    }
-    
-    
-    .grainOrb {
-        display: none; 
-    }
-
     .infoContainer {
-    display: inline;
-    justify-content: center;
-    flex-direction: row;
-    padding: 0 1rem; 
-    margin: 0rem; 
-    gap: 1rem;
-    line-height: 1.2;
-
+        display: block;
+        padding: 0 1rem;
+    }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .title1,
+    .title2,
+    .subtitle,
+    .heroDesc {
+        animation: none;
+    }
 }

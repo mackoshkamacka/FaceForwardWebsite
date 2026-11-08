@@ -1,8 +1,15 @@
+.navBack {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(90deg, #a2b8e3, #4469d0, #a2b8e3, #4844c7);
+    background-size: 400% 400%;
+    animation: waterFlow 15s ease infinite;
+}
+
 .navBar {
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem; 
-
-    
+    padding-bottom: 1.5rem;
 }
 
 .navText {
@@ -10,24 +17,13 @@
     font-weight: 700;
 }
 
-.navText:visited, .navText:link {
-    color:rgb(255, 255, 255);
+.navText:link,
+.navText:visited {
+    color: white;
 }
 
-
-
-.navBack {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    background: linear-gradient(
-        90deg,
-        #a2b8e3, 
-        #4469d0,
-        #a2b8e3,
-        #4844c7
-    );
-    background-size: 400% 400%;
-    animation: waterFlow 15s ease infinite;
+@media (prefers-reduced-motion: reduce) {
+    .navBack {
+        animation: none;
+    }
 }

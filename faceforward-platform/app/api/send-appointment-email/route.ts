@@ -1,195 +1,175 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextRequest, NextResponse } from "next/server";
+import { getResend } from "../../lib/resend";
 import { ArtistApprovedEmail } from "../../../src/emails/ArtistApprovedEmail";
-import { adminDb } from "../../lib/firebase-admin";
+import { getAdminAuth, getAdminDb } from "../../lib/firebase-admin";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
-// ICS Calendar Generation
-function generateICS(
-  artistName: string,
-  serviceName: string,
-  date: string,
-  time: string = '10:00',
-  location: string = 'Face Forward Clinic',
-  duration: number = 60
-): string {
-  const start = new Date(`${date}T${time}:00`);
-  const end = new Date(start.getTime() + duration * 60 * 1000);
+/** Escapes text for an iCalendar property value. */
+function icsText(value: string) {
+    return value.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+}
 
-  const formatDate = (date: Date) => {
-    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-  };
+/**
+ * Appointment date/time as a "wall clock" Date: the components are stored in
+ * UTC fields so formatting with timeZone "UTC" shows exactly what the artist
+ * typed, regardless of the server's timezone.
+ */
+function wallClock(date: string, time: string) {
+    return new Date(`${date}T${time}:00Z`);
+}
 
-  const now = new Date();
-  const uid = `${now.getTime()}-${Math.random().toString(36).substring(7)}@faceforward.com`;
+/** Floating local time (no "Z"): calendar apps show it in the attendee's local time. */
+function icsLocal(d: Date) {
+    return d.toISOString().replace(/[-:]/g, "").slice(0, 15);
+}
 
-  return `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Face Forward//Appointment//EN
-CALSCALE:GREGORIAN
-METHOD:REQUEST
-BEGIN:VEVENT
-UID:${uid}
-DTSTAMP:${formatDate(now)}
-DTSTART:${formatDate(start)}
-DTEND:${formatDate(end)}
-SUMMARY:${serviceName} with ${artistName}
-DESCRIPTION:Your appointment with ${artistName} for ${serviceName} is confirmed.
-LOCATION:${location}
-STATUS:CONFIRMED
-SEQUENCE:0
-BEGIN:VALARM
-TRIGGER:-PT24H
-ACTION:DISPLAY
-DESCRIPTION:Reminder: Appointment with ${artistName} tomorrow
-END:VALARM
-END:VEVENT
-END:VCALENDAR`.trim();
+function generateICS(opts: {
+    artistName: string;
+    serviceName: string;
+    start: Date;
+    durationMinutes: number;
+    location: string;
+}) {
+    const { artistName, serviceName, start, durationMinutes, location } = opts;
+    const end = new Date(start.getTime() + durationMinutes * 60_000);
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+    const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@faceforwardcanada.com`;
+
+    return [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Face Forward Canada//Appointment//EN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:REQUEST",
+        "BEGIN:VEVENT",
+        `UID:${uid}`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART:${icsLocal(start)}`,
+        `DTEND:${icsLocal(end)}`,
+        `SUMMARY:${icsText(`${serviceName} with ${artistName} (Face Forward)`)}`,
+        `DESCRIPTION:${icsText(`Your free Face Forward service with ${artistName} is confirmed.`)}`,
+        `LOCATION:${icsText(location)}`,
+        "STATUS:CONFIRMED",
+        "SEQUENCE:0",
+        "BEGIN:VALARM",
+        "TRIGGER:-PT24H",
+        "ACTION:DISPLAY",
+        `DESCRIPTION:${icsText(`Reminder: ${serviceName} with ${artistName} tomorrow`)}`,
+        "END:VALARM",
+        "END:VEVENT",
+        "END:VCALENDAR",
+    ].join("\r\n");
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { requestId } = body;
+    try {
+        // Only the artist assigned to a request may approve it.
+        const token = request.headers.get("authorization")?.replace(/^Bearer /, "");
+        if (!token) {
+            return NextResponse.json({ error: "Not signed in" }, { status: 401 });
+        }
+        const { uid } = await getAdminAuth().verifyIdToken(token);
 
-    console.log('Received request to send email for:', requestId);
+        const body = await request.json();
+        const requestId: string | undefined = body.requestId;
+        const appointmentTime: string = /^\d{2}:\d{2}$/.test(body.appointmentTime ?? "")
+            ? body.appointmentTime
+            : "10:00";
+        const location: string = String(body.location ?? "").trim();
+        const duration = Number(body.duration) > 0 ? Number(body.duration) : 60;
 
-    // Validate request ID
-    if (!requestId) {
-      return NextResponse.json(
-        { error: 'Missing required field: requestId' },
-        { status: 400 }
-      );
+        if (!requestId || !location) {
+            return NextResponse.json({ error: "Missing requestId or location" }, { status: 400 });
+        }
+
+        const adminDb = getAdminDb();
+        const requestRef = adminDb.collection("requests").doc(requestId);
+        const requestDoc = await requestRef.get();
+        const requestData = requestDoc.data();
+
+        if (!requestDoc.exists || !requestData) {
+            return NextResponse.json({ error: "Request not found" }, { status: 404 });
+        }
+        if (requestData.artistId !== uid) {
+            return NextResponse.json({ error: "Not allowed" }, { status: 403 });
+        }
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(requestData.requestedDate ?? "")) {
+            return NextResponse.json({ error: "Request has no valid date" }, { status: 400 });
+        }
+
+        const [userDoc, artistDoc] = await Promise.all([
+            adminDb.collection("users").doc(requestData.userId).get(),
+            adminDb.collection("users").doc(uid).get(),
+        ]);
+        const userData = userDoc.data();
+        const artistData = artistDoc.data();
+
+        const recipientEmail = requestData.email || userData?.email;
+        const recipientName = requestData.name || userData?.name || "there";
+        const artistName = artistData?.name || "your Face Forward artist";
+        const start = wallClock(requestData.requestedDate, appointmentTime);
+
+        const icsContent = generateICS({
+            artistName,
+            serviceName: requestData.serviceName,
+            start,
+            durationMinutes: duration,
+            location,
+        });
+
+        const formattedDate = start.toLocaleDateString("en-CA", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "UTC",
+        });
+        const formattedTime = start.toLocaleTimeString("en-CA", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "UTC",
+        });
+
+        const { data, error } = await getResend().emails.send({
+            from: "test@faceforwardcanada.org",
+            to: recipientEmail,
+            subject: `Confirmed: ${requestData.serviceName} with ${artistName}`,
+            react: ArtistApprovedEmail({
+                recipientName,
+                artistName,
+                serviceName: requestData.serviceName,
+                date: formattedDate,
+                time: formattedTime,
+                location,
+            }),
+            attachments: [
+                {
+                    filename: "face-forward-appointment.ics",
+                    content: Buffer.from(icsContent).toString("base64"),
+                },
+            ],
+        });
+
+        if (error) {
+            console.error("Resend error:", error);
+            return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        }
+
+        await requestRef.update({
+            status: "approved",
+            appointmentTime,
+            location,
+            updatedAt: new Date(),
+        });
+
+        return NextResponse.json({ success: true, emailId: data?.id });
+    } catch (error) {
+        console.error("send-appointment-email failed:", error);
+        const isAuthError = error instanceof Error && /token/i.test(error.message);
+        return NextResponse.json(
+            { error: isAuthError ? "Not signed in" : "Internal server error" },
+            { status: isAuthError ? 401 : 500 }
+        );
     }
-
-    // Fetch request details from Firestore
-    const requestDoc = await adminDb.collection('requests').doc(requestId).get();
-    
-    if (!requestDoc.exists) {
-      return NextResponse.json(
-        { error: 'Request not found' },
-        { status: 404 }
-      );
-    }
-
-    const requestData = requestDoc.data();
-    
-    if (!requestData) {
-      return NextResponse.json(
-        { error: 'Request data is empty' },
-        { status: 404 }
-      );
-    }
-    
-    console.log('Request data:', requestData);
-
-    // Get user details from the users collection
-    const userDoc = await adminDb.collection('users').doc(requestData.userId).get();
-    const userData = userDoc.data();
-
-    // Get artist details from the users collection
-    const artistDoc = await adminDb.collection('users').doc(requestData.artistId).get();
-    const artistData = artistDoc.data();
-
-    console.log('User email:', userData?.email);
-    console.log('Artist name:', artistData?.name);
-
-    // Use data from the request document
-    const recipientEmail = requestData.email || userData?.email;
-    const recipientName = requestData.name || userData?.name || 'Client';
-    const artistName = artistData?.name || 'Face Forward Artist';
-    const appointmentTime = '10:00'; // Default time, can be customized later
-    const location = 'Face Forward Clinic'; // Default location
-
-    // Generate ICS file content
-    const icsContent = generateICS(
-      artistName,
-      requestData.serviceName,
-      requestData.requestedDate,
-      appointmentTime,
-      location,
-      60
-    );
-
-    // Create data URL for calendar link
-    const calendarLink = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
-
-    // Format date for display
-    const appointmentDate = new Date(`${requestData.requestedDate}T${appointmentTime}:00`);
-    const formattedDate = appointmentDate.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-    const formattedTime = appointmentDate.toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
-
-    console.log('Sending email to:', recipientEmail);
-
-    // Send email with React Email template
-    const { data, error } = await resend.emails.send({
-      from: "test@faceforwardcanada.org",
-      to: recipientEmail,
-      subject: `Your appointment with ${artistName} is confirmed!`,
-      react: ArtistApprovedEmail({
-        recipientName,
-        artistName,
-        serviceName: requestData.serviceName,
-        date: formattedDate,
-        time: formattedTime,
-        location,
-        calendarLink,
-      }),
-      attachments: [
-        {
-          filename: 'appointment.ics',
-          content: Buffer.from(icsContent).toString('base64'),
-        },
-      ],
-    });
-
-    if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json(
-        { error: 'Failed to send email', details: error },
-        { status: 500 }
-      );
-    }
-
-    console.log('Email sent successfully:', data);
-
-    // Update request status to approved
-    await adminDb.collection('requests').doc(requestId).update({
-      status: 'approved',
-      updatedAt: new Date(),
-    });
-
-    return NextResponse.json({
-      success: true,
-      message: 'Appointment email sent successfully',
-      emailId: data?.id,
-      requestData: {
-        recipient: recipientName,
-        artist: artistName,
-        service: requestData.serviceName,
-        date: formattedDate,
-        time: formattedTime,
-      },
-    });
-  } catch (error) {
-    console.error('API error:', error);
-    return NextResponse.json(
-      {
-        error: 'Internal server error',
-        details: error instanceof Error ? error.message : 'Unknown error',
-      },
-      { status: 500 }
-    );
-  }
 }

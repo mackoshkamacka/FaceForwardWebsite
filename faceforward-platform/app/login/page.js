@@ -1,80 +1,82 @@
-"use client"; 
+"use client";
 
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../src/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
-import "./login.css"; 
+import { auth, db } from "../../src/firebase";
+import AuthPanel from "../components/auth/AuthPanel";
+import { authErrorMessage, dashboardPathFor } from "../lib/platform";
 
 export default function Login() {
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter(); //Allows for page changing (e.g. go to /artist-dashboard is login is valid, and artist)
+    const [error, setError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     const handleLogin = async (e) => {
-        e.preventDefault(); //Stops page from refreshing
+        e.preventDefault();
+        setError("");
+        setSubmitting(true);
+
         try {
-            //Authenticate = ensure that the password, and email match the Firebase Authentication
-            const userCred = await signInWithEmailAndPassword(auth, email, password);
-
-            //Assuming userCred it correct, userDocRef makes reference to the user's document in Firestore
-            //then getDoc(userDocRef) actually fetches the document 
-            const userDocRef = doc(db, "users", userCred.user.uid);
-            const userDocSnap = await getDoc(userDocRef);
-
-            //If anything goes wrong (causing the userDocSnap to not exist), an error is thrown
-            if (!userDocSnap.exists()) {
-                throw new Error("User document not found");
+            const { user } = await signInWithEmailAndPassword(auth, email, password);
+            const profile = await getDoc(doc(db, "users", user.uid));
+            if (!profile.exists()) {
+                throw new Error("Missing user profile");
             }
-
-            //Gets the data from the userDocSnap, then gets the role
-            const userData = userDocSnap.data();
-            const userRole = userData.role;
-            const userVerified = userData.verified; 
-
-            //With the userRole, navigation proceeds. 
-            if (!userVerified) {
-                router.push("/awaiting-verification");
-            } else if (userRole === "artist") {
-                router.push("/artist-dashboard");
-            } else if (userRole === "patient") {
-                router.push("/pat-hop-dashboard");
-            } else if (userRole === "hospital") {
-                router.push("/pat-hop-dashboard");
-            } else {
-                router.push("/"); // fallback if role is undefined
-            }
-
+            router.push(dashboardPathFor(profile.data()));
         } catch (err) {
-            console.error("Full error:", err);
-            alert(`Login failed: ${err.message}`);
+            console.error("Login failed:", err);
+            setError(authErrorMessage(err));
+            setSubmitting(false);
         }
     };
 
     return (
-        <div className = "loginPage"> 
-            <form onSubmit={handleLogin}
-                  className = "loginForm">
-                <h2 className = "formHeader">Login</h2>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit" className="formButton">Login</button>
-                <Link href="/signup" className = "altLink">Sign Up</Link>
+        <AuthPanel
+            eyebrow="Face Forward Canada"
+            title="Welcome back"
+            intro="Log in to manage your services, requests and upcoming events."
+            footer={
+                <>
+                    New to Face Forward? <Link href="/signup">Create an account</Link>
+                </>
+            }
+        >
+            <form className="stack" onSubmit={handleLogin}>
+                <div className="field">
+                    <label htmlFor="login-email">Email</label>
+                    <input
+                        id="login-email"
+                        type="email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="login-password">Password</label>
+                    <input
+                        id="login-password"
+                        type="password"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
+                {error && <p className="notice notice-error" role="alert">{error}</p>}
+
+                <button type="submit" className="btn btn-block" disabled={submitting}>
+                    {submitting ? "Logging in…" : "Log In"}
+                </button>
             </form>
-        </div>
+        </AuthPanel>
     );
 }

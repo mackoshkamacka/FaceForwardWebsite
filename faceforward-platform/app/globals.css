@@ -5,34 +5,20 @@
     --foreground: #171717;
 }
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-} */
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 body {
     background: var(--background);
     color: var(--foreground);
-    /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .p-4 {
     padding-left: 0;
-    padding-right: 0; 
+    padding-right: 0;
 }
 
+/* ---------- navbar links ---------- */
 .navBar {
-    padding-left: 2rem; 
-    padding-right: 4rem; 
+    padding-left: 2rem;
+    padding-right: 4rem;
     justify-content: flex-end;
 }
 
@@ -48,22 +34,9 @@ body {
     }
 }
 
-
-
-
-form {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color: white;
-}
-
-input, select {
+/* ---------- form controls (defaults; `.field` in ui.css restyles them) ---------- */
+input,
+select {
     padding: 10px 15px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -73,27 +46,32 @@ input, select {
     background-color: white;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     border-color: #4557b9;
-    box-shadow: 0 0 5px rgba(0,112,243,0.3);
+    box-shadow: 0 0 5px rgba(0, 112, 243, 0.3);
 }
 
-button {
+/* ---------- buttons ----------
+   `.btn` gives links the same look as <button>, so navigation can use
+   <Link>/<a> instead of nesting a button inside a link. */
+button,
+.btn {
+    display: inline-block;
     padding: 12px 20px;
     font-size: 16px;
     font-weight: bold;
-    border: none;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid rgba(255, 255, 255, 0.622);
     border-radius: 6px;
     background-color: #6458e7;
     color: white;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
-    border-color: rgba(255, 255, 255, 0.622);
-    border-width: 2px; 
-    border-style: solid; 
 }
 
-button:hover {
+button:hover,
+.btn:hover {
     background-color: rgb(68, 61, 195);
 }

@@ -1,143 +1,94 @@
-p {
-    color: white; 
-}
-
 .aboutPage {
-    /* padding: 2rem;  */
-    /* max-width: max(500px, 70vw);  */
-    /* display:inline-flex; 
-    justify-content: center; 
-    align-items: center;  
-    width: max(500px, 70vw);  */
-
-    display:flex; 
+    display: flex;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center;  
-}
-
-.uh {
-    height: 3rem; 
-}
-
-
-
-.heroSection {
-
-    display: flex; 
-    gap:1rem; 
-
-    background-image: radial-gradient(
-        farthest-corner at 50px 300px,
-        #462792 0%,
-        #7B55C2 30%, 
-        #c7e0f0 80%,
-        white 100%);
-
-    border-radius: 2rem;
-    
+    justify-content: center;
     align-items: center;
-    
-    width: 94%; 
-    max-width: 1000px; 
+}
 
-    /* image fixed to right */
-    padding-right:0; 
+/* Scoped to this page; a bare `p` rule here used to turn the footer text white. */
+.aboutPage p {
+    color: white;
+}
 
+.aboutPage p + p {
+    margin-top: 1rem;
+}
+
+.aboutPage sup a {
+    text-decoration: underline;
+}
+
+.aboutSpacer {
+    height: 3rem;
+}
+
+/* ---------- shared card look ---------- */
+.heroSection,
+.whatWeDoSection,
+.volunteerSection {
+    max-width: 1000px;
+    line-height: 1.25;
+    border-radius: 2rem;
+    background: radial-gradient(farthest-corner at 0 0, #5645c5 0%, #6657cd 10%, #63aff7 100%);
+}
+
+/* ---------- mission ---------- */
+.heroSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 94%;
+    margin: 2rem;
+    padding-right: 0;
 }
 
 .heroText {
-    color: white; 
-    padding-left: 2rem; 
-    padding-top: 2rem; 
-    padding-bottom: 2rem; 
+    padding: 2rem 0 2rem 2rem;
+    color: white;
 }
 
 .nHeader {
+    padding-bottom: 1rem;
     font-size: 4rem;
     font-weight: 600;
-    color: white;
     line-height: 1;
-    padding-bottom: 1rem;  
+    color: white;
 }
-
-.nnHeader, .nnHeader2 {
-    font-size: min(7vw, 2.6rem); 
-    font-weight: 600; 
-    color: white; 
-}
-
-.nnHeader2 {
-    padding-top: 2rem;
-    text-align: right;
-}
-
 
 .heroImageContainer {
-    height: 50vh; 
+    height: 50vh;
     min-width: 248px;
-    width: 200vw;  
-    overflow: hidden; 
-    border-radius: inherit;       
+    width: 200vw;
+    overflow: hidden;
+    border-radius: inherit;
 }
 
 .heroImage {
-    height:100%; 
-    width: 100%; 
-    object-fit: cover; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center;
 }
 
-
-
-
-
-
-
-.sponsorSection {
-    padding-bottom: 2rem; 
-}
-
-.heroSection, .whoWeAreSection, 
-.sponsorSection, .roadmapSection, 
-.volunteerSection, .whatWeDoSection {
-    background: radial-gradient(
-    farthest-corner at 0px 0px,
-    #5645c5 0%, 
-    #6657cd 10%, 
-    #63AFF7 100%);
-
-    max-width: 1000px; 
-    margin: 2rem; 
-    line-height: 1.25;
-}
-.whoWeAreSection, .sponsorSection, 
-.roadmapSection, .volunteerSection, .whatWeDoSection {
-    padding: 2rem;
-    background-color: #ccc8ec;
-    margin-top: 1.3rem; 
-    border-radius: 2rem;
-    min-height: 2rem; 
-}
-
-/* #F8FEFF 
-#C7E0F0
-#63AFF7
-#5350AC
-#462792
-#15172E */
-
+/* ---------- what we do / volunteer ---------- */
 .mergeSection {
-    display: flex; 
-    max-width: 1000px; 
-    margin: 0 2rem; 
-    gap: 2rem; 
+    display: flex;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 2rem;
 }
 
-.whatWeDoSection {
-    margin: 0; 
-    padding: 0; 
-    flex: 1; 
+.whatWeDoSection,
+.volunteerSection {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.volunteerSection {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
 }
 
 .whatWeImage {
@@ -146,179 +97,82 @@ p {
 }
 
 .whatWeText {
-    padding: 1.5rem; 
-    margin-bottom: 1rem; 
+    padding: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-.VolunteerText {
-    padding: 1.5rem; 
-    margin-bottom: 1rem; 
+.nnHeader,
+.nnHeader2 {
+    font-size: min(7vw, 2.6rem);
+    font-weight: 600;
+    color: white;
 }
 
-.volunteerSection {
-    margin: 0; 
-    flex: 1;
-    padding: 0; 
-
-    display: flex; 
-    flex-direction: column;
+.nnHeader2 {
+    padding-top: 2rem;
+    text-align: right;
 }
 
 .peer {
-    padding-top: 2rem; 
+    padding-top: 2rem;
 }
 
 .why {
     text-align: right;
 }
 
-
-
-
-
-
-
-
-.roadmapSection {
-    padding-bottom: 2rem;
-}
-
-
-
-.volunteerSection {
-    padding-bottom: 2rem; 
-}
-
-
 .button-container {
-    display: flex; 
+    display: flex;
     justify-content: right;
-    padding-top: 1rem; 
-    gap: 1rem; 
+    gap: 1rem;
+    padding-top: 1rem;
 }
 
-.volButton {
-    padding: 0.5rem 1.2rem; 
-    border-color: white;
-    border-width: 2px; 
-    border-style: solid; 
-    background-color: #6265e4f4;
+.execButton {
+    margin-top: 1rem;
 }
 
-.volButton:hover {
-    background-color: #3a1bb5c7;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.dummy2 {
-    /* width: 1000rem;  */
-    width: 100%; 
-    
-    height: 1rem;  
-    background: linear-gradient(
-        45deg,
-        #4469d0,
-        #a2b8e3,
-        #4844c7
-    );
-    background-size: 400% 400%;
-    animation: waterFlow 15s ease infinite;
-}
-
-@keyframes waterFlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* ---------- mobile ---------- */
 @media (max-width: 755px) {
-    .aboutPage{
-        /* padding: 1rem;  */
-        margin: 0; 
+    .aboutPage {
+        margin: 0;
     }
 
-    .nHeader{
-        font-size: 2.5rem; 
+    .nHeader {
+        font-size: 2.5rem;
     }
 
     .heroSection {
-        
-        margin: 1rem; 
         flex-direction: column;
-        padding-bottom: 1rem;  
+        margin: 1rem;
+        padding-bottom: 1rem;
         font-size: 0.9rem;
     }
 
     .heroText {
-        padding-right: 2rem; 
+        width: 100%;
+        padding-right: 2rem;
+    }
+
+    .heroImageContainer {
+        order: -1;
+        width: 100%;
+        height: 200px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     .mergeSection {
-        margin: 1rem; 
-        display: inline; 
+        display: block;
+        margin: 1rem;
     }
 
     .whatWeDoSection {
-        margin-bottom: 2rem; 
+        margin-bottom: 2rem;
         font-size: 0.9rem;
     }
 
-
-
-    .heroImageContainer {
-        order: -1; 
-        width: 100%; 
-        height: 200px; 
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0; 
-    }
-    
-
-    .heroText {
-        width: 100%; 
-    }
-
     .volunteerSection {
-        font-size: 0.9rem; 
-    
+        font-size: 0.9rem;
     }
-
-
 }

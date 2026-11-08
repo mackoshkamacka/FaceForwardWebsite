@@ -1,108 +1,65 @@
-import {
-    Body,
-    Container,
-    Head,
-    Heading,
-    Hr,
-    Html,
-    Link,
-    Preview,
-    Section,
-    Text,
-  } from '@react-email/components';
-  
-  interface ArtistApprovedEmailProps {
+import { Body, Container, Head, Heading, Hr, Html, Preview, Section, Text } from "@react-email/components";
+import { footer, heading, hr, main, container, paragraph, section } from "./styles";
+
+interface ArtistApprovedEmailProps {
     recipientName: string;
     artistName: string;
     serviceName: string;
-    date: string; // YYYY-MM-DD
-    time: string; // HH:MM
-    location?: string;
-    calendarLink?: string;
-  }
-  
-  export const ArtistApprovedEmail = ({
+    date: string; // already formatted for display
+    time: string; // already formatted for display
+    location: string;
+}
+
+export const ArtistApprovedEmail = ({
     recipientName,
     artistName,
     serviceName,
     date,
     time,
     location,
-    calendarLink,
-  }: ArtistApprovedEmailProps) => (
+}: ArtistApprovedEmailProps) => (
     <Html>
-      <Head />
-      <Body style={main}>
-        <Preview>Your Face Forward Appointment is Confirmed!</Preview>
-        <Container style={container}>
-          <Heading style={heading}>Appointment Confirmed!</Heading>
-  
-          <Text style={paragraph}>Hi {recipientName},</Text>
-  
-          <Section style={body}>
-            <Text style={paragraph}>
-              {artistName} has approved your request for <strong>{serviceName}</strong>.
-            </Text>
-            <Text style={paragraph}>
-              Your appointment is scheduled for <strong>{date} at {time}</strong>.
-              {location && <> Location: {location}</>}
-            </Text>
-  
-            {calendarLink && (
-              <Text style={paragraph}>
-                <Link style={link} href={calendarLink}>
-                  Add this appointment to your calendar
-                </Link>
-              </Text>
-            )}
-          </Section>
-  
-          <Hr style={hr} />
-          <Text style={footer}>Face Forward Humanitarian Association</Text>
-        </Container>
-      </Body>
+        <Head />
+        <Preview>Your Face Forward service is confirmed</Preview>
+        <Body style={main}>
+            <Container style={container}>
+                <Heading style={heading}>You&rsquo;re all set!</Heading>
+
+                <Text style={paragraph}>Hi {recipientName},</Text>
+
+                <Section style={section}>
+                    <Text style={paragraph}>
+                        {artistName} has confirmed your request for <strong>{serviceName}</strong>.
+                    </Text>
+                    <Text style={paragraph}>
+                        <strong>When:</strong> {date} at {time}
+                        <br />
+                        <strong>Where:</strong> {location}
+                    </Text>
+                    <Text style={paragraph}>
+                        A calendar invite is attached. As with every Face Forward service, this is
+                        completely free of charge. If you have any skin sensitivities or product
+                        preferences (for example, fragrance-free), please let us know ahead of time
+                        by replying to this email.
+                    </Text>
+                </Section>
+
+                <Hr style={hr} />
+                <Text style={footer}>
+                    Face Forward Canada · Bringing beauty, dignity, and joy to every face
+                </Text>
+            </Container>
+        </Body>
     </Html>
-  );
-  
-  const main = {
-    backgroundColor: '#ffffff',
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-  };
-  
-  const container = {
-    margin: '0 auto',
-    padding: '20px 25px 48px',
-  };
-  
-  const heading = {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    marginTop: '48px',
-  };
-  
-  const body = {
-    margin: '24px 0',
-  };
-  
-  const paragraph = {
-    fontSize: '16px',
-    lineHeight: '26px',
-  };
-  
-  const link = {
-    color: '#FF6363',
-  };
-  
-  const hr = {
-    borderColor: '#dddddd',
-    marginTop: '48px',
-  };
-  
-  const footer = {
-    color: '#8898aa',
-    fontSize: '12px',
-    marginLeft: '4px',
-  };
-  
-  export default ArtistApprovedEmail;
-  
+);
+
+ArtistApprovedEmail.PreviewProps = {
+    recipientName: "Alex",
+    artistName: "Jordan",
+    serviceName: "Natural everyday makeup",
+    date: "Saturday, November 14, 2026",
+    time: "10:00 a.m.",
+    location: "Community Centre, 123 Main St.",
+} as ArtistApprovedEmailProps;
+
+export default ArtistApprovedEmail;

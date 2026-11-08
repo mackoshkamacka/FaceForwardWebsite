@@ -1,7 +1,6 @@
-import { Resend } from "resend";
+import { getResend } from "../../lib/resend";
 import { WelcomeEmail } from "../../../src/emails/WelcomeEmail";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
   const { name, email } = await req.json();
@@ -11,10 +10,10 @@ export async function POST(req) {
   }
 
   try {
-    await resend.emails.send({
+    await getResend().emails.send({
       from: "onboarding@resend.dev",
       to: email,
-      subject: "Welcome to FaceForward!",
+      subject: "Welcome to Face Forward Canada!",
       react: WelcomeEmail({ name }),
     });
 

@@ -1,107 +1,46 @@
-import {
-    Body,
-    Container,
-    Head,
-    Heading,
-    Hr,
-    Html,
-    Img,
-    Link,
-    Preview,
-    Section,
-    Text,
-  } from '@react-email/components';
-  
-  interface WelcomeEmailProps {
+import { Body, Container, Head, Heading, Hr, Html, Preview, Section, Text } from "@react-email/components";
+import { footer, heading, hr, main, container, paragraph, section } from "./styles";
+
+interface WelcomeEmailProps {
     name: string;
-    magicLink?: string;
-  }
-  
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : '';
-  
-  export const WelcomeEmail = ({
-    name,
-    magicLink,
-  }: WelcomeEmailProps) => (
+}
+
+export const WelcomeEmail = ({ name }: WelcomeEmailProps) => (
     <Html>
-      <Head />
-      <Body style={main}>
-        <Preview>Welcome to Face Forward</Preview>
-        <Container style={container}>
-          <Heading style={heading}>WELCOME TO FACEFORWARD</Heading>
-  
-          <Text style={paragraph}>Hi {name},</Text>
-  
-          <Section style={body}>
-            {magicLink && (
-              <Text style={paragraph}>
-                <Link style={link} href={magicLink}>
-                  Click here to verify your account
-                </Link>
-              </Text>
-            )}
-  
-            <Text style={paragraph}>
-              We're excited to have you join the FaceForward community!
-            </Text>
-          </Section>
-  
-          <Hr style={hr} />
-  
-          <Text style={footer}>Face Forward Humanitarian Association</Text>
-        </Container>
-      </Body>
+        <Head />
+        <Preview>Welcome to Face Forward Canada</Preview>
+        <Body style={main}>
+            <Container style={container}>
+                <Heading style={heading}>Welcome to Face Forward</Heading>
+
+                <Text style={paragraph}>Hi {name},</Text>
+
+                <Section style={section}>
+                    <Text style={paragraph}>
+                        Thank you for joining Face Forward Canada, a not-for-profit wellness
+                        initiative that brings free beauty and self-care services to underserved and
+                        marginalized communities.
+                    </Text>
+                    <Text style={paragraph}>
+                        To keep our partner organizations, clients and volunteers safe, our team
+                        reviews every new account. This usually takes up to 24 hours, and
+                        we&rsquo;ll email you as soon as your account is approved.
+                    </Text>
+                    <Text style={paragraph}>
+                        Questions? Just reply to this email or write to
+                        info.faceforwardcanada@gmail.com.
+                    </Text>
+                </Section>
+
+                <Hr style={hr} />
+                <Text style={footer}>
+                    Face Forward Canada · Bringing beauty, dignity, and joy to every face
+                </Text>
+            </Container>
+        </Body>
     </Html>
-  );
+);
 
-WelcomeEmail.PreviewProps = {
-  magicLink: 'https://raycast.com', // !!! change this to verification 
-} as WelcomeEmailProps; // this too!!
+WelcomeEmail.PreviewProps = { name: "Alex" } as WelcomeEmailProps;
 
-export default WelcomeEmail; //
-
-const main = {
-  backgroundColor: '#ffffff',
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-};
-
-const container = {
-  margin: '0 auto',
-  padding: '20px 25px 48px',
-  backgroundImage: 'url("/static/raycast-bg.png")',
-  backgroundPosition: 'bottom',
-  backgroundRepeat: 'no-repeat, no-repeat',
-};
-
-const heading = {
-  fontSize: '28px',
-  fontWeight: 'bold',
-  marginTop: '48px',
-};
-
-const body = {
-  margin: '24px 0',
-};
-
-const paragraph = {
-  fontSize: '16px',
-  lineHeight: '26px',
-};
-
-const link = {
-  color: '#FF6363',
-};
-
-const hr = {
-  borderColor: '#dddddd',
-  marginTop: '48px',
-};
-
-const footer = {
-  color: '#8898aa',
-  fontSize: '12px',
-  marginLeft: '4px',
-};
+export default WelcomeEmail;

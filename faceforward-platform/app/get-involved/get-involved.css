@@ -1,232 +1,57 @@
-.GIContainer {
-    background: radial-gradient(circle, 
-                                        #2d1c96 0%, 
-                                        #3724b3 40%, 
-                                        #547fca 80%, 
-                                        rgb(205, 206, 245) 100%);
-    background-color: #281794;
-                            
-
-    height: 85vh; 
-    margin: 2vw; 
-    border-radius: 3rem; 
-    padding: 2vw; 
-
-    margin-top: 1.5rem; 
-
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-
-    position: relative; 
-    z-index: 1; 
-
-
-    
-}
-
-.centralCard {
-    width: 60vw;
-    min-width: 18.5rem;  
-    
-
-    background: radial-gradient(circle, 
-                                        #c1dff1a1 0%, 
-                                        #7d99eba6 70%, 
-                                        transparent 100%);
-    background-color: #6c4a9935;
-
-    padding: 2vw 2vh; 
-    border-radius: 2rem;
-    border-width: 5px;
-    border-color: rgba(157, 211, 255, 0.779);
-    
-
-    z-index: 2; 
-    position: absolute;
-     
-    
-    height: 70vh; 
-    max-height: 50rem; 
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    padding-top:5rem; 
-    
-}
-
-.GIBottom {
-    flex: 10;
-    min-height: 95%;
-    position: relative;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    overflow: hidden;
-    /* background: linear-gradient(135deg, #f5f7fa23, #c3cfe24f); */
-    /* subtle splash gradient */
-    border-radius: 2rem;
-    /* rounded splash edges */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    
-    width: 5rem;
-
-    border-width: 3px; 
-    border-color: rgba(94, 220, 255, 0.422); 
-    
-}
-
-.GIBottom::before {
-    content: '';
-    position: absolute;
-    width: 300%;
-    height: 300%;
-    top: -100%;
-    left: -100%;
-    background: radial-gradient(circle, rgba(85, 150, 220, 0), transparent 70%);
-    animation: rotateSplash 15s linear infinite;
-    pointer-events: none;
-}
-
-
-@keyframes rotateSplash {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.grainOrb {
-    position: absolute;
-    top: 0;
-    /* tweak for placement */
-    left: 0;
-    /* tweak for placement */
-    width: 1000px;
-    height: 1000px;
-
-    pointer-events: none;
-    mix-blend-mode: soft-light;
-    /* blends into gradient */
-    opacity: 0.6;
-    z-index: 1.5;
-    /* sits below your text in heroTop */
-}
-
-.GITop {
-    height: 90%; 
-    position: absolute; 
-
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-
+.giCard {
+    width: min(860px, 100%);
+    padding: clamp(1.5rem, 4vw, 3rem);
     text-align: center;
-    
-
+    animation: giRise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-.GIheader {
-    font-size: max(5vw, 2.2rem); 
-    
+.giTitle {
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
-    padding: 0 1.5vh; 
-    text-transform: uppercase;
-    color: #ffffff; 
-    
-}
-
-.GIH1 {
-    font-size: max(8rem, 10vw);
-    margin-top: -12vh; 
-    letter-spacing: -5px;
-}
-
-.GIH2 {
-    margin-top: -12vh; 
-    font-size: max(3.5rem, 8vw); 
-    margin-top: min(-3.2rem, -5vw); 
-    letter-spacing: -5px;
     line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
 }
 
-
-
-.preamble {
+.giPaths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin: 2rem 0 1.5rem;
     text-align: left;
-    font-size: max(2vh, 1rem); 
-    padding: 1.5vh; 
-    color: #ffffff; 
-    padding-bottom: 2rem; 
-    line-height: 1.2;
 }
 
-.GIButtons {
-    display: flex; 
-    justify-content: center;
+.giPath {
+    padding: 1rem 1.1rem;
+    line-height: 1.4;
 }
 
-.GIB, .GIB2 {
-    background-color: #3142a0;
-    margin: 4px; 
-    padding: 0.5rem 2rem; 
-    border-radius: 10px;
-    color: white; 
-    width: 15vw; 
-    min-width: 8rem; 
-
-    border-width: 2px;
-    border-style: solid;
-    border-color: white; 
+.giPathTitle {
+    margin-bottom: 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
-.GIB:hover, .GIB2:hover {
-    background-color: #5c6ed5;
+.giLead {
+    margin: 1.5rem 0 0.75rem;
+    font-size: 1.05rem;
 }
 
-.GIB2 {
-    min-width: 0;
-    width:100%; 
-    padding-left: 1rem; 
-    padding-right: 1rem; 
+.giButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
 }
 
-@media (max-width: 755px) {
-    .centralCard {
-        width: 20rem;
-        min-height: 105vh; 
+@keyframes giRise {
+    from {
+        opacity: 0;
+        translate: 0 30px;
     }
-    
-    .GIContainer {
-        min-height: 120vh;
-    }
+}
 
-    .preamble {
-        font-size: 0.85rem;
-        text-align: center;
+@media (prefers-reduced-motion: reduce) {
+    .giCard {
+        animation: none;
     }
-
-    .GIB, .GIB2 {
-        font-size: 0.8rem;
-    }
-    
-    
-    
 }

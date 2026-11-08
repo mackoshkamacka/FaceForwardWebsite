@@ -1,90 +1,68 @@
 import "./Home.css";
-import Image from 'next/image';
-import GrainVisual from "../components/home/GrainVisual";  
+import HeroSplash from "../components/home/HeroSplash";
 
 export default function HomePage() {
     return (
         <div className="homeContainer">
-            <div className="hero">
-                <div className="heroBottom">
-                    {/* slash goes here  */}
-                    <GrainVisual /> 
-                </div>
+            <section className="hero">
+                <HeroSplash />
+
                 <div className="heroTop">
                     <div className="title">
                         <h1 className="title1">FACE</h1>
                         <h1 className="title2">FORWARD</h1>
-                        <h2 className="subtitle"> Humanitarian Association</h2>
+                        <h2 className="subtitle">Humanitarian Association</h2>
                     </div>
-                    <div className="heroDesc">
-                        <h3 className="missionStatement">Mission Statement: </h3>
-                        <p className="missionStatementP">"Face Forward is an Ontario-based organization
-                            that strives to bring comfort and dignity to hospitalized individuals through
-                            complementary beauty services. We connect cosmetic and facepaint artists with
-                            hospitals to host makeover events for adults and children at no charge to patients"</p>
 
-                        <p className="missionStatementP2">Proudly a Canadian Government Registered Foundation 
-                            and 501(c)(3) in the United States of America. 
+                    <div className="heroDesc">
+                        <h3 className="missionStatement">Mission Statement:</h3>
+                        <p className="missionStatementP">
+                            &ldquo;Face Forward Canada is a not-for-profit wellness initiative that
+                            brings free beauty and self-care services to underserved and
+                            marginalized communities. We connect volunteer hair, makeup, nail, and
+                            skincare artists with organizations that serve vulnerable populations,
+                            helping people feel comfortable, confident, and like themselves.&rdquo;
+                        </p>
+                        <p className="missionStatementP2">
+                            Proudly a Canadian Government Registered Foundation and 501(c)(3) in
+                            the United States of America.
                         </p>
                     </div>
                 </div>
+            </section>
 
-                {/* TODO: MAKE A LOGO AT THE BOTTOM RIGHT CORNER OF HERO */}
-                {/* <div className = "ffLogo">
-                    <Image 
-                        src="/app/public/FaceForwardLogo.png" 
-                        width={80}
-                        height={80}
-                        alt="Face Forward Logo"
-                        />
-                    
-                </div> */}
-            </div>
-
-
-            <div className="impact">
-                {/* <p>0 Hospitals Associated, 0 Patients Helped, 0 Artists Participating.</p> */}
-                {/* <p>
-                    Proudly in collaboration with Sunnybrook Health Sciences Centre (Sunnybrook Hospital), Toronto, Ontario
-                </p> */}
-            </div>
-            <div className="testimonials">
-                {/* card carosel component  */}
-            </div>
-            {/* <div className="updates">
-                <div className="updateCarosel">
-                    <div className="caroselTrack">
-                        <span>  UPDATES  </span>
-                        <span>  UPDATES  </span>
-                        <span>  UPDATES  </span>
-                        <span>  UPDATES  </span>
-                        <span>  UPDATES  </span>
-                    </div>
-                </div>
-                <div className="updateCardCarosel">
-                    <p>updates coming soon!!</p>
-                </div>
-            </div> */}
-
-            <div className = "infoContainer">
-                <div className = "info">
+            <section className="infoContainer">
+                <div className="info">
+                    <h2 className="infoHeading">WHAT FACE FORWARD ADDRESSES:</h2>
                     <p>
-                        <strong className = "exists"> WHAT FACE FORWARD ADDRESSES: </strong> <br /> <br/>
-                        <strong> Thousands of Canadians spend weeks to months in hospital each year </strong>
-                        —often away from loved ones, routines, and the comforts of daily life. Long hospital stays can leave patients feeling disconnected, unseen, and stripped of their sense of self. <br /> <br/> 
-                        Many inpatients experience mobility challenges or chronic pain, limiting their ability to participate in daily activities or creative outlets. Yet small moments of human connection and self-expression can profoundly improve the hospital experience. In Toronto alone, hundreds of patients each day could benefit from programs that bring joy, confidence, and creativity to their bedside. <br />
+                        <strong>
+                            People in underserved communities often have limited access to the
+                            small pleasures of everyday life
+                        </strong>
+                        —the freedom to express themselves, to feel confident in their
+                        appearance, to prepare for a meaningful occasion, or to enjoy activities
+                        they once loved.
+                    </p>
+                    <p>
+                        Few organizations provide accessible beauty and self-care services to
+                        people who may not otherwise have them, leaving many communities without
+                        consistent opportunities for these experiences. Yet small moments of care
+                        and self-expression can make a real difference in how a person feels.
                     </p>
                 </div>
-                <div className = "info2">
+
+                <div className="info">
+                    <h2 className="infoHeading">HOW WE TACKLE IT:</h2>
                     <p>
-                        <strong className = "exists"> HOW WE TACKLE IT: </strong> <br /> <br/>
-                        <em>We connect professional makeup artists, face painters, and student volunteers with hospitals to bring beauty, dignity, and joy to every face.</em>
+                        <em>
+                            We partner with shelters, community organizations, and care settings
+                            that serve vulnerable populations to host free events where experienced
+                            volunteer artists offer hair, makeup, nail, and skincare
+                            services—bringing beauty, dignity, and joy to every face.
+                        </em>
                     </p>
                 </div>
-            </div>
-
-
-
+            </section>
         </div>
     );
 }

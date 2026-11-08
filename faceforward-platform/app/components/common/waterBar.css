@@ -1,27 +1,32 @@
-.dummy {
-    height: 1rem; 
-    
+.waterBar {
+    width: 100%;
+    height: 1rem;
+    margin-bottom: 0.5rem;
     overflow: hidden;
-    width: 100%;  
-    background: linear-gradient(
-        45deg,
-        #4469d0,
-        #a2b8e3,
-        #4844c7
-    );
+}
+
+/* Shared "flowing water" gradient; also used by the navbar and footer. */
+.waterBar,
+.waterFlow {
+    background: linear-gradient(45deg, #4469d0, #a2b8e3, #4844c7);
     background-size: 400% 400%;
     animation: waterFlow 15s ease infinite;
 }
 
-
 @keyframes waterFlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+    0%,
     100% {
-      background-position: 0% 50%;
+        background-position: 0% 50%;
     }
-  }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .waterBar,
+    .waterFlow {
+        animation: none;
+    }
+}

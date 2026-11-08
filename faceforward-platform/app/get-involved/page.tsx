@@ -1,59 +1,56 @@
-"use client"; 
+import Link from "next/link";
 
-import "./get-involved.css"; 
-import GrainVisual from "../components/home/GrainVisual"; 
-import { useRouter } from "next/navigation"; 
+import "./get-involved.css";
+import SplashBackdrop from "../components/common/SplashBackdrop";
+
+const EXEC_FORM_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSe7DvRU7DiW87wAMJalSd_jUqPycHeOWJ_JIzabuGMAqo2MIw/viewform";
+
+const PATHS = [
+    {
+        title: "Partner organizations",
+        text: "Shelters, community organizations and care settings can request free events for the people they serve.",
+    },
+    {
+        title: "Volunteer artists",
+        text: "Hair, makeup, nail and skincare artists can grow their portfolio while giving back.",
+    },
+    {
+        title: "Volunteers",
+        text: "Event assistants, photographers and liaisons help every event run smoothly.",
+    },
+];
 
 export default function GetInvolved() {
-    const router = useRouter(); 
-
-    const clickSignup = () => {
-        router.push("/signup"); 
-    }; 
-    
-    const clickLogin = () => {
-        router.push("/login"); 
-    };
-    
     return (
-        <div className = "GIContainer">  
-            <div className = "GIBottom">
-                <GrainVisual />
-            </div> 
-            <div className = "GITop">
-                <div className = "centralCard"> 
-                    <div className="GIheader">
-                        {/* <h1 className = "GIH1">
-                            Get 
-                        </h1> */}
-                        <h1 className="GIH2">
-                            Get Involved
-                        </h1>
-                    </div>
-                    <p className = "preamble">
-                    If you are a hospital, patient, artist, or volunteer please feel free to make an account with us. If you already have an account with us, log in below! 
-                    <br></br> <br></br>Alternatively, if you are looking for an executive position, please follow the link below:
+        <div className="panelPage panelCenter">
+            <SplashBackdrop className="panelBackdrop" />
 
-                    </p>
-                    <div className = "GIButtons">
-                        <button className = "GIB" onClick={clickSignup}>
-                            Sign Up 
-                        </button>
-                        <button className = "GIB" onClick={clickLogin}>
-                            Log In
-                        </button>
-                    </div>
-                     
-                    <div>
-                        <a href = "https://docs.google.com/forms/d/e/1FAIpQLSe7DvRU7DiW87wAMJalSd_jUqPycHeOWJ_JIzabuGMAqo2MIw/viewform">
-                        <button className = "GIB2">
-                            Executive Recruitment Form
-                        </button>
-                    </a>
-                    </div>
+            <section className="panelContent glass giCard">
+                <h1 className="giTitle">Get Involved</h1>
+
+                <div className="giPaths">
+                    {PATHS.map((path) => (
+                        <div key={path.title} className="glassInset giPath">
+                            <h2 className="giPathTitle">{path.title}</h2>
+                            <p>{path.text}</p>
+                        </div>
+                    ))}
                 </div>
-            </div>
-            
+
+                <p className="giLead">
+                    Create an account to get started, or log in if you already have one.
+                </p>
+                <div className="giButtons">
+                    <Link className="btn" href="/signup">Sign Up</Link>
+                    <Link className="btn btn-ghost" href="/login">Log In</Link>
+                </div>
+
+                <p className="giLead">Interested in joining our executive team?</p>
+                <a className="btn btn-ghost btn-block" href={EXEC_FORM_URL}>
+                    Executive Recruitment Form
+                </a>
+            </section>
         </div>
-    ); 
-} 
+    );
+}

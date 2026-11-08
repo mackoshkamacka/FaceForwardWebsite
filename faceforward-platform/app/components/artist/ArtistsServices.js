@@ -1,198 +1,163 @@
-"use client"; 
+"use client";
 
-import "./styling/ArtistServices.css"
+import { useEffect, useState } from "react";
+import { collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 
-import { useState, useEffect } from 'react';
-import { db, auth } from '../../../src/firebase';
-import {
-    collection, query, where,
-    updateDoc, doc, deleteDoc,
-    onSnapshot
-} from 'firebase/firestore';
+import { db } from "../../../src/firebase";
+import { useDashboardUser } from "../../lib/useCurrentUser";
+import { SERVICE_TYPES, serviceLabel } from "../../lib/platform";
 
-export default function ArtistServicesList() {
+/** Artist widget: list, edit, pause and delete the artist's own services. */
+export default function ArtistServices() {
+    const { user } = useDashboardUser();
     const [services, setServices] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
-    const [editingService, setEditingService] = useState(null);
-    const [editForm, setEditForm] = useState({
-        title: '',
-        description: '',
-        price: '',
-        type: 'makeup',
-        status: 'active'
-    });
+    const [loading, setLoading] = useState(true);
+    const [editing, setEditing] = useState(null); // { id, title, type, description }
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        if (!auth.currentUser) {
-            setLoading(false);
-            return;
-        }
-
-        const q = query(
-            collection(db, 'services'),
-            where('artistId', '==', auth.currentUser.uid)
-        );
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            setServices(snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })));
-            setLoading(false); // Set loading to false when data arrives
-        }, (error) => {
-            console.error("Error fetching services:", error);
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, []);
-
-    const handleEditClick = (service) => {
-        setEditingService(service);
-        setEditForm({
-            title: service.title,
-            description: service.description,
-            price: service.price.toString(),
-            type: service.type,
-            status: service.status
-        });
-    };
-
-    const handleUpdate = async () => {
-        if (!editingService) return;
-
-        try {
-            await updateDoc(doc(db, 'services', editingService.id), {
-                ...editForm,
-                price: Number(editForm.price)
-            });
-            setEditingService(null);
-            alert('Service updated successfully!');
-        } catch (error) {
-            console.error('Error updating service:', error);
-            alert(`Update failed: ${error.message}`);
-        } 
-    };
-
-    const handleDelete = async (serviceId) => {
-        if (window.confirm('Permanently delete this service?')) {
-            try {
-                await deleteDoc(doc(db, 'services', serviceId));
-            } catch (error) {
-                console.error('Error deleting service:', error);
-                alert('Delete failed: Missing permissions');
+        const q = query(collection(db, "services"), where("artistId", "==", user.uid));
+        return onSnapshot(
+            q,
+            (snapshot) => {
+                setServices(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+                setLoading(false);
+            },
+            (err) => {
+                console.error("Error fetching services:", err);
+                setLoading(false);
             }
+        );
+    }, [user.uid]);
+
+    const run = async (action, failureText) => {
+        setError("");
+        try {
+            await action();
+        } catch (err) {
+            console.error(failureText, err);
+            setError(failureText);
         }
     };
 
-    // Loading state UI
-    if (loading) {
-        return (
-            <div className="artist-services">
-                <h2 className="manageHeader">Manage Services</h2>
-                <div className="loading-container">
-                    <div className="loading-spinner"></div>
-                    <p className="loading-text">Loading your services...</p>
-                </div>
-            </div>
-        );
-    }
+    const saveEdit = (e) => {
+        e.preventDefault();
+        const { id, ...fields } = editing;
+        run(async () => {
+            await updateDoc(doc(db, "services", id), fields);
+            setEditing(null);
+        }, "Couldn't save your changes. Please try again.");
+    };
 
-    // Empty state UI
-    if (services.length === 0) {
-        return (
-            <div className="artist-services">
-                <h2 className="manageHeader">Manage Services</h2>
-                <div className="empty-state">
-                    <p>You haven't created any services yet.</p>
-                    <p>Create your first service above to get started!</p>
-                </div>
-            </div>
+    const toggleStatus = (service) =>
+        run(
+            () =>
+                updateDoc(doc(db, "services", service.id), {
+                    status: service.status === "active" ? "paused" : "active",
+                }),
+            "Couldn't update the service status."
         );
-    }
+
+    const remove = (service) => {
+        if (!window.confirm(`Permanently delete "${service.title}"?`)) return;
+        run(() => deleteDoc(doc(db, "services", service.id)), "Couldn't delete the service.");
+    };
 
     return (
-        <div className="artist-services">
-            <h2 className="manageHeader">Manage Services</h2>
-            <div className="services-grid">
-                {services.map(service => (
-                    <div key={service.id} className="service-card">
-                        {editingService?.id === service.id ? (
-                            <div className="edit-form">
-                                <label>
-                                    Title:
-                                    <input
-                                        value={editForm.title}
-                                        onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    Description:
-                                    <textarea
-                                        value={editForm.description}
-                                        onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    Price ($):
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        step="0.01"
-                                        value={editForm.price}
-                                        onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    Type:
-                                    <select
-                                        value={editForm.type}
-                                        onChange={(e) => setEditForm({ ...editForm, type: e.target.value })}
-                                    >
-                                        <option value="makeup">Makeup</option>
-                                        <option value="face-painting">Face Painting</option>
-                                        <option value="manicure">Manicure</option>
-                                        <option value="hair-styling">Hair Styling</option>
-                                    </select>
-                                </label>
-                                <div className="form-actions">
-                                    <button onClick={handleUpdate}>Save Changes</button>
-                                    <button onClick={() => setEditingService(null)}>Cancel</button>
-                                </div>
-                            </div>
-                        ) : (
-                            <>
-                                <h3 className="serviceHeader">{service.title}</h3>
-                                <p className = "manageDesc">Description: {service.description}</p>
-                                <div className = "manageInfoContainer">
-                                    <p className = "manageInfo"> ${service.price}</p>
-                                    <p className = "manageInfo"> {service.type}</p>
-                                    <p className = "manageInfo"> {service.status}</p>
-                                </div>
-                                
+        <div className="widget">
+            <h2 className="sectionTitle widgetHeader">Your Services</h2>
 
-                                <div className="card-actions">
+            {error && <p className="notice notice-error" role="alert">{error}</p>}
+
+            {loading ? (
+                <div className="spinner" role="status" aria-label="Loading services" />
+            ) : services.length === 0 ? (
+                <div className="glassInset emptyState">
+                    <strong>No services yet</strong>
+                    Use &ldquo;New Service&rdquo; above to offer your first one.
+                </div>
+            ) : (
+                <div className="cardList">
+                    {services.map((service) =>
+                        editing?.id === service.id ? (
+                            <form key={service.id} className="glassInset itemCard stack" onSubmit={saveEdit}>
+                                <div className="field">
+                                    <label>Title</label>
+                                    <input
+                                        value={editing.title}
+                                        onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Service type</label>
+                                    <select
+                                        value={editing.type}
+                                        onChange={(e) => setEditing({ ...editing, type: e.target.value })}
+                                    >
+                                        {SERVICE_TYPES.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="field">
+                                    <label>Description</label>
+                                    <textarea
+                                        value={editing.description}
+                                        onChange={(e) => setEditing({ ...editing, description: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="btnRow">
+                                    <button type="submit" className="btn btn-sm">Save</button>
                                     <button
-                                        onClick={() => handleEditClick(service)}
-                                        className="edit-btn"
+                                        type="button"
+                                        className="btn btn-ghost btn-sm"
+                                        onClick={() => setEditing(null)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        ) : (
+                            <article key={service.id} className="glassInset itemCard">
+                                <div className="itemCardHeader">
+                                    <h3 className="itemCardTitle">{service.title}</h3>
+                                    <span className="pill">{service.status === "active" ? "Active" : "Paused"}</span>
+                                </div>
+                                <div className="itemMeta">
+                                    <span>{serviceLabel(service.type)}</span>
+                                    <span>Free of charge</span>
+                                </div>
+                                <p className="itemBody">{service.description}</p>
+                                <div className="btnRow itemActions">
+                                    <button
+                                        className="btn btn-sm"
+                                        onClick={() =>
+                                            setEditing({
+                                                id: service.id,
+                                                title: service.title,
+                                                type: service.type,
+                                                description: service.description,
+                                            })
+                                        }
                                     >
                                         Edit
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(service.id)}
-                                        className="delete-btn"
-                                    >
+                                    <button className="btn btn-ghost btn-sm" onClick={() => toggleStatus(service)}>
+                                        {service.status === "active" ? "Pause" : "Activate"}
+                                    </button>
+                                    <button className="btn btn-ghost btn-danger btn-sm" onClick={() => remove(service)}>
                                         Delete
                                     </button>
                                 </div>
-                            </>
-                        )}
-                    </div>
-                ))}
-            </div>
+                            </article>
+                        )
+                    )}
+                </div>
+            )}
         </div>
     );
 }

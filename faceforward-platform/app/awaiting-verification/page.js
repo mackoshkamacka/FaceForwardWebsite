@@ -1,23 +1,28 @@
-"use client";
+import Link from "next/link";
 
-import "./AwaitingVerification.css"; 
+import AuthPanel from "../components/auth/AuthPanel";
 
 export default function AwaitingVerification() {
-  return (
-    <div className="verifyPage">
-      <div className="verifyCard">
-        <h2 className="verifyTitle">Your Account Is Awaiting Verification</h2>
-        <p className="verifyText">
-          Thank you for registering with FaceForward.
-          <br />
-          Our team is currently reviewing your profile. Once approved, you will
-          gain access to the full platform.
-        </p>
-        <p className="verifySubtext">
-          This process may take up to 24 hours. You will receive an email once
-          verification is complete.
-        </p>
-      </div>
-    </div>
-  );
+    return (
+        <AuthPanel
+            eyebrow="Almost there"
+            title="Your account is being reviewed"
+            intro="Thank you for joining Face Forward Canada! To keep our partner organizations, clients and volunteers safe, our team reviews every new account before it can access the platform."
+            footer={<Link href="/">Back to the home page</Link>}
+        >
+            <div className="stack">
+                <p className="notice">
+                    Reviews usually take up to 24 hours. You&rsquo;ll receive an email as soon as
+                    your account is approved.
+                </p>
+                <p className="fieldHint">
+                    Questions in the meantime? Reach us at{" "}
+                    <a href="mailto:info.faceforwardcanada@gmail.com">
+                        info.faceforwardcanada@gmail.com
+                    </a>
+                    .
+                </p>
+            </div>
+        </AuthPanel>
+    );
 }

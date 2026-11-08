@@ -1,0 +1,164 @@
+/* Dashboard layout + widgets. Generic pieces (glass, field, pill, modal…) are in app/ui.css. */
+
+.dashContent {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashWelcome {
+    padding: 2rem;
+    animation: dashRise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.dashWelcomeHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dashIntro {
+    max-width: 70ch;
+    line-height: 1.45;
+}
+
+.dashIntro + .dashIntro {
+    margin-top: 0.6rem;
+}
+
+.dashGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.dashColumn {
+    padding: 1.5rem;
+    min-width: 0;
+    animation: dashRise 0.7s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.dashColumn + .dashColumn {
+    animation-delay: 0.3s;
+}
+
+.widget + .widget {
+    margin-top: 2rem;
+}
+
+.createServiceForm {
+    margin-top: 0.75rem;
+    padding: 1.1rem;
+}
+
+.widgetHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+/* cards in a list */
+.cardList {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.itemCard {
+    padding: 1rem 1.1rem;
+    color: inherit;
+    text-align: left;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button.itemCard {
+    width: 100%;
+    font-weight: inherit;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+button.itemCard:hover,
+.itemCard.isHoverable:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.itemCardHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.itemCardTitle {
+    font-size: 1.15rem;
+    font-weight: 650;
+    line-height: 1.2;
+}
+
+.itemMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.itemBody {
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    opacity: 0.92;
+}
+
+.itemActions {
+    margin-top: 0.9rem;
+}
+
+.inlineFilter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.inlineFilter select {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    color: #1d1b5e;
+    border-radius: 0.5rem;
+}
+
+.inlineFilter input[type="checkbox"] {
+    accent-color: #6458e7;
+}
+
+@keyframes dashRise {
+    from {
+        opacity: 0;
+        translate: 0 24px;
+    }
+}
+
+@media (max-width: 860px) {
+    .dashGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashWelcome,
+    .dashColumn {
+        padding: 1.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashWelcome,
+    .dashColumn {
+        animation: none;
+    }
+}
