@@ -15,7 +15,7 @@ import { NextResponse, type NextRequest } from "next/server";
  *  - Optional team preview while locked: set SITE_PREVIEW_KEY=<secret>, then
  *    visit any page with ?preview=<secret> once; a cookie keeps you in.
  */
-const DEFAULT_LOCKED = true;
+const DEFAULT_LOCKED = false;
 const PREVIEW_COOKIE = "ff_preview";
 
 function isLocked() {
